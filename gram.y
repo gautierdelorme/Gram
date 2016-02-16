@@ -10,13 +10,16 @@
   char *var;
 }
 
-%token <var> tID
-%token <nb> tNB
-%token  tEQU tADD tSUB tMUL tDIV
+%token  <var> tID
+        <nb> tNB
+        tEQU tADD tSUB tMUL tDIV
         tAND tOR tGTH tLTH tEEQU
         tPO tPC tBO tBC tCOM tSM
         tIF tWHILE tPRT
         tINT tERROR
+
+%left tADD tSUB
+%left tMUL tDIV
 
 %start Input
 %%
@@ -24,7 +27,7 @@
 Input           :     Function Input
                 |     ;
 
-Function        :     tINT tID tPO Params tPC Body {printf(">>> FUNCTION\n");}
+Function        :     tINT tID tPO Params tPC Body
 
 Params          :     tINT tID ParamsNext
                 |     ;
@@ -40,9 +43,9 @@ ConditionsNext  :     tOR Conditions
                 |     tAND Conditions
                 |     ;
 
-If              :     tIF tPO Conditions tPC Body {printf(">>> IF\n");}
+If              :     tIF tPO Conditions tPC Body
 
-While           :     tWHILE tPO Conditions tPC Body {printf(">>> WHILE\n");}
+While           :     tWHILE tPO Conditions tPC Body
 
 Arithm          :     tID ArithmNext
                 |     tNB ArithmNext
@@ -57,22 +60,22 @@ ArithmNext      :     tADD tID ArithmNext
                 |     tDIV tNB ArithmNext
                 |     ;
 
-Allocation      :     tID tEQU Arithm tSM {printf(">>> ALLOCATION \n");}
+Allocation      :     tID tEQU Arithm tSM
 
-Declarations    :     tINT tID DeclarationsNext tSM {printf(">>> DECLARATION \n");}
-                |     tINT tID tEQU Arithm DeclarationsNext tSM  {printf(">>> DECLARATION + ALLOCATION\n");}
+Declarations    :     tINT tID DeclarationsNext tSM
+                |     tINT tID tEQU Arithm DeclarationsNext tSM
 DeclarationsNext:     tCOM tID tEQU Arithm DeclarationsNext
                 |     tCOM tID DeclarationsNext
                 |     ;
 
 Body            :     tBO Content tBC
 
-Print           :     tPRT tPO tID tPC tSM {printf(">>> PRINT \n");}
+Print           :     tPRT tPO tID tPC tSM
 
 Arguments       :     tID Arguments
                 |     ;
 
-FunctionCall    :     tID tPO Arguments tPC tSM {printf(">>> FUNCTION CALL \n");}
+FunctionCall    :     tID tPO Arguments tPC tSM
 
 Content         :     If Content
                 |     While Content
