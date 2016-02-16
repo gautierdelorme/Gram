@@ -1,5 +1,5 @@
 typedef enum TYPE {
-  INT
+  INT,
   FUN
 } TYPE;
 

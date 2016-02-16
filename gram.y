@@ -1,7 +1,9 @@
 %{
-#include "gram.h"
-#include <stdio.h>
-#include <stdlib.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  #include "gram.h"
+  #include "symbols_table.h"
 %}
 
 %union
@@ -91,5 +93,6 @@ int yyerror(char *s) {
 }
 
 int main(void) {
+  init_symbols_table();
   yyparse();
 }
