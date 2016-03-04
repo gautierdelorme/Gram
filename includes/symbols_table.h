@@ -9,12 +9,17 @@ typedef struct Symbol {
 	int addr;
 	int init;
   int constant;
-  int deph;
+  int depth;
+  struct Symbol* next;
 } Symbol;
 
 typedef struct Table{
 	Symbol* symbols;
+  int height;
 } Table;
 
-
 void init_symbols_table();
+void add_symbol(char* name, TYPE type);
+
+Symbol* get_symbol(char* name);
+void remove_symbol(int depth);

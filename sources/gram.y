@@ -29,7 +29,7 @@
 Input           :     Function Input
                 |     ;
 
-Function        :     tINT tID tPO Params tPC Body
+Function        :     tINT tID tPO Params tPC Body                {add_symbol($2, FUN);}
 
 Params          :     tINT tID ParamsNext
                 |     ;
@@ -62,15 +62,15 @@ ArithmNext      :     tADD tID ArithmNext
                 |     tDIV tNB ArithmNext
                 |     ;
 
-Allocation      :     tID tEQU Arithm tSM
+Affectation      :     tID tEQU Arithm tSM
 
-Declarations    :     tINT tID DeclarationsNext tSM
+Declarations    :     tINT tID DeclarationsNext tSM               {add_symbol($2, INT);}
                 |     tINT tID tEQU Arithm DeclarationsNext tSM
 DeclarationsNext:     tCOM tID tEQU Arithm DeclarationsNext
                 |     tCOM tID DeclarationsNext
                 |     ;
 
-Body            :     tBO Content tBC
+Body            :     tBO {current_depth++;} Content tBC {remove_symbols(current_depth);current_depth--;}
 
 Print           :     tPRT tPO tID tPC tSM
 
@@ -82,7 +82,7 @@ FunctionCall    :     tID tPO Arguments tPC tSM
 Content         :     If Content
                 |     While Content
                 |     Declarations Content
-                |     Allocation Content
+                |     Affectation Content
                 |     FunctionCall Content
                 |     Print Content
                 |     ;
@@ -93,6 +93,7 @@ int yyerror(char *s) {
 }
 
 int main(void) {
+  int current_depth = 0;
   init_symbols_table();
   yyparse();
 }

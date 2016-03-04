@@ -511,7 +511,7 @@ static const char *const yytname[] =
   "tBO", "tBC", "tCOM", "tSM", "tIF", "tWHILE", "tPRT", "tINT", "tERROR",
   "$accept", "Input", "Function", "Params", "ParamsNext", "Condition",
   "Conditions", "ConditionsNext", "If", "While", "Arithm", "ArithmNext",
-  "Allocation", "Declarations", "DeclarationsNext", "Body", "Print",
+  "Affectation", "Declarations", "DeclarationsNext", "Body", "Print",
   "Arguments", "FunctionCall", "Content", YY_NULL
 };
 #endif
@@ -1447,10 +1447,10 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 2:
+        case 32:
 /* Line 1787 of yacc.c  */
-#line 29 "sources/gram.y"
-    {printf("a");}
+#line 67 "sources/gram.y"
+    {add_symbol((yyvsp[(2) - (4)].var), INT);}
     break;
 
 
