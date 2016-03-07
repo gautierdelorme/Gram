@@ -1,13 +1,13 @@
 all: binary/gram
 	$^ < sources/gram.c
 
-binary/gram: builds/symbols_table.o builds/symbol.o builds/error.o builds/gram.l.o builds/gram.y.o
-	gcc -g -o $@ $^ -Iincludes -ll -lm
+binary/gram: sources/*.c
+	gcc -g -o $@ builds/*.o -Iincludes -ll -lm
 
-builds/%.o: sources/%.c
-	gcc -g -c $^ -o $@ -Iincludes
+sources/%.c: builds/%.o
+	gcc -g -c $@ -o $^ -Iincludes
 
-sources/%.c: sources/gram.y.c sources/gram.l.c
+sources/%.c: sources/gram.y.c sources/gram.l.c includes/%.h
 
 sources/gram.y.c: sources/gram.y
 	bison -d $^
