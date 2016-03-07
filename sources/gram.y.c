@@ -1452,7 +1452,7 @@ yyreduce:
         case 32:
 /* Line 1787 of yacc.c  */
 #line 69 "sources/gram.y"
-    {add_symbol((yyvsp[(2) - (4)].var), INT, current_depth);}
+    {add_symbol((yyvsp[(2) - (4)].var), current_depth);}
     break;
 
   case 37:
@@ -1710,6 +1710,6 @@ int yyerror(char *s) {
 
 int main(void) {
   current_depth = 0;
-  init_symbols_table();
+  new_symbols_table();
   yyparse();
 }

@@ -66,7 +66,7 @@ ArithmNext      :     tADD tID ArithmNext
 
 Affectation     :     tID tEQU Arithm tSM
 
-Declarations    :     tINT tID DeclarationsNext tSM               {add_symbol($2, INT, current_depth);}
+Declarations    :     tINT tID DeclarationsNext tSM               {add_symbol($2, current_depth);}
                 |     tINT tID tEQU Arithm DeclarationsNext tSM
 DeclarationsNext:     tCOM tID tEQU Arithm DeclarationsNext
                 |     tCOM tID DeclarationsNext
@@ -96,6 +96,6 @@ int yyerror(char *s) {
 
 int main(void) {
   current_depth = 0;
-  init_symbols_table();
+  new_symbols_table();
   yyparse();
 }
