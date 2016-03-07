@@ -19,7 +19,6 @@ typedef struct Table{
 } Table;
 
 void init_symbols_table();
-void add_symbol(char* name, TYPE type);
+void add_symbol(char* name, TYPE type, int depth);
 
-Symbol* get_symbol(char* name);
 void remove_symbol(int depth);

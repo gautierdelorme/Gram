@@ -1,5 +1,5 @@
 all: binary/gram
-	$^ < sources/gram.c > sources/gram.ass
+	$^ < sources/gram.c 
 
 binary/gram: builds/symbols_table.o builds/gram.l.o builds/gram.y.o
 	gcc -o $@ $^ -Iincludes -ll -lm

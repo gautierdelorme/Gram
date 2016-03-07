@@ -4,6 +4,8 @@
 
   #include "gram.h"
   #include "symbols_table.h"
+
+  int current_depth;
 %}
 
 %union
@@ -29,7 +31,7 @@
 Input           :     Function Input
                 |     ;
 
-Function        :     tINT tID tPO Params tPC Body                {add_symbol($2, FUN);}
+Function        :     tINT tID tPO Params tPC Body
 
 Params          :     tINT tID ParamsNext
                 |     ;
@@ -62,15 +64,15 @@ ArithmNext      :     tADD tID ArithmNext
                 |     tDIV tNB ArithmNext
                 |     ;
 
-Affectation      :     tID tEQU Arithm tSM
+Affectation     :     tID tEQU Arithm tSM
 
-Declarations    :     tINT tID DeclarationsNext tSM               {add_symbol($2, INT);}
+Declarations    :     tINT tID DeclarationsNext tSM               {add_symbol($2, INT, current_depth);}
                 |     tINT tID tEQU Arithm DeclarationsNext tSM
 DeclarationsNext:     tCOM tID tEQU Arithm DeclarationsNext
                 |     tCOM tID DeclarationsNext
                 |     ;
 
-Body            :     tBO {current_depth++;} Content tBC {remove_symbols(current_depth);current_depth--;}
+Body            :     tBO {current_depth++;} Content tBC {remove_symbol(current_depth);current_depth--;}
 
 Print           :     tPRT tPO tID tPC tSM
 
@@ -93,7 +95,7 @@ int yyerror(char *s) {
 }
 
 int main(void) {
-  int current_depth = 0;
+  current_depth = 0;
   init_symbols_table();
   yyparse();
 }
