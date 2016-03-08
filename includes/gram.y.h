@@ -64,11 +64,12 @@ extern int yydebug;
      tBC = 273,
      tCOM = 274,
      tSM = 275,
-     tIF = 276,
-     tWHILE = 277,
-     tPRT = 278,
-     tINT = 279,
-     tERROR = 280
+     tCONST = 276,
+     tIF = 277,
+     tWHILE = 278,
+     tPRT = 279,
+     tINT = 280,
+     tERROR = 281
    };
 #endif
 
@@ -84,7 +85,7 @@ typedef union YYSTYPE
 
 
 /* Line 2053 of yacc.c  */
-#line 88 "gram.tab.h"
+#line 89 "gram.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

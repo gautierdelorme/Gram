@@ -8,7 +8,7 @@ typedef struct Table{
 } Table;
 
 void new_symbols_table();
-void add_variable(char* name, int depth, int init);
+void add_variable(char* name, int depth, int init, int constant);
 void add_function(char* name, int depth);
 
 void remove_symbol(int depth);

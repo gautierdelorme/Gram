@@ -1,6 +1,6 @@
 int main (int a, int b) {
     int a, d=1+2;
-    int b;
+    int const b = 1;
     f2(c);
 }
 

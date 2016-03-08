@@ -20,7 +20,7 @@
         tEQU tADD tSUB tMUL tDIV
         tAND tOR tGTH tLTH tEEQU
         tPO tPC tBO tBC tCOM tSM
-        tIF tWHILE tPRT
+        tCONST tIF tWHILE tPRT
         tINT tERROR
 
 %left tADD tSUB
@@ -67,13 +67,15 @@ ArithmNext      :     tADD tID ArithmNext
 
 Affectation     :     tID tEQU Arithm tSM
 
-Declarations    :     tINT tID DeclarationsNext tSM               {add_variable($2, current_depth, 0);}
-                |     tINT tID tEQU Arithm DeclarationsNext tSM   {add_variable($2, current_depth, 1);}
-DeclarationsNext:     tCOM tID tEQU Arithm DeclarationsNext       {add_variable($2, current_depth, 1);}
-                |     tCOM tID DeclarationsNext                   {add_variable($2, current_depth, 0);}
+Declarations    :     tINT tID DeclarationsNext tSM {add_variable($2, current_depth, 0, 0);}
+                |     tINT tID tEQU Arithm DeclarationsNext tSM {add_variable($2, current_depth, 1, 0);}
+                |     tINT tCONST tID tEQU Arithm DeclarationsNext tSM  {add_variable($3, current_depth, 1, 1);}
+DeclarationsNext:     tCOM tID tEQU Arithm DeclarationsNext {add_variable($2, current_depth, 1, 0);}
+                |     tCOM tCONST tID tEQU Arithm DeclarationsNext {add_variable($3, current_depth, 0, 1);}
+                |     tCOM tID DeclarationsNext {add_variable($2, current_depth, 0, 0);}
                 |     ;
 
-Body            :     tBO {current_depth++;} Content tBC {remove_symbol(current_depth);current_depth--;}
+Body            :     tBO {current_depth++;} Content tBC  {remove_symbol(current_depth);current_depth--;}
 
 Print           :     tPRT tPO tID tPC tSM
 

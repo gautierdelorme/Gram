@@ -62,6 +62,9 @@ ID          {ALPHABET}+{DIGIT}*{ALPHABET}*
 ";" {
   return tSM;
 }
+"const" {
+  return tCONST;
+}
 "if" {
   return tIF;
 }
