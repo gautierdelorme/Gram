@@ -39,7 +39,7 @@ void add_symbol(char* name, int depth, int init, int constant, TYPE type) {
   printf("ADDING %s\n", name);
   Symbol* s = new_symbol(name, depth, init, constant, type);
   Symbol* symbols = symbols_table->symbols;
-  while ((symbols != NULL) && ((symbols->name != s->name) || (symbols->depth != s->depth))) {
+  while ((symbols != NULL) && ((symbols->name != s->name) || (s->name == "-1") || (symbols->depth != s->depth))) {
     symbols = symbols->next;
   }
   if (symbols ==  NULL) {
@@ -53,8 +53,16 @@ void add_variable(char* name, int depth, int init, int constant) {
   add_symbol(name, depth, init, constant, INT);
 }
 
-void add_function(char* name, int depth) {
-  add_symbol(name, depth, 0, 0, FUN);
+int get_addr_symbol(char* name, int depth) {
+  Symbol* symbols = symbols_table->symbols;
+  while ((symbols != NULL) && ((symbols->name != name) || (symbols->depth != depth))) {
+    symbols = symbols->next;
+  }
+  if (symbols ==  NULL) {
+    raise_error("SYMBOL %s level %d NOT IN THE TABLE", name, depth);
+  } else {
+    return symbols->addr;
+  }
 }
 
 void remove_symbol(int depth) {
@@ -64,4 +72,16 @@ void remove_symbol(int depth) {
     symbols_table->height--;
   }
   print_symbols_table();
+}
+
+int add_tmp_variable() {
+  add_variable("-1", -1, -1, -1);
+  return symbols_table->height;
+}
+
+void remove_tmp_variable() {
+  if (symbols_table->height > 0) {
+    symbols_table->symbols = symbols_table->symbols->next;
+    symbols_table->height--;
+  }
 }

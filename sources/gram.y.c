@@ -72,10 +72,11 @@
   #include "symbols_table.h"
   #include "error.h"
 
+  FILE* outfile;
   int current_depth;
 
 /* Line 371 of yacc.c  */
-#line 79 "gram.tab.c"
+#line 80 "gram.tab.c"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -143,14 +144,14 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 13 "sources/gram.y"
+#line 14 "sources/gram.y"
 
   int nb;
   char *var;
 
 
 /* Line 387 of yacc.c  */
-#line 154 "gram.tab.c"
+#line 155 "gram.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -178,7 +179,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 182 "gram.tab.c"
+#line 183 "gram.tab.c"
 
 #ifdef short
 # undef short
@@ -500,12 +501,12 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    32,    32,    33,    35,    37,    38,    39,    40,    42,
-      43,    44,    45,    46,    47,    48,    49,    51,    53,    55,
-      56,    57,    58,    59,    60,    61,    62,    63,    64,    65,
-      66,    68,    70,    71,    72,    73,    74,    75,    76,    78,
-      78,    80,    82,    83,    85,    87,    88,    89,    90,    91,
-      92,    93
+       0,    33,    33,    34,    36,    38,    39,    40,    41,    43,
+      44,    45,    46,    47,    48,    49,    50,    52,    54,    56,
+      61,    65,    66,    67,    68,    69,    70,    71,    72,    73,
+      74,    76,    78,    79,    80,    81,    82,    83,    84,    86,
+      86,    88,    90,    91,    93,    95,    96,    97,    98,    99,
+     100,   101
 };
 #endif
 
@@ -1464,57 +1465,76 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 32:
+        case 19:
 /* Line 1787 of yacc.c  */
-#line 70 "sources/gram.y"
+#line 56 "sources/gram.y"
+    {
+                        int n = add_tmp_variable();
+                        int m = get_addr_symbol((yyvsp[(1) - (2)].var), current_depth);
+                        fprintf(outfile, "COP %d %d\n", n, m);
+                      }
+    break;
+
+  case 20:
+/* Line 1787 of yacc.c  */
+#line 61 "sources/gram.y"
+    {
+                        //int n = add_tmp_variable();
+                        //fprintf(outfile, "AFC %d %d\n", n, $1);
+                      }
+    break;
+
+  case 32:
+/* Line 1787 of yacc.c  */
+#line 78 "sources/gram.y"
     {add_variable((yyvsp[(2) - (4)].var), current_depth, 0, 0);}
     break;
 
   case 33:
 /* Line 1787 of yacc.c  */
-#line 71 "sources/gram.y"
+#line 79 "sources/gram.y"
     {add_variable((yyvsp[(2) - (6)].var), current_depth, 1, 0);}
     break;
 
   case 34:
 /* Line 1787 of yacc.c  */
-#line 72 "sources/gram.y"
+#line 80 "sources/gram.y"
     {add_variable((yyvsp[(3) - (7)].var), current_depth, 1, 1);}
     break;
 
   case 35:
 /* Line 1787 of yacc.c  */
-#line 73 "sources/gram.y"
+#line 81 "sources/gram.y"
     {add_variable((yyvsp[(2) - (5)].var), current_depth, 1, 0);}
     break;
 
   case 36:
 /* Line 1787 of yacc.c  */
-#line 74 "sources/gram.y"
+#line 82 "sources/gram.y"
     {add_variable((yyvsp[(3) - (6)].var), current_depth, 0, 1);}
     break;
 
   case 37:
 /* Line 1787 of yacc.c  */
-#line 75 "sources/gram.y"
+#line 83 "sources/gram.y"
     {add_variable((yyvsp[(2) - (3)].var), current_depth, 0, 0);}
     break;
 
   case 39:
 /* Line 1787 of yacc.c  */
-#line 78 "sources/gram.y"
+#line 86 "sources/gram.y"
     {current_depth++;}
     break;
 
   case 40:
 /* Line 1787 of yacc.c  */
-#line 78 "sources/gram.y"
+#line 86 "sources/gram.y"
     {remove_symbol(current_depth);current_depth--;}
     break;
 
 
 /* Line 1787 of yacc.c  */
-#line 1518 "gram.tab.c"
+#line 1538 "gram.tab.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1746,7 +1766,7 @@ yyreturn:
 
 
 /* Line 2050 of yacc.c  */
-#line 94 "sources/gram.y"
+#line 102 "sources/gram.y"
 
 
 int yyerror(char *s) {
@@ -1754,6 +1774,7 @@ int yyerror(char *s) {
 }
 
 int main(void) {
+  outfile = fopen( "gram.ass", "w" );
   current_depth = 0;
   new_symbols_table();
   yyparse();

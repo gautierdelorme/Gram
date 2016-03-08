@@ -6,6 +6,7 @@
   #include "symbols_table.h"
   #include "error.h"
 
+  FILE* outfile;
   int current_depth;
 %}
 
@@ -52,8 +53,15 @@ If              :     tIF tPO Conditions tPC Body
 
 While           :     tWHILE tPO Conditions tPC Body
 
-Arithm          :     tID ArithmNext
-                |     tNB ArithmNext
+Arithm          :     tID ArithmNext  {
+                        int n = add_tmp_variable();
+                        int m = get_addr_symbol($1, current_depth);
+                        fprintf(outfile, "COP %d %d\n", n, m);
+                      }
+                |     tNB ArithmNext  {
+                        //int n = add_tmp_variable();
+                        //fprintf(outfile, "AFC %d %d\n", n, $1);
+                      }
                 |     tPO Arithm tPC ArithmNext
 ArithmNext      :     tADD tID ArithmNext
                 |     tSUB tID ArithmNext
@@ -98,6 +106,7 @@ int yyerror(char *s) {
 }
 
 int main(void) {
+  outfile = fopen( "gram.ass", "w" );
   current_depth = 0;
   new_symbols_table();
   yyparse();
