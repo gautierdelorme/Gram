@@ -68,7 +68,7 @@
   #include <stdio.h>
   #include <stdlib.h>
 
-  #include "gram.h"
+  #include "gram.y.h"
   #include "symbols_table.h"
 
   int current_depth;

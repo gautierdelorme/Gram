@@ -486,7 +486,7 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "sources/gram.l"
 #line 2 "sources/gram.l"
-#include "gram.h"
+#include "gram.y.h"
 #include <stdlib.h>
 #line 492 "lex.yy.c"
 

@@ -1,17 +1,20 @@
+C_FILES:=$(wildcard sources/*.c)
+O_FILES:=$(C_FILES:sources/%.c=builds/%.o)
+
 all: binary/gram
-	$^ < sources/gram.c
+	$^ < test.c
 
-binary/gram: sources/*.c
-	gcc -g -o $@ builds/*.o -Iincludes -ll -lm
+binary/gram: $(O_FILES)
+	gcc -g -o $@ $^ -Iincludes -ll -lm
 
-sources/%.c: builds/%.o
-	gcc -g -c $@ -o $^ -Iincludes
+builds/%.o: sources/%.c
+	gcc -g -c $^ -o $@ -Iincludes
 
-sources/%.c: sources/gram.y.c sources/gram.l.c includes/%.h
+sources/%.c: includes/%.h sources/gram.y.c sources/gram.l.c
 
 sources/gram.y.c: sources/gram.y
 	bison -d $^
-	@mv gram.tab.h includes/gram.h
+	@mv gram.tab.h includes/gram.y.h
 	@mv gram.tab.c sources/gram.y.c
 
 sources/gram.l.c: sources/gram.l

@@ -1,5 +1,5 @@
 %{
-#include "gram.h"
+#include "gram.y.h"
 #include <stdlib.h>
 %}
 
