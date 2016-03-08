@@ -12,3 +12,7 @@ Symbol* new_symbol(char* name, int depth){
   s->next = NULL;
   return s;
 }
+
+void print_symbol(Symbol* s) {
+  printf("%6s|%6d|%6d\n",s->name, s->addr, s->depth);
+}

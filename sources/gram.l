@@ -78,7 +78,9 @@ ID          {ALPHABET}+{DIGIT}*{ALPHABET}*
   return tOR;
 }
 {ID}  {
-  yylval.var = yytext;
+  char* newID = malloc(sizeof(strlen(yytext)+1));
+  strcpy(newID, yytext);
+  yylval.var = newID;
   return tID;
 }
 . {

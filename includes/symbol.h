@@ -17,5 +17,6 @@ typedef struct Symbol {
 } Symbol;
 
 Symbol* new_symbol(char* name, int depth);
+void print_symbol(Symbol* s);
 
 #endif

@@ -70,11 +70,12 @@
 
   #include "gram.y.h"
   #include "symbols_table.h"
+  #include "error.h"
 
   int current_depth;
 
 /* Line 371 of yacc.c  */
-#line 78 "gram.tab.c"
+#line 79 "gram.tab.c"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -141,14 +142,14 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 12 "sources/gram.y"
+#line 13 "sources/gram.y"
 
   int nb;
   char *var;
 
 
 /* Line 387 of yacc.c  */
-#line 152 "gram.tab.c"
+#line 153 "gram.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -176,7 +177,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 180 "gram.tab.c"
+#line 181 "gram.tab.c"
 
 #ifdef short
 # undef short
@@ -495,11 +496,11 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    31,    31,    32,    34,    36,    37,    38,    39,    41,
-      42,    43,    44,    45,    46,    47,    48,    50,    52,    54,
-      55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
-      65,    67,    69,    70,    71,    72,    73,    75,    75,    77,
-      79,    80,    82,    84,    85,    86,    87,    88,    89,    90
+       0,    32,    32,    33,    35,    37,    38,    39,    40,    42,
+      43,    44,    45,    46,    47,    48,    49,    51,    53,    55,
+      56,    57,    58,    59,    60,    61,    62,    63,    64,    65,
+      66,    68,    70,    71,    72,    73,    74,    76,    76,    78,
+      80,    81,    83,    85,    86,    87,    88,    89,    90,    91
 };
 #endif
 
@@ -1451,25 +1452,43 @@ yyreduce:
     {
         case 32:
 /* Line 1787 of yacc.c  */
-#line 69 "sources/gram.y"
+#line 70 "sources/gram.y"
     {add_symbol((yyvsp[(2) - (4)].var), current_depth);}
+    break;
+
+  case 33:
+/* Line 1787 of yacc.c  */
+#line 71 "sources/gram.y"
+    {add_symbol((yyvsp[(2) - (6)].var), current_depth);}
+    break;
+
+  case 34:
+/* Line 1787 of yacc.c  */
+#line 72 "sources/gram.y"
+    {add_symbol((yyvsp[(2) - (5)].var), current_depth);}
+    break;
+
+  case 35:
+/* Line 1787 of yacc.c  */
+#line 73 "sources/gram.y"
+    {add_symbol((yyvsp[(2) - (3)].var), current_depth);}
     break;
 
   case 37:
 /* Line 1787 of yacc.c  */
-#line 75 "sources/gram.y"
+#line 76 "sources/gram.y"
     {current_depth++;}
     break;
 
   case 38:
 /* Line 1787 of yacc.c  */
-#line 75 "sources/gram.y"
+#line 76 "sources/gram.y"
     {remove_symbol(current_depth);current_depth--;}
     break;
 
 
 /* Line 1787 of yacc.c  */
-#line 1473 "gram.tab.c"
+#line 1492 "gram.tab.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1701,11 +1720,11 @@ yyreturn:
 
 
 /* Line 2050 of yacc.c  */
-#line 91 "sources/gram.y"
+#line 92 "sources/gram.y"
 
 
 int yyerror(char *s) {
-  printf("%s\n",s);
+  raise_error("ERROR YACC %s", s);
 }
 
 int main(void) {

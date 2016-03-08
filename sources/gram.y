@@ -4,6 +4,7 @@
 
   #include "gram.y.h"
   #include "symbols_table.h"
+  #include "error.h"
 
   int current_depth;
 %}
@@ -67,9 +68,9 @@ ArithmNext      :     tADD tID ArithmNext
 Affectation     :     tID tEQU Arithm tSM
 
 Declarations    :     tINT tID DeclarationsNext tSM               {add_symbol($2, current_depth);}
-                |     tINT tID tEQU Arithm DeclarationsNext tSM
-DeclarationsNext:     tCOM tID tEQU Arithm DeclarationsNext
-                |     tCOM tID DeclarationsNext
+                |     tINT tID tEQU Arithm DeclarationsNext tSM   {add_symbol($2, current_depth);}
+DeclarationsNext:     tCOM tID tEQU Arithm DeclarationsNext       {add_symbol($2, current_depth);}
+                |     tCOM tID DeclarationsNext                   {add_symbol($2, current_depth);}
                 |     ;
 
 Body            :     tBO {current_depth++;} Content tBC {remove_symbol(current_depth);current_depth--;}
@@ -91,7 +92,7 @@ Content         :     If Content
 %%
 
 int yyerror(char *s) {
-  printf("%s\n",s);
+  raise_error("ERROR YACC %s", s);
 }
 
 int main(void) {

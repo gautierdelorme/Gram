@@ -912,13 +912,15 @@ case 23:
 YY_RULE_SETUP
 #line 80 "sources/gram.l"
 {
-  yylval.var = yytext;
+  char* newID = malloc(sizeof(strlen(yytext)+1));
+  strcpy(newID, yytext);
+  yylval.var = newID;
   return tID;
 }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 84 "sources/gram.l"
+#line 86 "sources/gram.l"
 {
   printf("tERROR\n");
   return tERROR;
@@ -926,10 +928,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 88 "sources/gram.l"
+#line 90 "sources/gram.l"
 ECHO;
 	YY_BREAK
-#line 933 "lex.yy.c"
+#line 935 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1923,4 +1925,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 88 "sources/gram.l"
+#line 90 "sources/gram.l"

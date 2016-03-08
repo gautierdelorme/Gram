@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "symbols_table.h"
+#include "error.h"
 
 Table* symbols_table;
 
@@ -12,11 +13,14 @@ void new_symbols_table() {
 
 void print_symbols_table() {
   Symbol* symbols = symbols_table->symbols;
-  printf("TABLE SYMBOLS\n");
+  printf("---------------------\n");
+  printf("NAME  | ADDR  | DEPTH\n");
+  printf("---------------------\n");
   while (symbols != NULL) {
-    printf("symbol %s @%d\n",symbols->name, symbols->addr);
+    print_symbol(symbols);
     symbols = symbols->next;
   }
+  printf("---------------------\n");
 }
 
 void perform_add_symbol(Symbol* s) {
@@ -28,14 +32,14 @@ void perform_add_symbol(Symbol* s) {
     symbols_table->symbols = s;
   }
   symbols_table->height++;
-  printf("ADD\n");
-  //print_symbols_table();
+  print_symbols_table();
 }
 
 void add_symbol(char* name, int depth) {
+  printf("ADDING %s\n", name);
   Symbol* s = new_symbol(name, depth);
   Symbol* symbols = symbols_table->symbols;
-  while ((symbols != NULL) && (symbols->name != s->name) && (symbols->depth != s->depth)) {
+  while ((symbols != NULL) && ((symbols->name != s->name) || (symbols->depth != s->depth))) {
     symbols = symbols->next;
   }
   if (symbols ==  NULL) {
@@ -46,10 +50,10 @@ void add_symbol(char* name, int depth) {
 }
 
 void remove_symbol(int depth) {
+  printf("REMOVING by %d\n", depth);
   while ((symbols_table->symbols != NULL) && (symbols_table->symbols->depth == depth)) {
     symbols_table->symbols = symbols_table->symbols->next;
+    symbols_table->height--;
   }
-  symbols_table->height--;
-  printf("REMOVE\n");
-  //print_symbols_table();
+  print_symbols_table();
 }

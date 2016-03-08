@@ -1,7 +1,6 @@
 #ifndef SYMBOL_TABLE_H
 #define SYMBOL_TABLE_H
 #include "symbol.h"
-#include "error.h"
 
 typedef struct Table{
 	Symbol* symbols;

@@ -1,5 +1,6 @@
 int main (int a, int b) {
-    int a = 1, b;
+    int a;
+    int b;
     f2(c);
 }
 
