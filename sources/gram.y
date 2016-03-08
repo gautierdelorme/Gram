@@ -67,10 +67,10 @@ ArithmNext      :     tADD tID ArithmNext
 
 Affectation     :     tID tEQU Arithm tSM
 
-Declarations    :     tINT tID DeclarationsNext tSM               {add_symbol($2, current_depth);}
-                |     tINT tID tEQU Arithm DeclarationsNext tSM   {add_symbol($2, current_depth);}
-DeclarationsNext:     tCOM tID tEQU Arithm DeclarationsNext       {add_symbol($2, current_depth);}
-                |     tCOM tID DeclarationsNext                   {add_symbol($2, current_depth);}
+Declarations    :     tINT tID DeclarationsNext tSM               {add_variable($2, current_depth, 0);}
+                |     tINT tID tEQU Arithm DeclarationsNext tSM   {add_variable($2, current_depth, 1);}
+DeclarationsNext:     tCOM tID tEQU Arithm DeclarationsNext       {add_variable($2, current_depth, 1);}
+                |     tCOM tID DeclarationsNext                   {add_variable($2, current_depth, 0);}
                 |     ;
 
 Body            :     tBO {current_depth++;} Content tBC {remove_symbol(current_depth);current_depth--;}

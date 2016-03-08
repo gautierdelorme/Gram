@@ -16,7 +16,7 @@ typedef struct Symbol {
   struct Symbol* next;
 } Symbol;
 
-Symbol* new_symbol(char* name, int depth);
+Symbol* new_symbol(char* name, int depth, int init, TYPE type);
 void print_symbol(Symbol* s);
 
 #endif

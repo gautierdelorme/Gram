@@ -1453,25 +1453,25 @@ yyreduce:
         case 32:
 /* Line 1787 of yacc.c  */
 #line 70 "sources/gram.y"
-    {add_symbol((yyvsp[(2) - (4)].var), current_depth);}
+    {add_variable((yyvsp[(2) - (4)].var), current_depth, 0);}
     break;
 
   case 33:
 /* Line 1787 of yacc.c  */
 #line 71 "sources/gram.y"
-    {add_symbol((yyvsp[(2) - (6)].var), current_depth);}
+    {add_variable((yyvsp[(2) - (6)].var), current_depth, 1);}
     break;
 
   case 34:
 /* Line 1787 of yacc.c  */
 #line 72 "sources/gram.y"
-    {add_symbol((yyvsp[(2) - (5)].var), current_depth);}
+    {add_variable((yyvsp[(2) - (5)].var), current_depth, 1);}
     break;
 
   case 35:
 /* Line 1787 of yacc.c  */
 #line 73 "sources/gram.y"
-    {add_symbol((yyvsp[(2) - (3)].var), current_depth);}
+    {add_variable((yyvsp[(2) - (3)].var), current_depth, 0);}
     break;
 
   case 37:
