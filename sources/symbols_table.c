@@ -76,7 +76,7 @@ void remove_symbol(int depth) {
 
 int add_tmp_variable() {
   add_variable("-1", -1, -1, -1);
-  return symbols_table->height;
+  return symbols_table->height-1;
 }
 
 void remove_tmp_variable() {

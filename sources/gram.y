@@ -97,28 +97,25 @@ Affectation     :     tID tEQU Arithm tSM {
 Declarations    :     tINT tID DeclarationsNext tSM {
                         add_variable($2, current_depth, 0, 0);
                       }
-                |     tINT tID tEQU Arithm DeclarationsNext tSM {
-                        add_variable($2, current_depth, 1, 0);
+                |     tINT tID tEQU {add_variable($2, current_depth, 1, 0);} Arithm DeclarationsNext tSM {
                         int n = get_addr_symbol($2, current_depth);
-                        write_assembly("COP %d %d", n, $4);
-                        remove_tmp_variable();
-                      }
-                |     tINT tCONST tID tEQU Arithm DeclarationsNext tSM  {
-                        add_variable($3, current_depth, 1, 1);
-                        int n = get_addr_symbol($3, current_depth);
+                        printf("aa : %s\n",$1);
                         write_assembly("COP %d %d", n, $5);
                         remove_tmp_variable();
                       }
-DeclarationsNext:     tCOM tID tEQU Arithm DeclarationsNext {
-                        add_variable($2, current_depth, 1, 0);
-                        int n = get_addr_symbol($2, current_depth);
-                        write_assembly("COP %d %d", n, $4);
+                |     tINT tCONST tID tEQU {add_variable($3, current_depth, 1, 1);} Arithm DeclarationsNext tSM  {
+                        int n = get_addr_symbol($3, current_depth);
+                        write_assembly("COP %d %d", n, $6);
                         remove_tmp_variable();
                       }
-                |     tCOM tCONST tID tEQU Arithm DeclarationsNext {
-                        add_variable($3, current_depth, 1, 1);
-                        int n = get_addr_symbol($3, current_depth);
+DeclarationsNext:     tCOM tID tEQU {add_variable($2, current_depth, 1, 0);} Arithm DeclarationsNext {
+                        int n = get_addr_symbol($2, current_depth);
                         write_assembly("COP %d %d", n, $5);
+                        remove_tmp_variable();
+                      }
+                |     tCOM tCONST tID tEQU {add_variable($3, current_depth, 1, 1);} Arithm DeclarationsNext {
+                        int n = get_addr_symbol($3, current_depth);
+                        write_assembly("COP %d %d", n, $6);
                         remove_tmp_variable();
                       }
                 |     tCOM tID DeclarationsNext {

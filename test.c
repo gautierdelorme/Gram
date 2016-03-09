@@ -1,4 +1,4 @@
 int main (int a, int b) {
-    int a, d=1+2;
-    int const b = 1;
+    int a, d=11+12;
+    int const b = 13;
 }
