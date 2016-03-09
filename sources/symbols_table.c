@@ -80,8 +80,10 @@ int add_tmp_variable() {
 }
 
 void remove_tmp_variable() {
+  printf("REMOVING -1\n");
   if (symbols_table->height > 0) {
     symbols_table->symbols = symbols_table->symbols->next;
     symbols_table->height--;
   }
+  print_symbols_table();
 }

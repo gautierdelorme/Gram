@@ -1,5 +1,6 @@
 #include "symbol.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 Symbol* new_symbol(char* name, int depth, int init, int constant, TYPE type){
   Symbol* s = malloc(sizeof(Symbol));

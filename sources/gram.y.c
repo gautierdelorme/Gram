@@ -500,9 +500,9 @@ static const yytype_uint8 yyrline[] =
 {
        0,    35,    35,    36,    38,    40,    41,    42,    43,    45,
       46,    47,    48,    49,    50,    51,    52,    54,    56,    58,
-      63,    69,    74,    75,    76,    77,    79,    81,    82,    83,
-      84,    85,    86,    87,    89,    89,    91,    93,    94,    96,
-      98,    99,   100,   101,   102,   103,   104
+      63,    69,    74,    79,    84,    89,    91,    97,    98,   104,
+     105,   111,   112,   113,   115,   115,   120,   122,   123,   125,
+     127,   128,   129,   130,   131,   132,   133
 };
 #endif
 
@@ -1485,63 +1485,116 @@ yyreduce:
                       }
     break;
 
+  case 22:
+/* Line 1787 of yacc.c  */
+#line 74 "sources/gram.y"
+    {
+                        write_assembly("SOU %d %d %d", (yyvsp[(1) - (3)].nb), (yyvsp[(1) - (3)].nb), (yyvsp[(3) - (3)].nb));
+                        remove_tmp_variable();
+                        (yyval.nb) = (yyvsp[(1) - (3)].nb);
+                      }
+    break;
+
+  case 23:
+/* Line 1787 of yacc.c  */
+#line 79 "sources/gram.y"
+    {
+                        write_assembly("MUL %d %d %d", (yyvsp[(1) - (3)].nb), (yyvsp[(1) - (3)].nb), (yyvsp[(3) - (3)].nb));
+                        remove_tmp_variable();
+                        (yyval.nb) = (yyvsp[(1) - (3)].nb);
+                      }
+    break;
+
+  case 24:
+/* Line 1787 of yacc.c  */
+#line 84 "sources/gram.y"
+    {
+                        write_assembly("DIV %d %d %d", (yyvsp[(1) - (3)].nb), (yyvsp[(1) - (3)].nb), (yyvsp[(3) - (3)].nb));
+                        remove_tmp_variable();
+                        (yyval.nb) = (yyvsp[(1) - (3)].nb);
+                      }
+    break;
+
   case 25:
 /* Line 1787 of yacc.c  */
-#line 77 "sources/gram.y"
+#line 89 "sources/gram.y"
     { (yyval.nb) = (yyvsp[(2) - (3)].nb); }
+    break;
+
+  case 26:
+/* Line 1787 of yacc.c  */
+#line 91 "sources/gram.y"
+    {
+                        int n = get_addr_symbol((yyvsp[(1) - (4)].var), current_depth);
+                        write_assembly("COP %d %d", n, (yyvsp[(3) - (4)].nb));
+                        remove_tmp_variable();
+                      }
     break;
 
   case 27:
 /* Line 1787 of yacc.c  */
-#line 81 "sources/gram.y"
+#line 97 "sources/gram.y"
     {add_variable((yyvsp[(2) - (4)].var), current_depth, 0, 0);}
     break;
 
   case 28:
 /* Line 1787 of yacc.c  */
-#line 82 "sources/gram.y"
-    {add_variable((yyvsp[(2) - (6)].var), current_depth, 1, 0);}
+#line 98 "sources/gram.y"
+    {
+                        add_variable((yyvsp[(2) - (6)].var), current_depth, 1, 0);
+                        int n = get_addr_symbol((yyvsp[(2) - (6)].var), current_depth);
+                        write_assembly("COP %d %d", n, (yyvsp[(4) - (6)].nb));
+                        remove_tmp_variable();
+                      }
     break;
 
   case 29:
 /* Line 1787 of yacc.c  */
-#line 83 "sources/gram.y"
+#line 104 "sources/gram.y"
     {add_variable((yyvsp[(3) - (7)].var), current_depth, 1, 1);}
     break;
 
   case 30:
 /* Line 1787 of yacc.c  */
-#line 84 "sources/gram.y"
-    {add_variable((yyvsp[(2) - (5)].var), current_depth, 1, 0);}
+#line 105 "sources/gram.y"
+    {
+                        add_variable((yyvsp[(2) - (5)].var), current_depth, 1, 0);
+                        int n = get_addr_symbol((yyvsp[(2) - (5)].var), current_depth);
+                        write_assembly("COP %d %d", n, (yyvsp[(4) - (5)].nb));
+                        remove_tmp_variable();
+                      }
     break;
 
   case 31:
 /* Line 1787 of yacc.c  */
-#line 85 "sources/gram.y"
+#line 111 "sources/gram.y"
     {add_variable((yyvsp[(3) - (6)].var), current_depth, 0, 1);}
     break;
 
   case 32:
 /* Line 1787 of yacc.c  */
-#line 86 "sources/gram.y"
+#line 112 "sources/gram.y"
     {add_variable((yyvsp[(2) - (3)].var), current_depth, 0, 0);}
     break;
 
   case 34:
 /* Line 1787 of yacc.c  */
-#line 89 "sources/gram.y"
+#line 115 "sources/gram.y"
     {current_depth++;}
     break;
 
   case 35:
 /* Line 1787 of yacc.c  */
-#line 89 "sources/gram.y"
-    {remove_symbol(current_depth);current_depth--;}
+#line 115 "sources/gram.y"
+    {
+                        remove_symbol(current_depth);
+                        current_depth--;
+                      }
     break;
 
 
 /* Line 1787 of yacc.c  */
-#line 1545 "gram.tab.c"
+#line 1598 "gram.tab.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1773,7 +1826,7 @@ yyreturn:
 
 
 /* Line 2050 of yacc.c  */
-#line 105 "sources/gram.y"
+#line 134 "sources/gram.y"
 
 
 int yyerror(char *s) {
