@@ -45,7 +45,7 @@ void add_symbol(char* name, int depth, int init, int constant, TYPE type) {
   if (symbols ==  NULL) {
     perform_add_symbol(s);
   } else {
-    raise_error("ERROR SYMBOL %s ALREADY IN THE TABLE", s->name);
+    raise_error("ERROR SYMBOL %s level %d ALREADY IN THE TABLE", s->name, s->depth);
   }
 }
 

@@ -5,8 +5,8 @@
   #include "gram.y.h"
   #include "symbols_table.h"
   #include "error.h"
+  #include "assembly.h"
 
-  FILE* outfile;
   int current_depth;
 %}
 
@@ -15,6 +15,8 @@
   int nb;
   char *var;
 }
+
+%type <nb>Arithm
 
 %token  <var> tID
         <nb> tNB
@@ -53,25 +55,26 @@ If              :     tIF tPO Conditions tPC Body
 
 While           :     tWHILE tPO Conditions tPC Body
 
-Arithm          :     tID ArithmNext  {
+Arithm          :     tNB {
+                        int n = add_tmp_variable();
+                        write_assembly("AFC %d %d", n, $1);
+                        $$ = n;
+                      }
+                |     tID {
                         int n = add_tmp_variable();
                         int m = get_addr_symbol($1, current_depth);
-                        fprintf(outfile, "COP %d %d\n", n, m);
+                        write_assembly("COP %d %d", n, m);
+                        $$ = n;
                       }
-                |     tNB ArithmNext  {
-                        //int n = add_tmp_variable();
-                        //fprintf(outfile, "AFC %d %d\n", n, $1);
+                |     Arithm tADD Arithm {
+                        write_assembly("ADD %d %d %d", $1, $1, $3);
+                        remove_tmp_variable();
+                        $$ = $1;
                       }
-                |     tPO Arithm tPC ArithmNext
-ArithmNext      :     tADD tID ArithmNext
-                |     tSUB tID ArithmNext
-                |     tMUL tID ArithmNext
-                |     tDIV tID ArithmNext
-                |     tADD tNB ArithmNext
-                |     tSUB tNB ArithmNext
-                |     tMUL tNB ArithmNext
-                |     tDIV tNB ArithmNext
-                |     ;
+                |     Arithm tSUB Arithm
+                |     Arithm tMUL Arithm
+                |     Arithm tDIV Arithm
+                |     tPO Arithm tPC { $$ = $2; }
 
 Affectation     :     tID tEQU Arithm tSM
 
@@ -106,8 +109,9 @@ int yyerror(char *s) {
 }
 
 int main(void) {
-  outfile = fopen( "gram.ass", "w" );
-  current_depth = 0;
+  init_assembly();
   new_symbols_table();
+  current_depth = 0;
   yyparse();
+  close_assembly();
 }
