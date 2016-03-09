@@ -39,7 +39,7 @@ void add_symbol(char* name, int depth, int init, int constant, TYPE type) {
   printf("ADDING %s\n", name);
   Symbol* s = new_symbol(name, depth, init, constant, type);
   Symbol* symbols = symbols_table->symbols;
-  while ((symbols != NULL) && ((symbols->name != s->name) || (s->name == "-1") || (symbols->depth != s->depth))) {
+  while ((symbols != NULL) && ((strcmp(symbols->name, s->name) != 0) || (strcmp(s->name, "-1") == 0) || (symbols->depth != s->depth))) {
     symbols = symbols->next;
   }
   if (symbols ==  NULL) {
@@ -55,7 +55,7 @@ void add_variable(char* name, int depth, int init, int constant) {
 
 int get_addr_symbol(char* name, int depth) {
   Symbol* symbols = symbols_table->symbols;
-  while ((symbols != NULL) && ((symbols->name != name) || (symbols->depth != depth))) {
+  while ((symbols != NULL) && ((strcmp(symbols->name, name) != 0) || (symbols->depth != depth))) {
     symbols = symbols->next;
   }
   if (symbols ==  NULL) {
