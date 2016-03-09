@@ -89,9 +89,13 @@ Arithm          :     tNB {
                 |     tPO Arithm tPC { $$ = $2; }
 
 Affectation     :     tID tEQU Arithm tSM {
-                        int n = get_addr_symbol($1, current_depth);
-                        write_assembly("COP %d %d", n, $3);
-                        remove_tmp_variable();
+                        if (not_constant($1, current_depth)) {
+                          int n = get_addr_symbol($1, current_depth);
+                          write_assembly("COP %d %d", n, $3);
+                          remove_tmp_variable();
+                        } else {
+                          raise_error("ERROR %s is a constant", $1);
+                        }
                       }
 
 Declarations    :     tINT tID DeclarationsNext tSM {
@@ -99,7 +103,6 @@ Declarations    :     tINT tID DeclarationsNext tSM {
                       }
                 |     tINT tID tEQU {add_variable($2, current_depth, 1, 0);} Arithm DeclarationsNext tSM {
                         int n = get_addr_symbol($2, current_depth);
-                        printf("aa : %s\n",$1);
                         write_assembly("COP %d %d", n, $5);
                         remove_tmp_variable();
                       }

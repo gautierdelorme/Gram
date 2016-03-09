@@ -53,7 +53,7 @@ void add_variable(char* name, int depth, int init, int constant) {
   add_symbol(name, depth, init, constant, INT);
 }
 
-int get_addr_symbol(char* name, int depth) {
+Symbol* get_symbol(char* name, int depth) {
   Symbol* symbols = symbols_table->symbols;
   while ((symbols != NULL) && ((strcmp(symbols->name, name) != 0) || (symbols->depth != depth))) {
     symbols = symbols->next;
@@ -61,8 +61,12 @@ int get_addr_symbol(char* name, int depth) {
   if (symbols ==  NULL) {
     raise_error("SYMBOL %s level %d NOT IN THE TABLE", name, depth);
   } else {
-    return symbols->addr;
+    return symbols;
   }
+}
+
+int get_addr_symbol(char* name, int depth) {
+  return get_symbol(name, depth)->addr;
 }
 
 void remove_symbol(int depth) {
@@ -86,4 +90,8 @@ void remove_tmp_variable() {
     symbols_table->height--;
   }
   print_symbols_table();
+}
+
+int not_constant(char* name, int depth) {
+  return get_symbol(name, depth)->constant == 0;
 }

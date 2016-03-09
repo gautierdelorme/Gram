@@ -17,4 +17,6 @@ int get_addr_symbol(char* name, int depth);
 int add_tmp_variable();
 void remove_tmp_variable();
 
+int not_constant(char* name, int depth);
+
 #endif
