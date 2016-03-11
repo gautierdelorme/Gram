@@ -48,13 +48,13 @@ int add_label() {
   }
 }
 
-void update_label(int index, int addr) {
+void update_label(int addr) {
   Label* labels = labels_table->labels;
-  while ((labels != NULL) && (labels->index != index)) {
+  while ((labels != NULL) && (labels->init == 1)) {
     labels = labels->next;
   }
   if (labels ==  NULL) {
-    raise_error("LABEL %s NOT IN THE TABLE", index);
+    raise_error("EVERY LABELS ARE INITIALIZED IN THE TABLE");
   } else {
     labels->addr = addr;
   }

@@ -11,7 +11,7 @@ builds/%.o: sources/%.c
 	gcc -g -c $^ -o $@ -Iincludes
 
 sources/%.c: includes/%.h sources/gram.y.c sources/gram.l.c
-	@echo ''
+	@#
 
 sources/gram.y.c: sources/gram.y
 	bison -d $^

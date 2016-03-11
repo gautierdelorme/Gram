@@ -4,6 +4,7 @@
 typedef struct Label {
 	int index;
 	int addr;
+  int init;
   struct Label* next;
 } Label;
 

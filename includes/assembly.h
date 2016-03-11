@@ -4,5 +4,6 @@
 void init_assembly();
 void close_assembly();
 void write_assembly(char* fun, ...);
+int get_cpt_asm();
 
 #endif

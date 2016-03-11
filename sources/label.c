@@ -6,6 +6,7 @@ Label* new_label(int index){
   Label* l = malloc(sizeof(Label));
   l->index = index;
   l->addr = -1;
+  l->init = 0;
   l->next = NULL;
   return l;
 }

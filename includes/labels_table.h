@@ -10,6 +10,6 @@ typedef struct Labels_Table{
 
 void new_labels_table();
 int add_label();
-void update_label(int index, int addr);
+void update_label(int addr);
 
 #endif
