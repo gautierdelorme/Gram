@@ -14,7 +14,7 @@ void new_labels_table() {
 void print_labels_table() {
   Label* labels = labels_table->labels;
   printf("---------------\n");
-  printf(" NAME | ADDR \n");
+  printf(" INDEX| ADDR \n");
   printf("---------------\n");
   while (labels != NULL) {
     print_label(labels);
@@ -30,30 +30,31 @@ void perform_add_label(Label* l) {
     l->next = labels_table->labels;
     labels_table->labels = l;
   }
-  labels_table->height++;
   print_labels_table();
+  labels_table->height++;
 }
 
-void add_label(char* name) {
-  Label* l = new_label(name);
+int add_label() {
+  Label* l = new_label(labels_table->height+1);
   Label* labels = labels_table->labels;
-  while ((labels != NULL) && (strcmp(labels->name, l->name) != 0)) {
+  while ((labels != NULL) && (labels->index != l->index)) {
     labels = labels->next;
   }
   if (labels ==  NULL) {
     perform_add_label(l);
+    return l->index;
   } else {
-    raise_error("ERROR LABEL %s ALREADY IN THE LABELS TABLE", l->name);
+    raise_error("ERROR LABEL %s ALREADY IN THE LABELS TABLE", l->index);
   }
 }
 
-void update_label(char* name, int addr) {
+void update_label(int index, int addr) {
   Label* labels = labels_table->labels;
-  while ((labels != NULL) && (strcmp(labels->name, name) != 0)) {
+  while ((labels != NULL) && (labels->index != index)) {
     labels = labels->next;
   }
   if (labels ==  NULL) {
-    raise_error("LABEL %s NOT IN THE TABLE", name);
+    raise_error("LABEL %s NOT IN THE TABLE", index);
   } else {
     labels->addr = addr;
   }

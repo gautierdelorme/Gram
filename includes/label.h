@@ -2,12 +2,12 @@
 #define LABEL_H
 
 typedef struct Label {
-	char* name;
+	int index;
 	int addr;
   struct Label* next;
 } Label;
 
-Label* new_label(char* name);
+Label* new_label(int index);
 
 void print_label(Label* l);
 

@@ -9,7 +9,7 @@ typedef struct Labels_Table{
 } Labels_Table;
 
 void new_labels_table();
-void add_label(char* name);
-void update_label(char* name, int addr);
+int add_label();
+void update_label(int index, int addr);
 
 #endif

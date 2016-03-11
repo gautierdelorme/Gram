@@ -78,7 +78,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 2053 of yacc.c  */
-#line 14 "sources/gram.y"
+#line 16 "sources/gram.y"
 
   int nb;
   char *var;
