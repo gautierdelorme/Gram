@@ -54,7 +54,6 @@ ConditionsNext  :     tOR Conditions
                 |     ;
 
 If              :     tIF tPO Conditions {
-  
                         int l = add_label();
                         write_assembly("JMF %d %d", $3, l);
                       }
