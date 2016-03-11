@@ -2,10 +2,10 @@
 #define SYMBOL_TABLE_H
 #include "symbol.h"
 
-typedef struct Table{
+typedef struct Symbols_Table{
 	Symbol* symbols;
   int height;
-} Table;
+} Symbols_Table;
 
 void new_symbols_table();
 void add_variable(char* name, int depth, int init, int constant);

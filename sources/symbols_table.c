@@ -3,10 +3,10 @@
 #include "symbols_table.h"
 #include "error.h"
 
-Table* symbols_table;
+Symbols_Table* symbols_table;
 
 void new_symbols_table() {
-  symbols_table = malloc(sizeof(Table));
+  symbols_table = malloc(sizeof(Symbols_Table));
   symbols_table->symbols = NULL;
   symbols_table->height = 0;
 }
@@ -45,7 +45,7 @@ void add_symbol(char* name, int depth, int init, int constant, TYPE type) {
   if (symbols ==  NULL) {
     perform_add_symbol(s);
   } else {
-    raise_error("ERROR SYMBOL %s level %d ALREADY IN THE TABLE", s->name, s->depth);
+    raise_error("ERROR SYMBOL %s level %d ALREADY IN THE SYMBOLS TABLE", s->name, s->depth);
   }
 }
 
