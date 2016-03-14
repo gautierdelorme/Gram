@@ -18,8 +18,6 @@
 }
 
 %type <nb>Arithm
-%type <nb>Conditions
-%type <nb>Condition
 
 %token  <var> tID
         <nb> tNB
@@ -29,6 +27,8 @@
         tCONST tIF tWHILE tPRT
         tINT tERROR
 
+%left tAND tOR
+%left tEEQU tGTH tLTH
 %left tADD tSUB
 %left tMUL tDIV
 
@@ -45,20 +45,28 @@ Params          :     tINT tID ParamsNext
 ParamsNext      :     tCOM tINT tID ParamsNext
                 |     ;
 
-Condition       :     Arithm tEEQU Arithm {
+/*Condition       :     Arithm tEEQU Arithm {
                         int n = add_tmp_variable();
                         write_assembly("EQU %d %d %d", n, $1, $3);
                         $$ = n;
                       }
-                |     Arithm tGTH Arithm
-                |     Arithm tLTH Arithm
+                |     Arithm tGTH Arithm {
+                        int n = add_tmp_variable();
+                        write_assembly("SUP %d %d %d", n, $1, $3);
+                        $$ = n;
+                      }
+                |     Arithm tLTH Arithm {
+                        int n = add_tmp_variable();
+                        write_assembly("INF %d %d %d", n, $1, $3);
+                        $$ = n;
+                      }
 Conditions      :     Condition ConditionsNext
                 |     tPO Condition tPC ConditionsNext
 ConditionsNext  :     tOR Conditions
                 |     tAND Conditions
                 |     ;
-
-If              :     tIF tPO Conditions {
+*/
+If              :     tIF tPO Arithm {
                         int l = add_label();
                         write_assembly("JMF %d %d", $3, l);
                       }
@@ -66,7 +74,7 @@ If              :     tIF tPO Conditions {
                         update_label(get_cpt_asm());
                       }
 
-While           :     tWHILE tPO Conditions tPC Body
+While           :     tWHILE tPO Arithm tPC Body
 
 Arithm          :     tNB {
                         int n = add_tmp_variable();
@@ -100,6 +108,32 @@ Arithm          :     tNB {
                         $$ = $1;
                       }
                 |     tPO Arithm tPC { $$ = $2; }
+                // CONDITIONS
+                |     Arithm tEEQU Arithm {
+                        write_assembly("EQU %d %d %d", $1, $1, $3);
+                        remove_tmp_variable();
+                        $$ = $1;
+                      }
+                |     Arithm tGTH Arithm {
+                        write_assembly("SUP %d %d %d", $1, $1, $3);
+                        remove_tmp_variable();
+                        $$ = $1;
+                      }
+                |     Arithm tLTH Arithm {
+                        write_assembly("INF %d %d %d", $1, $1, $3);
+                        remove_tmp_variable();
+                        $$ = $1;
+                      }
+                |     Arithm tAND Arithm {
+                        write_assembly("AND %d %d %d", $1, $1, $3);
+                        remove_tmp_variable();
+                        $$ = $1;
+                      }
+                |     Arithm tOR Arithm {
+                        write_assembly("OR %d %d %d", $1, $1, $3);
+                        remove_tmp_variable();
+                        $$ = $1;
+                      }
 
 Affectation     :     tID tEQU Arithm tSM {
                         if (not_constant($1, current_depth)) {
