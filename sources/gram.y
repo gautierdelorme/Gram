@@ -45,27 +45,6 @@ Params          :     tINT tID ParamsNext
 ParamsNext      :     tCOM tINT tID ParamsNext
                 |     ;
 
-/*Condition       :     Arithm tEEQU Arithm {
-                        int n = add_tmp_variable();
-                        write_assembly("EQU %d %d %d", n, $1, $3);
-                        $$ = n;
-                      }
-                |     Arithm tGTH Arithm {
-                        int n = add_tmp_variable();
-                        write_assembly("SUP %d %d %d", n, $1, $3);
-                        $$ = n;
-                      }
-                |     Arithm tLTH Arithm {
-                        int n = add_tmp_variable();
-                        write_assembly("INF %d %d %d", n, $1, $3);
-                        $$ = n;
-                      }
-Conditions      :     Condition ConditionsNext
-                |     tPO Condition tPC ConditionsNext
-ConditionsNext  :     tOR Conditions
-                |     tAND Conditions
-                |     ;
-*/
 If              :     tIF tPO Arithm {
                         int l = add_label();
                         write_assembly("JMF %d %d", $3, l);
@@ -74,7 +53,17 @@ If              :     tIF tPO Arithm {
                         update_label(get_cpt_asm());
                       }
 
-While           :     tWHILE tPO Arithm tPC Body
+While           :     tWHILE tPO Arithm {
+                        add_label_while();
+                        update_label(get_cpt_asm());
+                        int k = add_label();
+                        write_assembly("JMF %d %d", $3, k);
+                      }
+                      tPC Body {
+                        int l = disabled_last_while();
+                        write_assembly("JMP %d", l);
+                        update_label(get_cpt_asm());
+                      }
 
 Arithm          :     tNB {
                         int n = add_tmp_variable();
@@ -108,7 +97,6 @@ Arithm          :     tNB {
                         $$ = $1;
                       }
                 |     tPO Arithm tPC { $$ = $2; }
-                // CONDITIONS
                 |     Arithm tEEQU Arithm {
                         write_assembly("EQU %d %d %d", $1, $1, $3);
                         remove_tmp_variable();

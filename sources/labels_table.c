@@ -27,6 +27,13 @@ void print_labels_table() {
 }
 
 void perform_add_label(Label* l) {
+  Label* labels = labels_table->labels;
+  while ((labels != NULL) && (labels->index != l->index)) {
+    labels = labels->next;
+  }
+  if (labels !=  NULL) {
+    raise_error("ERROR LABEL %d ALREADY IN THE LABELS TABLE", l->index);
+  }
   if (labels_table->labels == NULL) {
     labels_table->labels = l;
   } else {
@@ -41,13 +48,13 @@ void perform_add_label(Label* l) {
 
 int add_label() {
   Label* l = new_label(labels_table->height+1);
-  Label* labels = labels_table->labels;
-  while ((labels != NULL) && (labels->index != l->index)) {
-    labels = labels->next;
-  }
-  if (labels !=  NULL) {
-    raise_error("ERROR LABEL %d ALREADY IN THE LABELS TABLE", l->index);
-  }
+  perform_add_label(l);
+  return l->index;
+}
+
+int add_label_while() {
+  Label* l = new_label(labels_table->height+1);
+  set_is_while(l);
   perform_add_label(l);
   return l->index;
 }
@@ -77,4 +84,16 @@ Label* get_label(int index) {
     raise_error("ERROR LABEL %d NOT IN THE LABELS TABLE", index);
   }
   return labels;
+}
+
+int disabled_last_while() {
+  Label* labels = labels_table->labels;
+  while ((labels != NULL) && (labels->is_while == 0)) {
+    labels = labels->next;
+  }
+  if (labels ==  NULL) {
+    raise_error("NO WHILE LABEL ACTIVATED IN THE TABLE");
+  }
+  labels->is_while = 0;
+  return labels->index;
 }

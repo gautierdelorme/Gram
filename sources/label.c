@@ -7,8 +7,13 @@ Label* new_label(int index){
   l->index = index;
   l->addr = -1;
   l->init = 0;
+  l->is_while = 0;
   l->next = NULL;
   return l;
+}
+
+void set_is_while(Label* l) {
+  l->is_while = 1;
 }
 
 void print_label(Label* l) {
