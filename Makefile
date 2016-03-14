@@ -8,7 +8,7 @@ binary/gram: $(O_FILES)
 	gcc -g -o $@ $^ -Iincludes -ll -lm
 
 builds/%.o: sources/%.c
-	gcc -g -c $^ -o $@ -Iincludes
+	gcc -g -c -Wall $^ -o $@ -Iincludes
 
 sources/%.c: includes/%.h sources/gram.y.c sources/gram.l.c
 	@#

@@ -11,5 +11,6 @@ typedef struct Labels_Table{
 void new_labels_table();
 int add_label();
 void update_label(int addr);
+Label* get_label(int index);
 
 #endif

@@ -12,5 +12,5 @@ Label* new_label(int index){
 }
 
 void print_label(Label* l) {
-  printf("%6d|%6d\n",l->index, l->addr);
+  printf("%6d|%6d|%6s\n",l->index, l->addr, (l->init == 0 ? "NO" : "YES"));
 }

@@ -19,6 +19,7 @@
 
 %type <nb>Arithm
 %type <nb>Conditions
+%type <nb>Condition
 
 %token  <var> tID
         <nb> tNB
@@ -44,7 +45,11 @@ Params          :     tINT tID ParamsNext
 ParamsNext      :     tCOM tINT tID ParamsNext
                 |     ;
 
-Condition       :     Arithm tEEQU Arithm
+Condition       :     Arithm tEEQU Arithm {
+                        int n = add_tmp_variable();
+                        write_assembly("EQU %d %d %d", n, $1, $3);
+                        $$ = n;
+                      }
                 |     Arithm tGTH Arithm
                 |     Arithm tLTH Arithm
 Conditions      :     Condition ConditionsNext
@@ -157,6 +162,7 @@ Content         :     If Content
 
 int yyerror(char *s) {
   raise_error("ERROR YACC %s", s);
+  return 1;
 }
 
 int main(void) {
@@ -166,4 +172,6 @@ int main(void) {
   current_depth = 0;
   yyparse();
   close_assembly();
+  second_wave();
+  return 0;
 }

@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include "symbols_table.h"
 #include "error.h"
+#include <string.h>
+
+#define  DEBUG_SYMBOLS_TABLE 0
 
 Symbols_Table* symbols_table;
 
@@ -32,21 +35,21 @@ void perform_add_symbol(Symbol* s) {
     symbols_table->symbols = s;
   }
   symbols_table->height++;
-  print_symbols_table();
+  if (DEBUG_SYMBOLS_TABLE) {
+    print_symbols_table();
+  }
 }
 
 void add_symbol(char* name, int depth, int init, int constant, TYPE type) {
-  printf("ADDING %s\n", name);
   Symbol* s = new_symbol(name, depth, init, constant, type);
   Symbol* symbols = symbols_table->symbols;
   while ((symbols != NULL) && ((strcmp(symbols->name, s->name) != 0) || (strcmp(s->name, "-1") == 0) || (symbols->depth != s->depth))) {
     symbols = symbols->next;
   }
-  if (symbols ==  NULL) {
-    perform_add_symbol(s);
-  } else {
+  if (symbols !=  NULL) {
     raise_error("ERROR SYMBOL %s level %d ALREADY IN THE SYMBOLS TABLE", s->name, s->depth);
   }
+  perform_add_symbol(s);
 }
 
 void add_variable(char* name, int depth, int init, int constant) {
@@ -55,14 +58,13 @@ void add_variable(char* name, int depth, int init, int constant) {
 
 Symbol* get_symbol(char* name, int depth) {
   Symbol* symbols = symbols_table->symbols;
-  while ((symbols != NULL) && ((strcmp(symbols->name, name) != 0) || (symbols->depth != depth))) {
+  while ((symbols != NULL) && ((strcmp(symbols->name, name) != 0) || (symbols->depth > depth))) {
     symbols = symbols->next;
   }
   if (symbols ==  NULL) {
     raise_error("SYMBOL %s level %d NOT IN THE TABLE", name, depth);
-  } else {
-    return symbols;
   }
+  return symbols;
 }
 
 int get_addr_symbol(char* name, int depth) {
@@ -70,12 +72,13 @@ int get_addr_symbol(char* name, int depth) {
 }
 
 void remove_symbol(int depth) {
-  printf("REMOVING level %d\n", depth);
   while ((symbols_table->symbols != NULL) && (symbols_table->symbols->depth == depth)) {
     symbols_table->symbols = symbols_table->symbols->next;
     symbols_table->height--;
   }
-  print_symbols_table();
+  if (DEBUG_SYMBOLS_TABLE) {
+    print_symbols_table();
+  }
 }
 
 int add_tmp_variable() {
@@ -84,12 +87,13 @@ int add_tmp_variable() {
 }
 
 void remove_tmp_variable() {
-  printf("REMOVING -1\n");
   if (symbols_table->height > 0) {
     symbols_table->symbols = symbols_table->symbols->next;
     symbols_table->height--;
   }
-  print_symbols_table();
+  if (DEBUG_SYMBOLS_TABLE) {
+    print_symbols_table();
+  }
 }
 
 int not_constant(char* name, int depth) {
