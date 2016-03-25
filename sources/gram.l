@@ -2,7 +2,8 @@
 #include "gram.y.h"
 #include <stdlib.h>
 %}
-
+%option noinput
+%option nounput
 WHITESPACES [ \t]+
 DIGIT       [0-9]
 ALPHABET    [a-zA-Z]
@@ -36,7 +37,7 @@ ID          {ALPHABET}+{DIGIT}*{ALPHABET}*
   return tSUB;
 }
 "*" {
-  return tMUL;
+  return tSTAR;
 }
 "/" {
   return tDIV;

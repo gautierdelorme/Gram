@@ -33,77 +33,12 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Tokens.  */
-#ifndef YYTOKENTYPE
-# define YYTOKENTYPE
-   /* Put the tokens into the symbol table, so that GDB and other debuggers
-      know about them.  */
-   enum yytokentype {
-     tID = 258,
-     tNB = 259,
-     tEQU = 260,
-     tADD = 261,
-     tSUB = 262,
-     tSTAR = 263,
-     tDIV = 264,
-     tAND = 265,
-     tOR = 266,
-     tGTH = 267,
-     tLTH = 268,
-     tEEQU = 269,
-     tPO = 270,
-     tPC = 271,
-     tBO = 272,
-     tBC = 273,
-     tCOM = 274,
-     tSM = 275,
-     tCONST = 276,
-     tIF = 277,
-     tWHILE = 278,
-     tPRT = 279,
-     tINT = 280,
-     tERROR = 281
-   };
-#endif
-/* Tokens.  */
-#define tID 258
-#define tNB 259
-#define tEQU 260
-#define tADD 261
-#define tSUB 262
-#define tSTAR 263
-#define tDIV 264
-#define tAND 265
-#define tOR 266
-#define tGTH 267
-#define tLTH 268
-#define tEEQU 269
-#define tPO 270
-#define tPC 271
-#define tBO 272
-#define tBC 273
-#define tCOM 274
-#define tSM 275
-#define tCONST 276
-#define tIF 277
-#define tWHILE 278
-#define tPRT 279
-#define tINT 280
-#define tERROR 281
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE
-#line 18 "sources/gram.y"
-{
-  int nb;
-  char *var;
-}
-/* Line 1529 of yacc.c.  */
-#line 106 "gram.tab.h"
-	YYSTYPE;
+typedef int YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1

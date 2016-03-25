@@ -1,12 +1,15 @@
 %{
   #include <stdio.h>
   #include <stdlib.h>
-
   #include "gram.y.h"
   #include "symbols_table.h"
   #include "labels_table.h"
   #include "error.h"
   #include "assembly.h"
+
+  // FIX WARNING YACC
+  int yylex();
+  int yyerror();
 
   int current_depth;
 %}
@@ -21,7 +24,7 @@
 
 %token  <var> tID
         <nb> tNB
-        tEQU tADD tSUB tMUL tDIV
+        tEQU tADD tSUB tSTAR tDIV
         tAND tOR tGTH tLTH tEEQU
         tPO tPC tBO tBC tCOM tSM
         tCONST tIF tWHILE tPRT
@@ -30,7 +33,7 @@
 %left tAND tOR
 %left tEEQU tGTH tLTH
 %left tADD tSUB
-%left tMUL tDIV
+%left tSTAR tDIV
 
 %start Input
 %%
@@ -86,7 +89,7 @@ Arithm          :     tNB {
                         remove_tmp_variable();
                         $$ = $1;
                       }
-                |     Arithm tMUL Arithm {
+                |     Arithm tSTAR Arithm {
                         write_assembly("MUL %d %d %d", $1, $1, $3);
                         remove_tmp_variable();
                         $$ = $1;

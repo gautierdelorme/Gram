@@ -2,7 +2,7 @@ C_FILES:=$(wildcard sources/*.c)
 O_FILES:=$(C_FILES:sources/%.c=builds/%.o)
 
 all: binary/gram
-	$^ < test.c
+	@$^ < test.c
 
 binary/gram: $(O_FILES)
 	gcc -g -o $@ $^ -Iincludes -ll -lm
