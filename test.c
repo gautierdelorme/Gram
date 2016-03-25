@@ -1,5 +1,5 @@
 int main (int a, int b) {
-  int a;
+  int a,b;
   while (1==10) {
     a=3;
   }

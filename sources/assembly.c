@@ -35,18 +35,18 @@ void second_wave() {
   FILE* in_ass_file  = fopen("gram.ass", "r");
   FILE* out_ass_file  = fopen("gram_final.ass", "w");
   char buf[256], str[256];
-  char instruction[3];
+  char instruction[4];
   int result, num_instruction;
   Label* l;
   while (fgets (buf, sizeof(buf), in_ass_file)) {
     sscanf(buf, "%s", instruction);
     if (strcmp(instruction, "JMF") == 0) {
-      sscanf(buf, "%s %d %d",instruction,  &result, &num_instruction);
+      sscanf(buf, "%s %d %d", instruction,  &result, &num_instruction);
       l = get_label(num_instruction);
       sprintf(str, "%s %d %d\n", instruction, result, l->addr);
-      fprintf(out_ass_file, str);
+      fprintf(out_ass_file, "%s", str);
     } else {
-      fprintf(out_ass_file, buf);
+      fprintf(out_ass_file, "%s", buf);
     }
   }
   fclose(in_ass_file);
