@@ -3,15 +3,29 @@
 #include "labels_table.h"
 #include "error.h"
 
-#define  DEBUG_LABELS_TABLE 1
+#define  DEBUG_LABELS_TABLE 0
 
-
-Labels_Table* labels_table;
+int add_label();
+int add_label_while();
+void update_label(int addr);
+Label* get_label(int index);
+int disabled_last_while();
+void print_labels_table();
 
 void new_labels_table() {
-  labels_table = malloc(sizeof(Labels_Table));
-  labels_table->labels = NULL;
-  labels_table->height = 0;
+  if (labels_table == NULL) {
+    labels_table = malloc(sizeof(Labels_Table));
+    labels_table->labels = NULL;
+    labels_table->height = 0;
+    labels_table->add_label = add_label;
+    labels_table->add_label_while = add_label_while;
+    labels_table->update_label = update_label;
+    labels_table->get_label = get_label;
+    labels_table->disabled_last_while = disabled_last_while;
+    labels_table->print_labels_table = print_labels_table;
+  } else {
+    error_manager->raise_error("ERROR LABELS TABLE ALREADY EXISTING");
+  }
 }
 
 void print_labels_table() {
@@ -20,7 +34,7 @@ void print_labels_table() {
   printf(" INDEX| ADDR | INIT \n");
   printf("--------------------\n");
   while (labels != NULL) {
-    print_label(labels);
+    labels->print_label(labels);
     labels = labels->next;
   }
   printf("--------------------\n");
@@ -32,7 +46,7 @@ void perform_add_label(Label* l) {
     labels = labels->next;
   }
   if (labels !=  NULL) {
-    raise_error("ERROR LABEL %d ALREADY IN THE LABELS TABLE", l->index);
+    error_manager->raise_error("ERROR LABEL %d ALREADY IN THE LABELS TABLE", l->index);
   }
   if (labels_table->labels == NULL) {
     labels_table->labels = l;
@@ -54,7 +68,7 @@ int add_label() {
 
 int add_label_while() {
   Label* l = new_label(labels_table->height+1);
-  set_is_while(l);
+  l->set_is_while(l);
   perform_add_label(l);
   return l->index;
 }
@@ -65,7 +79,7 @@ void update_label(int addr) {
     labels = labels->next;
   }
   if (labels ==  NULL) {
-    raise_error("EVERY LABELS ARE INITIALIZED IN THE TABLE");
+    error_manager->raise_error("EVERY LABELS ARE INITIALIZED IN THE TABLE");
   } else {
     labels->init = 1;
     labels->addr = addr;
@@ -81,7 +95,7 @@ Label* get_label(int index) {
     labels = labels->next;
   }
   if (labels ==  NULL) {
-    raise_error("ERROR LABEL %d NOT IN THE LABELS TABLE", index);
+    error_manager->raise_error("ERROR LABEL %d NOT IN THE LABELS TABLE", index);
   }
   return labels;
 }
@@ -92,7 +106,7 @@ int disabled_last_while() {
     labels = labels->next;
   }
   if (labels ==  NULL) {
-    raise_error("NO WHILE LABEL ACTIVATED IN THE TABLE");
+    error_manager->raise_error("NO WHILE LABEL ACTIVATED IN THE TABLE");
   }
   labels->is_while = 0;
   return labels->index;

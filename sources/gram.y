@@ -49,123 +49,123 @@ ParamsNext      :     tCOM tINT tID ParamsNext
                 |     ;
 
 If              :     tIF tPO Arithm {
-                        int l = add_label();
-                        write_assembly("JMF %d %d", $3, l);
+                        int l = labels_table->add_label();
+                        assembly_manager->write_assembly("JMF %d %d", $3, l);
                       }
                       tPC Body {
-                        update_label(get_cpt_asm());
+                        labels_table->update_label(assembly_manager->cpt);
                       }
 
 While           :     tWHILE tPO Arithm {
-                        add_label_while();
-                        update_label(get_cpt_asm());
-                        int k = add_label();
-                        write_assembly("JMF %d %d", $3, k);
+                        labels_table->add_label_while();
+                        labels_table->update_label(assembly_manager->cpt);
+                        int k = labels_table->add_label();
+                        assembly_manager->write_assembly("JMF %d %d", $3, k);
                       }
                       tPC Body {
-                        int l = disabled_last_while();
-                        write_assembly("JMP %d", l);
-                        update_label(get_cpt_asm());
+                        int l = labels_table->disabled_last_while();
+                        assembly_manager->write_assembly("JMP %d", l);
+                        labels_table->update_label(assembly_manager->cpt);
                       }
 
 Arithm          :     tNB {
-                        int n = add_tmp_variable();
-                        write_assembly("AFC %d %d", n, $1);
+                        int n = symbols_table->add_tmp_variable();
+                        assembly_manager->write_assembly("AFC %d %d", n, $1);
                         $$ = n;
                       }
                 |     tID {
-                        int n = add_tmp_variable();
-                        int m = get_addr_symbol($1, current_depth);
-                        write_assembly("COP %d %d", n, m);
+                        int n = symbols_table->add_tmp_variable();
+                        int m = symbols_table->get_addr_symbol($1, current_depth);
+                        assembly_manager->write_assembly("COP %d %d", n, m);
                         $$ = n;
                       }
                 |     Arithm tADD Arithm {
-                        write_assembly("ADD %d %d %d", $1, $1, $3);
-                        remove_tmp_variable();
+                        assembly_manager->write_assembly("ADD %d %d %d", $1, $1, $3);
+                        symbols_table->remove_tmp_variable();
                         $$ = $1;
                       }
                 |     Arithm tSUB Arithm {
-                        write_assembly("SOU %d %d %d", $1, $1, $3);
-                        remove_tmp_variable();
+                        assembly_manager->write_assembly("SOU %d %d %d", $1, $1, $3);
+                        symbols_table->remove_tmp_variable();
                         $$ = $1;
                       }
                 |     Arithm tSTAR Arithm {
-                        write_assembly("MUL %d %d %d", $1, $1, $3);
-                        remove_tmp_variable();
+                        assembly_manager->write_assembly("MUL %d %d %d", $1, $1, $3);
+                        symbols_table->remove_tmp_variable();
                         $$ = $1;
                       }
                 |     Arithm tDIV Arithm {
-                        write_assembly("DIV %d %d %d", $1, $1, $3);
-                        remove_tmp_variable();
+                        assembly_manager->write_assembly("DIV %d %d %d", $1, $1, $3);
+                        symbols_table->remove_tmp_variable();
                         $$ = $1;
                       }
                 |     tPO Arithm tPC { $$ = $2; }
                 |     Arithm tEEQU Arithm {
-                        write_assembly("EQU %d %d %d", $1, $1, $3);
-                        remove_tmp_variable();
+                        assembly_manager->write_assembly("EQU %d %d %d", $1, $1, $3);
+                        symbols_table->remove_tmp_variable();
                         $$ = $1;
                       }
                 |     Arithm tGTH Arithm {
-                        write_assembly("SUP %d %d %d", $1, $1, $3);
-                        remove_tmp_variable();
+                        assembly_manager->write_assembly("SUP %d %d %d", $1, $1, $3);
+                        symbols_table->remove_tmp_variable();
                         $$ = $1;
                       }
                 |     Arithm tLTH Arithm {
-                        write_assembly("INF %d %d %d", $1, $1, $3);
-                        remove_tmp_variable();
+                        assembly_manager->write_assembly("INF %d %d %d", $1, $1, $3);
+                        symbols_table->remove_tmp_variable();
                         $$ = $1;
                       }
                 |     Arithm tAND Arithm {
-                        write_assembly("AND %d %d %d", $1, $1, $3);
-                        remove_tmp_variable();
+                        assembly_manager->write_assembly("AND %d %d %d", $1, $1, $3);
+                        symbols_table->remove_tmp_variable();
                         $$ = $1;
                       }
                 |     Arithm tOR Arithm {
-                        write_assembly("OR %d %d %d", $1, $1, $3);
-                        remove_tmp_variable();
+                        assembly_manager->write_assembly("OR %d %d %d", $1, $1, $3);
+                        symbols_table->remove_tmp_variable();
                         $$ = $1;
                       }
 
 Affectation     :     tID tEQU Arithm tSM {
-                        if (not_constant($1, current_depth)) {
-                          int n = get_addr_symbol($1, current_depth);
-                          write_assembly("COP %d %d", n, $3);
-                          remove_tmp_variable();
+                        if (symbols_table->not_constant($1, current_depth)) {
+                          int n = symbols_table->get_addr_symbol($1, current_depth);
+                          assembly_manager->write_assembly("COP %d %d", n, $3);
+                          symbols_table->remove_tmp_variable();
                         } else {
-                          raise_error("ERROR %s is a constant", $1);
+                          error_manager->raise_error("ERROR %s is a constant", $1);
                         }
                       }
 
 Declarations    :     tINT tID DeclarationsNext tSM {
-                        add_variable($2, current_depth, 0, 0);
+                        symbols_table->add_variable($2, current_depth, 0, 0);
                       }
-                |     tINT tID tEQU {add_variable($2, current_depth, 1, 0);} Arithm DeclarationsNext tSM {
-                        int n = get_addr_symbol($2, current_depth);
-                        write_assembly("COP %d %d", n, $5);
-                        remove_tmp_variable();
+                |     tINT tID tEQU {symbols_table->add_variable($2, current_depth, 1, 0);} Arithm DeclarationsNext tSM {
+                        int n = symbols_table->get_addr_symbol($2, current_depth);
+                        assembly_manager->write_assembly("COP %d %d", n, $5);
+                        symbols_table->remove_tmp_variable();
                       }
-                |     tINT tCONST tID tEQU {add_variable($3, current_depth, 1, 1);} Arithm DeclarationsNext tSM  {
-                        int n = get_addr_symbol($3, current_depth);
-                        write_assembly("COP %d %d", n, $6);
-                        remove_tmp_variable();
+                |     tINT tCONST tID tEQU {symbols_table->add_variable($3, current_depth, 1, 1);} Arithm DeclarationsNext tSM  {
+                        int n = symbols_table->get_addr_symbol($3, current_depth);
+                        assembly_manager->write_assembly("COP %d %d", n, $6);
+                        symbols_table->remove_tmp_variable();
                       }
-DeclarationsNext:     tCOM tID tEQU {add_variable($2, current_depth, 1, 0);} Arithm DeclarationsNext {
-                        int n = get_addr_symbol($2, current_depth);
-                        write_assembly("COP %d %d", n, $5);
-                        remove_tmp_variable();
+DeclarationsNext:     tCOM tID tEQU {symbols_table->add_variable($2, current_depth, 1, 0);} Arithm DeclarationsNext {
+                        int n = symbols_table->get_addr_symbol($2, current_depth);
+                        assembly_manager->write_assembly("COP %d %d", n, $5);
+                        symbols_table->remove_tmp_variable();
                       }
-                |     tCOM tCONST tID tEQU {add_variable($3, current_depth, 1, 1);} Arithm DeclarationsNext {
-                        int n = get_addr_symbol($3, current_depth);
-                        write_assembly("COP %d %d", n, $6);
-                        remove_tmp_variable();
+                |     tCOM tCONST tID tEQU {symbols_table->add_variable($3, current_depth, 1, 1);} Arithm DeclarationsNext {
+                        int n = symbols_table->get_addr_symbol($3, current_depth);
+                        assembly_manager->write_assembly("COP %d %d", n, $6);
+                        symbols_table->remove_tmp_variable();
                       }
                 |     tCOM tID DeclarationsNext {
-                        add_variable($2, current_depth, 0, 0);
+                        symbols_table->add_variable($2, current_depth, 0, 0);
                       }
                 |     ;
 
 Body            :     tBO {current_depth++;} Content tBC  {
-                        remove_symbol(current_depth);
+                        symbols_table->remove_symbol(current_depth);
                         current_depth--;
                       }
 
@@ -186,17 +186,18 @@ Content         :     If Content
 %%
 
 int yyerror(char *s) {
-  raise_error("ERROR YACC %s", s);
+  error_manager->raise_error("ERROR YACC %s", s);
   return 1;
 }
 
 int main(void) {
-  init_assembly();
+  new_error_manager();
+  new_assembly_manager();
   new_symbols_table();
   new_labels_table();
   current_depth = 0;
   yyparse();
-  close_assembly();
-  second_wave();
+  assembly_manager->close_assembly();
+  assembly_manager->second_wave();
   return 0;
 }

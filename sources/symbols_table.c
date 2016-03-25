@@ -6,12 +6,27 @@
 
 #define  DEBUG_SYMBOLS_TABLE 0
 
-Symbols_Table* symbols_table;
+void add_variable(char* name, int depth, int init, int constant);
+void remove_symbol(int depth);
+int get_addr_symbol(char* name, int depth);
+int add_tmp_variable();
+void remove_tmp_variable();
+int not_constant(char* name, int depth);
 
 void new_symbols_table() {
-  symbols_table = malloc(sizeof(Symbols_Table));
-  symbols_table->symbols = NULL;
-  symbols_table->height = 0;
+  if (symbols_table == NULL) {
+    symbols_table = malloc(sizeof(Symbols_Table));
+    symbols_table->symbols = NULL;
+    symbols_table->height = 0;
+    symbols_table->add_variable = add_variable;
+    symbols_table->remove_symbol = remove_symbol;
+    symbols_table->get_addr_symbol = get_addr_symbol;
+    symbols_table->add_tmp_variable = add_tmp_variable;
+    symbols_table->remove_tmp_variable = remove_tmp_variable;
+    symbols_table->not_constant = not_constant;
+  } else {
+    error_manager->raise_error("ERROR SYMBOLS TABLE ALREADY EXISTING");
+  }
 }
 
 void print_symbols_table() {
@@ -20,7 +35,7 @@ void print_symbols_table() {
   printf(" NAME | ADDR |DEPTH | TYPE | INIT |CONST \n");
   printf("-----------------------------------------\n");
   while (symbols != NULL) {
-    print_symbol(symbols);
+    symbols->print_symbol(symbols);
     symbols = symbols->next;
   }
   printf("-----------------------------------------\n");
@@ -47,7 +62,7 @@ void add_symbol(char* name, int depth, int init, int constant, TYPE type) {
     symbols = symbols->next;
   }
   if (symbols !=  NULL) {
-    raise_error("ERROR SYMBOL %s level %d ALREADY IN THE SYMBOLS TABLE", s->name, s->depth);
+    error_manager->raise_error("ERROR SYMBOL %s level %d ALREADY IN THE SYMBOLS TABLE", s->name, s->depth);
   }
   perform_add_symbol(s);
 }
@@ -62,7 +77,7 @@ Symbol* get_symbol(char* name, int depth) {
     symbols = symbols->next;
   }
   if (symbols ==  NULL) {
-    raise_error("SYMBOL %s level %d NOT IN THE TABLE", name, depth);
+    error_manager->raise_error("SYMBOL %s level %d NOT IN THE TABLE", name, depth);
   }
   return symbols;
 }

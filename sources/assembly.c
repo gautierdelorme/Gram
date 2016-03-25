@@ -1,34 +1,38 @@
 #include "assembly.h"
-#include <stdlib.h>
-#include <stdio.h>
 #include <stdarg.h>
 #include "label.h"
 #include <string.h>
 #include "labels_table.h"
+#include "error.h"
 
-FILE* outfile;
-int cpt_asm;
+void close_assembly();
+void write_assembly(char* fun, ...);
+void second_wave();
 
-void init_assembly() {
-  outfile = fopen( "gram.ass", "w" );
-  cpt_asm = 1;
+void new_assembly_manager() {
+  if (assembly_manager == NULL) {
+    assembly_manager = malloc(sizeof(Assembly_Manager));
+    assembly_manager->outfile = fopen( "gram.ass", "w" );
+    assembly_manager->cpt = 1;
+    assembly_manager->close_assembly = close_assembly;
+    assembly_manager->write_assembly = write_assembly;
+    assembly_manager->second_wave = second_wave;
+  } else {
+    error_manager->raise_error("ERROR ASSEMBLY MANAGER ALREADY EXISTING");
+  }
 }
 
 void close_assembly() {
-  fclose(outfile);
+  fclose(assembly_manager->outfile);
 }
 
 void write_assembly(char* fun, ...) {
   va_list args;
   va_start(args, fun);
-  vfprintf(outfile, fun, args);
+  vfprintf(assembly_manager->outfile, fun, args);
   va_end(args);
-  fprintf(outfile, "\n");
-  cpt_asm++;
-}
-
-int get_cpt_asm() {
-  return cpt_asm;
+  fprintf(assembly_manager->outfile, "\n");
+  assembly_manager->cpt++;
 }
 
 void second_wave() {
@@ -42,7 +46,7 @@ void second_wave() {
     sscanf(buf, "%s", instruction);
     if (strcmp(instruction, "JMF") == 0) {
       sscanf(buf, "%s %d %d", instruction,  &result, &num_instruction);
-      l = get_label(num_instruction);
+      l = labels_table->get_label(num_instruction);
       sprintf(str, "%s %d %d\n", instruction, result, l->addr);
       fprintf(out_ass_file, "%s", str);
     } else {
