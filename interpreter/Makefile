@@ -7,7 +7,7 @@ all:
 	gcc -g -c -Wall interpreter.y.c -o builds/interpreter.y.o -Iincludes
 	gcc -g -c -Wall interpreter.l.c -o builds/interpreter.l.o -Iincludes
 	gcc -g -o builds/interpreter builds/interpreter.l.o builds/interpreter.y.o -Iincludes -ll -lm
-	builds/interpreter
+	builds/interpreter < ../gram_final.ass
 
 clean:
 	rm -rf builds/*

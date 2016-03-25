@@ -1,9 +1,7 @@
 %{
-#include "interpreter.y.h"
+#include "gram.y.h"
 #include <stdlib.h>
 %}
-%option noinput
-%option nounput
 
 WHITESPACES [ \t]+
 DIGIT       [0-9]
@@ -12,7 +10,6 @@ EXP         [eE][+-]?{DIGITS}
 NUMBER      {DIGITS}{EXP}?
 
 %%
-
 {WHITESPACES} { }
 {NUMBER}  {
   yylval.nb = atoi(yytext);

@@ -33,12 +33,62 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
+/* Tokens.  */
+#ifndef YYTOKENTYPE
+# define YYTOKENTYPE
+   /* Put the tokens into the symbol table, so that GDB and other debuggers
+      know about them.  */
+   enum yytokentype {
+     tNB = 258,
+     tADD = 259,
+     tSOU = 260,
+     tMUL = 261,
+     tDIV = 262,
+     tAFC = 263,
+     tCOP = 264,
+     tCOPB = 265,
+     tCOPA = 266,
+     tEQU = 267,
+     tSUP = 268,
+     tINF = 269,
+     tAND = 270,
+     tOR = 271,
+     tJMF = 272,
+     tJMP = 273,
+     tERROR = 274
+   };
+#endif
+/* Tokens.  */
+#define tNB 258
+#define tADD 259
+#define tSOU 260
+#define tMUL 261
+#define tDIV 262
+#define tAFC 263
+#define tCOP 264
+#define tCOPB 265
+#define tCOPA 266
+#define tEQU 267
+#define tSUP 268
+#define tINF 269
+#define tAND 270
+#define tOR 271
+#define tJMF 272
+#define tJMP 273
+#define tERROR 274
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE
+#line 13 "interpreter.y"
+{
+  int nb;
+}
+/* Line 1529 of yacc.c.  */
+#line 91 "interpreter.tab.h"
+	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1
