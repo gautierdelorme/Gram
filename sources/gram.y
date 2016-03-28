@@ -77,6 +77,12 @@ Arithm          :     tNB {
                         assembly_manager->write_assembly("COP %d %d", n, m);
                         $$ = n;
                       }
+                |     tSTAR tID {
+                        int n = symbols_table->add_tmp_variable();
+                        int m = symbols_table->get_addr_symbol($2);
+                        assembly_manager->write_assembly("COPA %d %d", n, m);
+                        $$ = n;
+                      }
                 |     Arithm tADD Arithm {
                         assembly_manager->write_assembly("ADD %d %d %d", $1, $1, $3);
                         symbols_table->remove_tmp_variable();

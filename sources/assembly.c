@@ -39,7 +39,7 @@ void second_wave() {
   FILE* in_ass_file  = fopen("gram.ass", "r");
   FILE* out_ass_file  = fopen("gram_final.ass", "w");
   char buf[256], str[256];
-  char instruction[4];
+  char instruction[5];
   int result, num_instruction;
   Label* l;
   while (fgets (buf, sizeof(buf), in_ass_file)) {
