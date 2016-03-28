@@ -146,6 +146,17 @@ Affectation     :     tID tEQU Arithm tSM {
                           error_manager->raise_error("ERROR %s is a constant", $1);
                         }
                       }
+                |     tSTAR tID tEQU Arithm tSM {
+                        int n = symbols_table->get_addr_symbol($2);
+                        assembly_manager->write_assembly("COPB %d %d", n, $4);
+                        symbols_table->remove_tmp_variable();
+                      }
+                |     tID tSBO Arithm tSBC tEQU Arithm tSM {
+                        int n = symbols_table->get_addr_symbol($1);
+                        assembly_manager->write_assembly("ADD %d %d %d", $3, n, $3);
+                        assembly_manager->write_assembly("COPB %d %d", $3, $6);
+                        symbols_table->remove_tmp_variable();
+                      }
 
 Declarations    :     tINT tID DeclarationsNext tSM {
                         symbols_table->add_variable($2, 0, 0);
