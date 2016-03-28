@@ -39,11 +39,32 @@
 Input           :     Function Input
                 |     ;
 
-Function        :     tINT tID tPO Params tPC Body
+FunctionCall    :     tID tPO Arguments tPC tSM
 
-Params          :     tINT tID ParamsNext
+Arguments       :     Arithm ArgumentsNext
                 |     ;
-ParamsNext      :     tCOM tINT tID ParamsNext
+ArgumentsNext   :     tCOM Arithm ArgumentsNext
+                |     ;
+
+Function        :     tINT tID tPO Params tPC Body {
+                        symbols_table->remove_symbol();
+                      }
+
+Params          :     tINT tID ParamsNext {
+                        symbols_table->add_variable($2, 0, 0);
+                      }
+                |     ;
+ParamsNext      :     tCOM tINT tID ParamsNext {
+                        symbols_table->add_variable($3, 0, 0);
+                      }
+                |     ;
+
+Content         :     If Content
+                |     While Content
+                |     Declarations Content
+                |     Affectation Content
+                |     FunctionCall Content
+                |     Print Content
                 |     ;
 
 If              :     tIF tPO Arithm {
@@ -195,19 +216,6 @@ Print           :     tPRT tPO tID tPC tSM {
                         int n = symbols_table->get_addr_symbol($3);
                         assembly_manager->write_assembly("PRI %d", n);
                       }
-
-Arguments       :     tID Arguments
-                |     ;
-
-FunctionCall    :     tID tPO Arguments tPC tSM
-
-Content         :     If Content
-                |     While Content
-                |     Declarations Content
-                |     Affectation Content
-                |     FunctionCall Content
-                |     Print Content
-                |     ;
 %%
 
 int yyerror(char *s) {
