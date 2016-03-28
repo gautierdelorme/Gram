@@ -3,8 +3,6 @@
 #include "labels_table.h"
 #include "error.h"
 
-#define  DEBUG_LABELS_TABLE 0
-
 int add_label();
 int add_label_while();
 void update_label(int addr);

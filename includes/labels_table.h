@@ -3,6 +3,8 @@
 
 #include "label.h"
 
+#define  DEBUG_LABELS_TABLE 0
+
 typedef struct Labels_Table{
 	Label* labels;
   int height;

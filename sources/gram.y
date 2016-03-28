@@ -191,7 +191,10 @@ Body            :     tBO {symbols_table->current_depth++;} Content tBC  {
                         symbols_table->current_depth--;
                       }
 
-Print           :     tPRT tPO tID tPC tSM
+Print           :     tPRT tPO tID tPC tSM {
+                        int n = symbols_table->get_addr_symbol($3);
+                        assembly_manager->write_assembly("PRI %d", n);
+                      }
 
 Arguments       :     tID Arguments
                 |     ;

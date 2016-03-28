@@ -4,8 +4,6 @@
 #include "error.h"
 #include <string.h>
 
-#define  DEBUG_SYMBOLS_TABLE 0
-
 void add_variable(char* name, int init, int constant);
 void remove_symbol();
 int get_addr_symbol(char* name);

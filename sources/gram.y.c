@@ -492,8 +492,8 @@ static const yytype_uint8 yyrline[] =
       49,    57,    57,    69,    74,    80,    86,    93,    98,   103,
      108,   113,   114,   119,   124,   129,   134,   140,   149,   154,
      161,   164,   164,   169,   169,   174,   174,   179,   179,   184,
-     187,   189,   189,   194,   196,   197,   199,   201,   202,   203,
-     204,   205,   206,   207
+     187,   189,   189,   194,   199,   200,   202,   204,   205,   206,
+     207,   208,   209,   210
 };
 #endif
 
@@ -1757,9 +1757,17 @@ yyreduce:
                       ;}
     break;
 
+  case 43:
+#line 194 "sources/gram.y"
+    {
+                        int n = symbols_table->get_addr_symbol((yyvsp[(3) - (5)].var));
+                        assembly_manager->write_assembly("PRI %d", n);
+                      ;}
+    break;
+
 
 /* Line 1267 of yacc.c.  */
-#line 1763 "gram.tab.c"
+#line 1771 "gram.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1973,7 +1981,7 @@ yyreturn:
 }
 
 
-#line 208 "sources/gram.y"
+#line 211 "sources/gram.y"
 
 
 int yyerror(char *s) {
