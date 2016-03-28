@@ -182,6 +182,9 @@ Affectation     :     tID tEQU Arithm tSM {
 Declarations    :     tINT tID DeclarationsNext tSM {
                         symbols_table->add_variable($2, 0, 0);
                       }
+                |     tINT tID tSBO Arithm tSBC DeclarationsNext tSM {
+                        symbols_table->add_variable($2, 0, 0);
+                      }
                 |     tINT tID tEQU {symbols_table->add_variable($2, 1, 0);} Arithm DeclarationsNext tSM {
                         int n = symbols_table->get_addr_symbol($2);
                         assembly_manager->write_assembly("COP %d %d", n, $5);
@@ -203,6 +206,9 @@ DeclarationsNext:     tCOM tID tEQU {symbols_table->add_variable($2, 1, 0);} Ari
                         symbols_table->remove_tmp_variable();
                       }
                 |     tCOM tID DeclarationsNext {
+                        symbols_table->add_variable($2, 0, 0);
+                      }
+                |     tCOM tID tSBO Arithm tSBC DeclarationsNext {
                         symbols_table->add_variable($2, 0, 0);
                       }
                 |     ;
