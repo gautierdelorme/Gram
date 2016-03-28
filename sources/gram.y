@@ -46,7 +46,7 @@ Arguments       :     Arithm ArgumentsNext
 ArgumentsNext   :     tCOM Arithm ArgumentsNext
                 |     ;
 
-Function        :     tINT tID tPO Params tPC Body {
+Function        :     tINT tID tPO Params tPC {assembly_manager->write_fun_assembly("%s:", $2);} Body {
                         symbols_table->remove_symbol();
                       }
 

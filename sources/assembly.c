@@ -7,6 +7,7 @@
 
 void close_assembly();
 void write_assembly(char* fun, ...);
+void write_fun_assembly(char* fun, ...);
 void second_wave();
 
 void new_assembly_manager() {
@@ -16,6 +17,7 @@ void new_assembly_manager() {
     assembly_manager->cpt = 1;
     assembly_manager->close_assembly = close_assembly;
     assembly_manager->write_assembly = write_assembly;
+    assembly_manager->write_fun_assembly = write_fun_assembly;
     assembly_manager->second_wave = second_wave;
   } else {
     error_manager->raise_error("ERROR ASSEMBLY MANAGER ALREADY EXISTING");
@@ -28,6 +30,16 @@ void close_assembly() {
 
 void write_assembly(char* fun, ...) {
   va_list args;
+  fprintf(assembly_manager->outfile, "\t");
+  va_start(args, fun);
+  vfprintf(assembly_manager->outfile, fun, args);
+  va_end(args);
+  fprintf(assembly_manager->outfile, "\n");
+  assembly_manager->cpt++;
+}
+
+void write_fun_assembly(char* fun, ...) {
+  va_list args;
   va_start(args, fun);
   vfprintf(assembly_manager->outfile, fun, args);
   va_end(args);
@@ -39,7 +51,7 @@ void second_wave() {
   FILE* in_ass_file  = fopen("gram.ass", "r");
   FILE* out_ass_file  = fopen("gram_final.ass", "w");
   char buf[256], str[256];
-  char instruction[5];
+  char instruction[256];
   int result, num_instruction;
   Label* l;
   while (fgets (buf, sizeof(buf), in_ass_file)) {
@@ -48,6 +60,7 @@ void second_wave() {
       sscanf(buf, "%s %d %d", instruction,  &result, &num_instruction);
       l = labels_table->get_label(num_instruction);
       sprintf(str, "%s %d %d\n", instruction, result, l->addr);
+      fprintf(out_ass_file, "\t");
       fprintf(out_ass_file, "%s", str);
     } else {
       fprintf(out_ass_file, "%s", buf);

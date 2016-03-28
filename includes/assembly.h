@@ -8,6 +8,7 @@ typedef struct Assembly_Manager{
   int cpt;
   void (*close_assembly)();
   void (*write_assembly)(char* fun, ...);
+  void (*write_fun_assembly)(char* fun, ...);
   void (*second_wave)();
 } Assembly_Manager;
 
