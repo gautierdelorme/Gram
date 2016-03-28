@@ -96,7 +96,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 18 "sources/gram.y"
+#line 16 "sources/gram.y"
 {
   int nb;
   char *var;

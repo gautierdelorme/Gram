@@ -6,16 +6,17 @@
 
 #define  DEBUG_SYMBOLS_TABLE 0
 
-void add_variable(char* name, int depth, int init, int constant);
-void remove_symbol(int depth);
-int get_addr_symbol(char* name, int depth);
+void add_variable(char* name, int init, int constant);
+void remove_symbol();
+int get_addr_symbol(char* name);
 int add_tmp_variable();
 void remove_tmp_variable();
-int not_constant(char* name, int depth);
+int not_constant(char* name);
 
 void new_symbols_table() {
   if (symbols_table == NULL) {
     symbols_table = malloc(sizeof(Symbols_Table));
+    symbols_table->current_depth = 0;
     symbols_table->symbols = NULL;
     symbols_table->height = 0;
     symbols_table->add_variable = add_variable;
@@ -55,8 +56,8 @@ void perform_add_symbol(Symbol* s) {
   }
 }
 
-void add_symbol(char* name, int depth, int init, int constant, TYPE type) {
-  Symbol* s = new_symbol(name, depth, init, constant, type);
+void add_symbol(char* name, int init, int constant, TYPE type) {
+  Symbol* s = new_symbol(name, symbols_table->current_depth, init, constant, type);
   Symbol* symbols = symbols_table->symbols;
   while ((symbols != NULL) && ((strcmp(symbols->name, s->name) != 0) || (strcmp(s->name, "-1") == 0) || (symbols->depth != s->depth))) {
     symbols = symbols->next;
@@ -67,27 +68,27 @@ void add_symbol(char* name, int depth, int init, int constant, TYPE type) {
   perform_add_symbol(s);
 }
 
-void add_variable(char* name, int depth, int init, int constant) {
-  add_symbol(name, depth, init, constant, INT);
+void add_variable(char* name, int init, int constant) {
+  add_symbol(name, init, constant, INT);
 }
 
-Symbol* get_symbol(char* name, int depth) {
+Symbol* get_symbol(char* name) {
   Symbol* symbols = symbols_table->symbols;
-  while ((symbols != NULL) && ((strcmp(symbols->name, name) != 0) || (symbols->depth > depth))) {
+  while ((symbols != NULL) && ((strcmp(symbols->name, name) != 0) || (symbols->depth > symbols_table->current_depth))) {
     symbols = symbols->next;
   }
   if (symbols ==  NULL) {
-    error_manager->raise_error("SYMBOL %s level %d NOT IN THE TABLE", name, depth);
+    error_manager->raise_error("SYMBOL %s level %d NOT IN THE TABLE", name, symbols_table->current_depth);
   }
   return symbols;
 }
 
-int get_addr_symbol(char* name, int depth) {
-  return get_symbol(name, depth)->addr;
+int get_addr_symbol(char* name) {
+  return get_symbol(name)->addr;
 }
 
-void remove_symbol(int depth) {
-  while ((symbols_table->symbols != NULL) && (symbols_table->symbols->depth == depth)) {
+void remove_symbol() {
+  while ((symbols_table->symbols != NULL) && (symbols_table->symbols->depth == symbols_table->current_depth)) {
     symbols_table->symbols = symbols_table->symbols->next;
     symbols_table->height--;
   }
@@ -97,7 +98,7 @@ void remove_symbol(int depth) {
 }
 
 int add_tmp_variable() {
-  add_variable("-1", -1, -1, -1);
+  add_variable("-1", -1, -1);
   return symbols_table->height-1;
 }
 
@@ -111,6 +112,6 @@ void remove_tmp_variable() {
   }
 }
 
-int not_constant(char* name, int depth) {
-  return get_symbol(name, depth)->constant == 0;
+int not_constant(char* name) {
+  return get_symbol(name)->constant == 0;
 }

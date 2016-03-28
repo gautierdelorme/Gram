@@ -10,8 +10,6 @@
   // FIX WARNING YACC
   int yylex();
   int yyerror();
-
-  int current_depth;
 %}
 
 %union
@@ -75,7 +73,7 @@ Arithm          :     tNB {
                       }
                 |     tID {
                         int n = symbols_table->add_tmp_variable();
-                        int m = symbols_table->get_addr_symbol($1, current_depth);
+                        int m = symbols_table->get_addr_symbol($1);
                         assembly_manager->write_assembly("COP %d %d", n, m);
                         $$ = n;
                       }
@@ -127,8 +125,8 @@ Arithm          :     tNB {
                       }
 
 Affectation     :     tID tEQU Arithm tSM {
-                        if (symbols_table->not_constant($1, current_depth)) {
-                          int n = symbols_table->get_addr_symbol($1, current_depth);
+                        if (symbols_table->not_constant($1)) {
+                          int n = symbols_table->get_addr_symbol($1);
                           assembly_manager->write_assembly("COP %d %d", n, $3);
                           symbols_table->remove_tmp_variable();
                         } else {
@@ -137,36 +135,36 @@ Affectation     :     tID tEQU Arithm tSM {
                       }
 
 Declarations    :     tINT tID DeclarationsNext tSM {
-                        symbols_table->add_variable($2, current_depth, 0, 0);
+                        symbols_table->add_variable($2, 0, 0);
                       }
-                |     tINT tID tEQU {symbols_table->add_variable($2, current_depth, 1, 0);} Arithm DeclarationsNext tSM {
-                        int n = symbols_table->get_addr_symbol($2, current_depth);
+                |     tINT tID tEQU {symbols_table->add_variable($2, 1, 0);} Arithm DeclarationsNext tSM {
+                        int n = symbols_table->get_addr_symbol($2);
                         assembly_manager->write_assembly("COP %d %d", n, $5);
                         symbols_table->remove_tmp_variable();
                       }
-                |     tINT tCONST tID tEQU {symbols_table->add_variable($3, current_depth, 1, 1);} Arithm DeclarationsNext tSM  {
-                        int n = symbols_table->get_addr_symbol($3, current_depth);
+                |     tINT tCONST tID tEQU {symbols_table->add_variable($3, 1, 1);} Arithm DeclarationsNext tSM  {
+                        int n = symbols_table->get_addr_symbol($3);
                         assembly_manager->write_assembly("COP %d %d", n, $6);
                         symbols_table->remove_tmp_variable();
                       }
-DeclarationsNext:     tCOM tID tEQU {symbols_table->add_variable($2, current_depth, 1, 0);} Arithm DeclarationsNext {
-                        int n = symbols_table->get_addr_symbol($2, current_depth);
+DeclarationsNext:     tCOM tID tEQU {symbols_table->add_variable($2, 1, 0);} Arithm DeclarationsNext {
+                        int n = symbols_table->get_addr_symbol($2);
                         assembly_manager->write_assembly("COP %d %d", n, $5);
                         symbols_table->remove_tmp_variable();
                       }
-                |     tCOM tCONST tID tEQU {symbols_table->add_variable($3, current_depth, 1, 1);} Arithm DeclarationsNext {
-                        int n = symbols_table->get_addr_symbol($3, current_depth);
+                |     tCOM tCONST tID tEQU {symbols_table->add_variable($3, 1, 1);} Arithm DeclarationsNext {
+                        int n = symbols_table->get_addr_symbol($3);
                         assembly_manager->write_assembly("COP %d %d", n, $6);
                         symbols_table->remove_tmp_variable();
                       }
                 |     tCOM tID DeclarationsNext {
-                        symbols_table->add_variable($2, current_depth, 0, 0);
+                        symbols_table->add_variable($2, 0, 0);
                       }
                 |     ;
 
-Body            :     tBO {current_depth++;} Content tBC  {
-                        symbols_table->remove_symbol(current_depth);
-                        current_depth--;
+Body            :     tBO {symbols_table->current_depth++;} Content tBC  {
+                        symbols_table->remove_symbol();
+                        symbols_table->current_depth--;
                       }
 
 Print           :     tPRT tPO tID tPC tSM
@@ -195,7 +193,6 @@ int main(void) {
   new_assembly_manager();
   new_symbols_table();
   new_labels_table();
-  current_depth = 0;
   yyparse();
   assembly_manager->close_assembly();
   assembly_manager->second_wave();

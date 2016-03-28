@@ -3,6 +3,7 @@ O_FILES:=$(C_FILES:sources/%.c=builds/%.o)
 
 all: binary/gram
 	$^ < test.c
+	@cat gram_final.ass 
 
 binary/gram: $(O_FILES)
 	gcc -g -o $@ $^ -Iincludes -ll -lm
