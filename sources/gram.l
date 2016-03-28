@@ -57,6 +57,12 @@ ID          {ALPHABET}+{DIGIT}*{ALPHABET}*
 "}" {
   return tBC;
 }
+"[" {
+  return tSBO;
+}
+"]" {
+  return tSBC;
+}
 "," {
   return tCOM;
 }

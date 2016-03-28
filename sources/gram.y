@@ -24,7 +24,7 @@
         <nb> tNB
         tEQU tADD tSUB tSTAR tDIV
         tAND tOR tGTH tLTH tEEQU
-        tPO tPC tBO tBC tCOM tSM
+        tPO tPC tBO tBC tSBO tSBC tCOM tSM
         tCONST tIF tWHILE tPRT
         tINT tERROR
 
@@ -81,6 +81,13 @@ Arithm          :     tNB {
                         int n = symbols_table->add_tmp_variable();
                         int m = symbols_table->get_addr_symbol($2);
                         assembly_manager->write_assembly("COPA %d %d", n, m);
+                        $$ = n;
+                      }
+                |     tID tSBO Arithm tSBC {
+                        int n = symbols_table->add_tmp_variable();
+                        int m = symbols_table->get_addr_symbol($1);
+                        assembly_manager->write_assembly("ADD %d %d %d", n, m, $3);
+                        assembly_manager->write_assembly("COPA %d %d", n, n);
                         $$ = n;
                       }
                 |     Arithm tADD Arithm {

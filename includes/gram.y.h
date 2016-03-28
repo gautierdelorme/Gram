@@ -55,14 +55,16 @@
      tPC = 271,
      tBO = 272,
      tBC = 273,
-     tCOM = 274,
-     tSM = 275,
-     tCONST = 276,
-     tIF = 277,
-     tWHILE = 278,
-     tPRT = 279,
-     tINT = 280,
-     tERROR = 281
+     tSBO = 274,
+     tSBC = 275,
+     tCOM = 276,
+     tSM = 277,
+     tCONST = 278,
+     tIF = 279,
+     tWHILE = 280,
+     tPRT = 281,
+     tINT = 282,
+     tERROR = 283
    };
 #endif
 /* Tokens.  */
@@ -82,14 +84,16 @@
 #define tPC 271
 #define tBO 272
 #define tBC 273
-#define tCOM 274
-#define tSM 275
-#define tCONST 276
-#define tIF 277
-#define tWHILE 278
-#define tPRT 279
-#define tINT 280
-#define tERROR 281
+#define tSBO 274
+#define tSBC 275
+#define tCOM 276
+#define tSM 277
+#define tCONST 278
+#define tIF 279
+#define tWHILE 280
+#define tPRT 281
+#define tINT 282
+#define tERROR 283
 
 
 
@@ -102,7 +106,7 @@ typedef union YYSTYPE
   char *var;
 }
 /* Line 1529 of yacc.c.  */
-#line 106 "gram.tab.h"
+#line 110 "gram.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
