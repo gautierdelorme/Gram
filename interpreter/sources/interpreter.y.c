@@ -114,7 +114,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "interpreter.y"
+#line 1 "sources/interpreter.y"
 
   #include <stdio.h>
   #include <stdlib.h>
@@ -146,7 +146,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 13 "interpreter.y"
+#line 13 "sources/interpreter.y"
 {
   int nb;
 }
@@ -1418,92 +1418,92 @@ yyreduce:
   switch (yyn)
     {
         case 21:
-#line 32 "interpreter.y"
-    {printf("end Add");;}
+#line 32 "sources/interpreter.y"
+    {printf("end Addd");;}
     break;
 
   case 22:
-#line 34 "interpreter.y"
+#line 34 "sources/interpreter.y"
     {printf("end Sub");;}
     break;
 
   case 23:
-#line 36 "interpreter.y"
+#line 36 "sources/interpreter.y"
     {printf("end Mul");;}
     break;
 
   case 24:
-#line 38 "interpreter.y"
+#line 38 "sources/interpreter.y"
     {printf("end Div");;}
     break;
 
   case 25:
-#line 40 "interpreter.y"
+#line 40 "sources/interpreter.y"
     {printf("end JumpFalse");;}
     break;
 
   case 26:
-#line 42 "interpreter.y"
+#line 42 "sources/interpreter.y"
     {printf("end Jump");;}
     break;
 
   case 27:
-#line 44 "interpreter.y"
+#line 44 "sources/interpreter.y"
     {printf("end Affectation");;}
     break;
 
   case 28:
-#line 46 "interpreter.y"
+#line 46 "sources/interpreter.y"
     {printf("end Copy");;}
     break;
 
   case 29:
-#line 48 "interpreter.y"
+#line 48 "sources/interpreter.y"
     {printf("end CopyPointer");;}
     break;
 
   case 30:
-#line 50 "interpreter.y"
+#line 50 "sources/interpreter.y"
     {printf("end CopyInPointer");;}
     break;
 
   case 31:
-#line 52 "interpreter.y"
+#line 52 "sources/interpreter.y"
     {printf("end Inf");;}
     break;
 
   case 32:
-#line 54 "interpreter.y"
+#line 54 "sources/interpreter.y"
     {printf("end Equal");;}
     break;
 
   case 33:
-#line 56 "interpreter.y"
+#line 56 "sources/interpreter.y"
     {printf("end Sup");;}
     break;
 
   case 34:
-#line 58 "interpreter.y"
+#line 58 "sources/interpreter.y"
     {printf("end And");;}
     break;
 
   case 35:
-#line 60 "interpreter.y"
+#line 60 "sources/interpreter.y"
     {printf("end Or");;}
     break;
 
   case 36:
-#line 62 "interpreter.y"
+#line 62 "sources/interpreter.y"
     {printf("end Call");;}
     break;
 
   case 37:
-#line 64 "interpreter.y"
+#line 64 "sources/interpreter.y"
     {printf("end Ret");;}
     break;
 
   case 38:
-#line 66 "interpreter.y"
+#line 66 "sources/interpreter.y"
     {printf("end Pri");;}
     break;
 
@@ -1723,7 +1723,7 @@ yyreturn:
 }
 
 
-#line 68 "interpreter.y"
+#line 68 "sources/interpreter.y"
 
 
 int yyerror(char *s) {

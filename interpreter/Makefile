@@ -1,13 +1,26 @@
-all:
-	bison -d interpreter.y
+C_FILES:=$(wildcard sources/*.c)
+O_FILES:=$(C_FILES:sources/%.c=builds/%.o)
+
+all: binary/interpreter
+	$^ < ../gram_final.ass
+
+binary/interpreter: $(O_FILES)
+	gcc -g -o $@ $^ -Iincludes -ll -lm
+
+builds/%.o: sources/%.c
+	gcc -g -c -Wall $^ -o $@ -Iincludes
+
+sources/%.c: includes/%.h sources/interpreter.y.c sources/interpreter.l.c
+	@#
+
+sources/interpreter.y.c: sources/interpreter.y
+	bison -d $^
 	@mv interpreter.tab.h includes/interpreter.y.h
-	@mv interpreter.tab.c interpreter.y.c
-	flex interpreter.l
-	@mv lex.yy.c interpreter.l.c
-	gcc -g -c -Wall interpreter.y.c -o builds/interpreter.y.o -Iincludes
-	gcc -g -c -Wall interpreter.l.c -o builds/interpreter.l.o -Iincludes
-	gcc -g -o builds/interpreter builds/interpreter.l.o builds/interpreter.y.o -Iincludes -ll -lm
-	builds/interpreter < ../gram_final.ass
+	@mv interpreter.tab.c sources/interpreter.y.c
+
+sources/interpreter.l.c: sources/interpreter.l
+	flex $^
+	@mv lex.yy.c sources/interpreter.l.c
 
 clean:
-	rm -rf builds/*
+	rm -f binary/interpreter builds/*.o

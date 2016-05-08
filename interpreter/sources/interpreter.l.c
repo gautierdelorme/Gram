@@ -507,8 +507,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "interpreter.l"
-#line 2 "interpreter.l"
+#line 1 "sources/interpreter.l"
+#line 2 "sources/interpreter.l"
 #include "interpreter.y.h"
 #include <stdlib.h>
 #define YY_NO_INPUT 1
@@ -692,7 +692,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 16 "interpreter.l"
+#line 16 "sources/interpreter.l"
 
 
 #line 699 "lex.yy.c"
@@ -780,17 +780,17 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 18 "interpreter.l"
+#line 18 "sources/interpreter.l"
 { }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 19 "interpreter.l"
+#line 19 "sources/interpreter.l"
 { }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 20 "interpreter.l"
+#line 20 "sources/interpreter.l"
 {
   yylval.nb = atoi(yytext);
   return tNB;
@@ -798,133 +798,133 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 24 "interpreter.l"
+#line 24 "sources/interpreter.l"
 {
   return tADD;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 27 "interpreter.l"
+#line 27 "sources/interpreter.l"
 {
   return tCALL;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 30 "interpreter.l"
+#line 30 "sources/interpreter.l"
 {
   return tRET;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 33 "interpreter.l"
+#line 33 "sources/interpreter.l"
 {
   return tPRI;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 36 "interpreter.l"
+#line 36 "sources/interpreter.l"
 {
   return tAFC;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 39 "interpreter.l"
+#line 39 "sources/interpreter.l"
 {
   return tCOP;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 42 "interpreter.l"
+#line 42 "sources/interpreter.l"
 {
   return tCOPA;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 45 "interpreter.l"
+#line 45 "sources/interpreter.l"
 {
   return tCOPB;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 48 "interpreter.l"
+#line 48 "sources/interpreter.l"
 {
   return tEQU;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 51 "interpreter.l"
+#line 51 "sources/interpreter.l"
 {
   return tSOU;
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 54 "interpreter.l"
+#line 54 "sources/interpreter.l"
 {
   return tMUL;
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 57 "interpreter.l"
+#line 57 "sources/interpreter.l"
 {
   return tDIV;
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 60 "interpreter.l"
+#line 60 "sources/interpreter.l"
 {
   return tINF;
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 63 "interpreter.l"
+#line 63 "sources/interpreter.l"
 {
   return tSUP;
 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 66 "interpreter.l"
+#line 66 "sources/interpreter.l"
 {
   return tAND;
 }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 69 "interpreter.l"
+#line 69 "sources/interpreter.l"
 {
   return tOR;
 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 72 "interpreter.l"
+#line 72 "sources/interpreter.l"
 {
   return tJMF;
 }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 75 "interpreter.l"
+#line 75 "sources/interpreter.l"
 {
   return tJMP;
 }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 78 "interpreter.l"
+#line 78 "sources/interpreter.l"
 {
   printf("tERROR\n");
   return tERROR;
@@ -932,7 +932,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 82 "interpreter.l"
+#line 82 "sources/interpreter.l"
 ECHO;
 	YY_BREAK
 #line 939 "lex.yy.c"
@@ -1895,4 +1895,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 82 "interpreter.l"
+#line 82 "sources/interpreter.l"
