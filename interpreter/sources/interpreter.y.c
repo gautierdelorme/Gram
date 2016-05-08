@@ -118,8 +118,9 @@
 
   #include <stdio.h>
   #include <stdlib.h>
-
   #include "interpreter.y.h"
+  #include "error.h"
+  #include "instructions_memory.h"
 
   // FIX WARNING YACC
   int yylex();
@@ -146,12 +147,12 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 13 "sources/interpreter.y"
+#line 14 "sources/interpreter.y"
 {
   int nb;
 }
 /* Line 193 of yacc.c.  */
-#line 155 "interpreter.tab.c"
+#line 156 "interpreter.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -164,7 +165,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 168 "interpreter.tab.c"
+#line 169 "interpreter.tab.c"
 
 #ifdef short
 # undef short
@@ -463,10 +464,10 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    27,    27,    27,    27,    27,    27,    27,    27,    28,
-      28,    28,    28,    28,    28,    29,    29,    29,    29,    29,
-      30,    32,    34,    36,    38,    40,    42,    44,    46,    48,
-      50,    52,    54,    56,    58,    60,    62,    64,    66
+       0,    28,    28,    28,    28,    28,    28,    28,    28,    29,
+      29,    29,    29,    29,    29,    30,    30,    30,    30,    30,
+      31,    33,    35,    37,    39,    41,    43,    45,    47,    49,
+      51,    53,    55,    57,    59,    61,    63,    65,    67
 };
 #endif
 
@@ -478,9 +479,8 @@ static const char *const yytname[] =
   "$end", "error", "$undefined", "tNB", "tADD", "tSOU", "tMUL", "tDIV",
   "tAFC", "tCOP", "tCOPB", "tCOPA", "tEQU", "tSUP", "tINF", "tAND", "tOR",
   "tRET", "tPRI", "tJMF", "tJMP", "tCALL", "tERROR", "$accept", "INS",
-  "Add", "Sub", "Mul", "Div", "JumpFalse", "Jump", "Affectation", "Copy",
-  "CopyPointer", "CopyInPointer", "Inf", "Equal", "Sup", "And", "Or",
-  "Call", "Ret", "Pri", 0
+  "Add", "Sub", "Mul", "Div", "Jmf", "Jmp", "Afc", "Copy", "Copa", "Copb",
+  "Inf", "Equ", "Sup", "And", "Or", "Call", "Ret", "Pri", 0
 };
 #endif
 
@@ -1418,93 +1418,93 @@ yyreduce:
   switch (yyn)
     {
         case 21:
-#line 32 "sources/interpreter.y"
-    {printf("end Addd");;}
+#line 33 "sources/interpreter.y"
+    {instructions_memory->add_instruction("ADD", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 22:
-#line 34 "sources/interpreter.y"
-    {printf("end Sub");;}
+#line 35 "sources/interpreter.y"
+    {instructions_memory->add_instruction("SUB", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 23:
-#line 36 "sources/interpreter.y"
-    {printf("end Mul");;}
+#line 37 "sources/interpreter.y"
+    {instructions_memory->add_instruction("MUL", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 24:
-#line 38 "sources/interpreter.y"
-    {printf("end Div");;}
+#line 39 "sources/interpreter.y"
+    {instructions_memory->add_instruction("DIV", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 25:
-#line 40 "sources/interpreter.y"
-    {printf("end JumpFalse");;}
+#line 41 "sources/interpreter.y"
+    {instructions_memory->add_instruction("JMF", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));;}
     break;
 
   case 26:
-#line 42 "sources/interpreter.y"
-    {printf("end Jump");;}
+#line 43 "sources/interpreter.y"
+    {instructions_memory->add_instruction("JMP", 1, (yyvsp[(2) - (2)].nb));;}
     break;
 
   case 27:
-#line 44 "sources/interpreter.y"
-    {printf("end Affectation");;}
+#line 45 "sources/interpreter.y"
+    {instructions_memory->add_instruction("AFC", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));;}
     break;
 
   case 28:
-#line 46 "sources/interpreter.y"
-    {printf("end Copy");;}
+#line 47 "sources/interpreter.y"
+    {instructions_memory->add_instruction("COP", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));;}
     break;
 
   case 29:
-#line 48 "sources/interpreter.y"
-    {printf("end CopyPointer");;}
+#line 49 "sources/interpreter.y"
+    {instructions_memory->add_instruction("COPA", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));;}
     break;
 
   case 30:
-#line 50 "sources/interpreter.y"
-    {printf("end CopyInPointer");;}
+#line 51 "sources/interpreter.y"
+    {instructions_memory->add_instruction("COPB", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));;}
     break;
 
   case 31:
-#line 52 "sources/interpreter.y"
-    {printf("end Inf");;}
+#line 53 "sources/interpreter.y"
+    {instructions_memory->add_instruction("INF", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 32:
-#line 54 "sources/interpreter.y"
-    {printf("end Equal");;}
+#line 55 "sources/interpreter.y"
+    {instructions_memory->add_instruction("EQU", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 33:
-#line 56 "sources/interpreter.y"
-    {printf("end Sup");;}
+#line 57 "sources/interpreter.y"
+    {instructions_memory->add_instruction("SUP", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 34:
-#line 58 "sources/interpreter.y"
-    {printf("end And");;}
+#line 59 "sources/interpreter.y"
+    {instructions_memory->add_instruction("AND", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 35:
-#line 60 "sources/interpreter.y"
-    {printf("end Or");;}
+#line 61 "sources/interpreter.y"
+    {instructions_memory->add_instruction("OR", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 36:
-#line 62 "sources/interpreter.y"
-    {printf("end Call");;}
+#line 63 "sources/interpreter.y"
+    {instructions_memory->add_instruction("CALL", 1, (yyvsp[(2) - (2)].nb));;}
     break;
 
   case 37:
-#line 64 "sources/interpreter.y"
-    {printf("end Ret");;}
+#line 65 "sources/interpreter.y"
+    {instructions_memory->add_instruction("RET", 0);;}
     break;
 
   case 38:
-#line 66 "sources/interpreter.y"
-    {printf("end Pri");;}
+#line 67 "sources/interpreter.y"
+    {instructions_memory->add_instruction("PRI", 1, (yyvsp[(2) - (2)].nb));;}
     break;
 
 
@@ -1723,16 +1723,27 @@ yyreturn:
 }
 
 
-#line 68 "sources/interpreter.y"
+#line 69 "sources/interpreter.y"
 
 
 int yyerror(char *s) {
-  printf("error : %s\n", s);
+  error_manager->raise_error("ERROR YACC %s", s);
   return 1;
 }
 
+void init() {
+  new_error_manager();
+  new_instructions_memory();
+}
+
+void clear() {
+  instructions_memory->clear();
+}
+
 int main(void) {
+  init();
   yyparse();
+  clear();
   return 0;
 }
 
