@@ -1,9 +1,20 @@
-main:
 	AFC 1 1
 	COP 0 1
-	COP 1 0
-	AFC 2 1
-	ADD 1 1 2
-	COP 0 1
+	AFC 2 0
+	COP 1 2
+	COP 2 0
+	AFC 3 10
+	INF 2 2 3
+	JMF 2 2
+	COP 3 0
+	AFC 4 1
+	ADD 3 3 4
+	COP 0 3
+	JMP 1
+	PRI 0
+	AFC 3 22
+	COPA 4 1
+	ADD 3 3 4
+	COP 0 3
 	PRI 0
 	RET

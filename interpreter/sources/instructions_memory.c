@@ -27,11 +27,14 @@ void new_instructions_memory() {
 void print_instructions_memory() {
   Instruction* instructions = instructions_memory->instructions;
   printf("-------------------\n");
-  printf(" NAME | ARGS\n");
+  printf("N| NAME | ARGS\n");
   printf("-------------------\n");
+  int cpt=1;
   while (instructions != NULL) {
+    printf("%d", cpt);
     instructions->print_instruction(instructions);
     instructions = instructions->next;
+    cpt++;
   }
   printf("-------------------\n");
 }
