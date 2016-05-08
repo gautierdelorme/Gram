@@ -2,7 +2,7 @@
 #define SYMBOLS_TABLE_H
 #include "symbol.h"
 
-#define  DEBUG_SYMBOLS_TABLE 0
+#define  DEBUG_SYMBOLS_TABLE 1
 
 typedef struct Symbols_Table{
 	Symbol* symbols;

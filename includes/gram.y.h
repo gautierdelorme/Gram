@@ -61,10 +61,11 @@
      tSM = 277,
      tCONST = 278,
      tIF = 279,
-     tWHILE = 280,
-     tPRT = 281,
-     tINT = 282,
-     tERROR = 283
+     tELSE = 280,
+     tWHILE = 281,
+     tPRT = 282,
+     tINT = 283,
+     tERROR = 284
    };
 #endif
 /* Tokens.  */
@@ -90,10 +91,11 @@
 #define tSM 277
 #define tCONST 278
 #define tIF 279
-#define tWHILE 280
-#define tPRT 281
-#define tINT 282
-#define tERROR 283
+#define tELSE 280
+#define tWHILE 281
+#define tPRT 282
+#define tINT 283
+#define tERROR 284
 
 
 
@@ -106,7 +108,7 @@ typedef union YYSTYPE
   char *var;
 }
 /* Line 1529 of yacc.c.  */
-#line 110 "gram.tab.h"
+#line 112 "gram.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

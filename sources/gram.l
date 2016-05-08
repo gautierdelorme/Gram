@@ -75,6 +75,9 @@ ID          {ALPHABET}+{DIGIT}*{ALPHABET}*
 "if" {
   return tIF;
 }
+"else" {
+  return tELSE;
+}
 "while" {
   return tWHILE;
 }

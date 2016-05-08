@@ -62,6 +62,12 @@ void second_wave() {
       sprintf(str, "%s %d %d\n", instruction, result, l->addr);
       fprintf(out_ass_file, "\t");
       fprintf(out_ass_file, "%s", str);
+    } else if (strcmp(instruction, "JMP") == 0) {
+      sscanf(buf, "%s %d", instruction, &num_instruction);
+      l = labels_table->get_label(num_instruction);
+      sprintf(str, "%s %d\n", instruction, l->addr);
+      fprintf(out_ass_file, "\t");
+      fprintf(out_ass_file, "%s", str);
     } else {
       fprintf(out_ass_file, "%s", buf);
     }

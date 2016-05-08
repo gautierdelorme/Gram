@@ -26,7 +26,7 @@
         tEQU tADD tSUB tSTAR tDIV
         tAND tOR tGTH tLTH tEEQU
         tPO tPC tBO tBC tSBO tSBC tCOM tSM
-        tCONST tIF tWHILE tPRT
+        tCONST tIF tELSE tWHILE tPRT
         tINT tERROR
 
 %left tAND tOR
@@ -79,15 +79,22 @@ If              :     tIF tPO Arithm {
                         int l = labels_table->add_label();
                         assembly_manager->write_assembly("JMF %d %d", $3, l);
                       }
-                      tPC Body {
+                      tPC Body IfNext
+IfNext          :     tELSE {
+                        labels_table->update_label(assembly_manager->cpt+1);
+                        int l = labels_table->add_label();
+                        assembly_manager->write_assembly("JMP %d", l);
+                      } Body {
                         labels_table->update_label(assembly_manager->cpt);
                       }
+                |     {labels_table->update_label(assembly_manager->cpt);};
 
-While           :     tWHILE tPO Arithm {
+While           :     tWHILE {
                         labels_table->add_label_while();
                         labels_table->update_label(assembly_manager->cpt);
+                      } tPO Arithm {
                         int k = labels_table->add_label();
-                        assembly_manager->write_assembly("JMF %d %d", $3, k);
+                        assembly_manager->write_assembly("JMF %d %d", $4, k);
                       }
                       tPC Body {
                         int l = labels_table->disabled_last_while();
