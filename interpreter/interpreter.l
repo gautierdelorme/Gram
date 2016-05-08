@@ -11,7 +11,7 @@ DIGITS      {DIGIT}+
 EXP         [eE][+-]?{DIGITS}
 NUMBER      {DIGITS}{EXP}?
 ALPHABET    [a-zA-Z]
-FUNCTIONS          {ALPHABET}+{DIGIT}*{ALPHABET}*:
+FUNCTIONS   {ALPHABET}+{DIGIT}*{ALPHABET}*:
 
 %%
 
