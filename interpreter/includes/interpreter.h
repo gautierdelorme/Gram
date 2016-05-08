@@ -2,8 +2,9 @@
 #define INTERPRETER_H
 
 #include "instructions_memory.h"
+#include "data_memory.h"
 
-#define  DEBUG_INTERPRETER 1
+#define  DEBUG_INTERPRETER 0
 
 typedef struct Interpreter{
   int current_line;

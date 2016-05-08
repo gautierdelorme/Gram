@@ -4,6 +4,7 @@
   #include "interpreter.y.h"
   #include "error.h"
   #include "instructions_memory.h"
+  #include "data_memory.h"
   #include "interpreter.h"
 
   // FIX WARNING YACC
@@ -27,7 +28,7 @@
 %%
 
 INS             :     Add INS |  Sub INS | Mul INS | Div INS | Jmp INS | Jmf INS | Afc INS
-                |     Copy INS | Copa INS | Copb INS | Inf INS | Equ INS | Sup INS
+                |     Cop INS | Copa INS | Copb INS | Inf INS | Equ INS | Sup INS
                 |     And INS | Or INS | Call INS | Ret INS | Pri INS
                 | ;
 
@@ -39,18 +40,6 @@ Mul             :     tMUL tNB tNB tNB {instructions_memory->add_instruction("MU
 
 Div             :     tDIV tNB tNB tNB {instructions_memory->add_instruction("DIV", 3, $2, $3, $4);}
 
-Jmf             :     tJMF tNB tNB {instructions_memory->add_instruction("JMF", 2, $2, $3);}
-
-Jmp             :     tJMP tNB {instructions_memory->add_instruction("JMP", 1, $2);}
-
-Afc             :     tAFC tNB tNB {instructions_memory->add_instruction("AFC", 2, $2, $3);}
-
-Copy            :     tCOP tNB tNB {instructions_memory->add_instruction("COP", 2, $2, $3);}
-
-Copa            :     tCOPA tNB tNB {instructions_memory->add_instruction("COPA", 2, $2, $3);}
-
-Copb            :     tCOPB tNB tNB {instructions_memory->add_instruction("COPB", 2, $2, $3);}
-
 Inf             :     tINF tNB tNB tNB {instructions_memory->add_instruction("INF", 3, $2, $3, $4);}
 
 Equ             :     tEQU tNB tNB tNB {instructions_memory->add_instruction("EQU", 3, $2, $3, $4);}
@@ -61,11 +50,23 @@ And             :     tAND tNB tNB tNB {instructions_memory->add_instruction("AN
 
 Or              :     tOR tNB tNB tNB {instructions_memory->add_instruction("OR", 3, $2, $3, $4);}
 
+Jmf             :     tJMF tNB tNB {instructions_memory->add_instruction("JMF", 2, $2, $3);}
+
+Afc             :     tAFC tNB tNB {instructions_memory->add_instruction("AFC", 2, $2, $3);}
+
+Cop             :     tCOP tNB tNB {instructions_memory->add_instruction("COP", 2, $2, $3);}
+
+Copa            :     tCOPA tNB tNB {instructions_memory->add_instruction("COPA", 2, $2, $3);}
+
+Copb            :     tCOPB tNB tNB {instructions_memory->add_instruction("COPB", 2, $2, $3);}
+
+Jmp             :     tJMP tNB {instructions_memory->add_instruction("JMP", 1, $2);}
+
 Call            :     tCALL tNB {instructions_memory->add_instruction("CALL", 1, $2);}
 
-Ret             :     tRET {instructions_memory->add_instruction("RET", 0);}
-
 Pri             :     tPRI tNB {instructions_memory->add_instruction("PRI", 1, $2);}
+
+Ret             :     tRET {instructions_memory->add_instruction("RET", 0);}
 
 %%
 
@@ -77,6 +78,7 @@ int yyerror(char *s) {
 void init() {
   new_error_manager();
   new_instructions_memory();
+  new_data_memory();
   new_interpreter();
 }
 

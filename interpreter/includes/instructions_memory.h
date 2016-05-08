@@ -3,7 +3,7 @@
 
 #include "instruction.h"
 
-#define  DEBUG_INSTRUCTIONS_MEMORY 1
+#define  DEBUG_INSTRUCTIONS_MEMORY 0
 
 typedef struct Instructions_Memory{
 	Instruction* instructions;
