@@ -27,7 +27,7 @@
         tAND tOR tGTH tLTH tEEQU
         tPO tPC tBO tBC tSBO tSBC tCOM tSM
         tCONST tIF tELSE tWHILE tPRT
-        tINT tERROR
+        tINT tERROR tMAIN
 
 %left tAND tOR
 %left tEEQU tGTH tLTH
@@ -38,7 +38,7 @@
 %%
 
 Input           :     Function Input
-                |     ;
+                |     Main
 
 FunctionCall    :     tID tPO Arguments tPC tSM {
                         int n = functions_table->get_addr_function($1);
@@ -53,6 +53,12 @@ ArgumentsNext   :     tCOM Arithm ArgumentsNext
 Function        :     tINT tID tPO Params tPC {
                         functions_table->add_function($2, assembly_manager->cpt);
                         assembly_manager->write_fun_assembly("%s:", $2);
+                      } Body {
+                        symbols_table->remove_symbol();
+                        assembly_manager->write_assembly("RET");
+                      }
+Main        :         tMAIN tPO Params tPC {
+                        assembly_manager->write_fun_assembly("main:");
                       } Body {
                         symbols_table->remove_symbol();
                         assembly_manager->write_assembly("RET");

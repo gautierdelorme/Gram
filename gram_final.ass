@@ -1,18 +1,22 @@
+g:
+	AFC 1 1
+	COP 0 1
+	RET
+f:
+	AFC 1 1
+	AFC 2 1
+	EQU 1 1 2
+	JMF 1 12
+	AFC 2 1
+	COP 0 2
+	RET
 main:
 	AFC 1 2
 	COP 0 1
-	AFC 1 23
-	AFC 2 24
-	EQU 1 1 2
-	JMF 1 11
+	CALL 5
+	AFC 1 1
+	JMF 1 20
+	JMP 17
 	AFC 2 3
 	COP 0 2
-	JMP 13
-	AFC 2 4
-	COP 0 2
-	AFC 2 5
-	COP 0 2
-	AFC 2 1
-	JMF 2 18
-	JMP 15
 	RET

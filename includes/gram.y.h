@@ -65,7 +65,8 @@
      tWHILE = 281,
      tPRT = 282,
      tINT = 283,
-     tERROR = 284
+     tERROR = 284,
+     tMAIN = 285
    };
 #endif
 /* Tokens.  */
@@ -96,6 +97,7 @@
 #define tPRT 282
 #define tINT 283
 #define tERROR 284
+#define tMAIN 285
 
 
 
@@ -108,7 +110,7 @@ typedef union YYSTYPE
   char *var;
 }
 /* Line 1529 of yacc.c.  */
-#line 112 "gram.tab.h"
+#line 114 "gram.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

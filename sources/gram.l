@@ -45,6 +45,9 @@ ID          {ALPHABET}+{DIGIT}*{ALPHABET}*
 "int" {
   return tINT;
 }
+"int main" {
+  return tMAIN;
+}
 "(" {
   return tPO;
 }
