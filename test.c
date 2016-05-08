@@ -1,14 +1,7 @@
-int g(int b) {
-  b=1;
-}
-int f(int b) {
-  if (1==1){
-    b=1;
-  }
-}
 int main () {
-  int a = 2;
-  f();
-  while(1){}
-  a=3;
+  int a = 1;
+  while(a<10){
+    a = a+1;
+  }
+  printf(a);
 }

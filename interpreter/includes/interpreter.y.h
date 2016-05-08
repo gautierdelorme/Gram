@@ -53,9 +53,12 @@
      tINF = 269,
      tAND = 270,
      tOR = 271,
-     tJMF = 272,
-     tJMP = 273,
-     tERROR = 274
+     tRET = 272,
+     tPRI = 273,
+     tJMF = 274,
+     tJMP = 275,
+     tCALL = 276,
+     tERROR = 277
    };
 #endif
 /* Tokens.  */
@@ -73,9 +76,12 @@
 #define tINF 269
 #define tAND 270
 #define tOR 271
-#define tJMF 272
-#define tJMP 273
-#define tERROR 274
+#define tRET 272
+#define tPRI 273
+#define tJMF 274
+#define tJMP 275
+#define tCALL 276
+#define tERROR 277
 
 
 
@@ -87,7 +93,7 @@ typedef union YYSTYPE
   int nb;
 }
 /* Line 1529 of yacc.c.  */
-#line 91 "interpreter.tab.h"
+#line 97 "interpreter.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

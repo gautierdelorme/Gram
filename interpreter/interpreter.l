@@ -10,16 +10,28 @@ DIGIT       [0-9]
 DIGITS      {DIGIT}+
 EXP         [eE][+-]?{DIGITS}
 NUMBER      {DIGITS}{EXP}?
+ALPHABET    [a-zA-Z]
+FUNCTIONS          {ALPHABET}+{DIGIT}*{ALPHABET}*:
 
 %%
 
 {WHITESPACES} { }
+{FUNCTIONS} { }
 {NUMBER}  {
   yylval.nb = atoi(yytext);
   return tNB;
 }
 "ADD" {
   return tADD;
+}
+"CALL" {
+  return tCALL;
+}
+"RET" {
+  return tRET;
+}
+"PRI" {
+  return tPRI;
 }
 "AFC" {
   return tAFC;
