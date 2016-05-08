@@ -36,8 +36,11 @@ void perform_add_instruction(Instruction* in) {
   if (instructions_memory->instructions == NULL) {
     instructions_memory->instructions = in;
   } else {
-    in->next = instructions_memory->instructions;
-    instructions_memory->instructions = in;
+    Instruction* instructions = instructions_memory->instructions;
+    while (instructions->next != NULL) {
+      instructions = instructions->next;
+    }
+    instructions->next = in;
   }
   instructions_memory->height++;
   if (DEBUG_INSTRUCTIONS_MEMORY) {
