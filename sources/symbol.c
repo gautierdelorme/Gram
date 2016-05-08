@@ -4,10 +4,9 @@
 
 void print_symbol(Symbol *self);
 
-Symbol* new_symbol(char* name, int depth, int init, int constant, TYPE type){
+Symbol* new_symbol(char* name, int depth, int init, int constant){
   Symbol* s = malloc(sizeof(Symbol));
   s->name = name;
-  s->type = type;
   s->addr = -1;
   s->init = init;
   s->constant = constant;
@@ -18,5 +17,5 @@ Symbol* new_symbol(char* name, int depth, int init, int constant, TYPE type){
 }
 
 void print_symbol(Symbol *self) {
-  printf("%6s|%6d|%6d|%6s|%6s|%6s\n",self->name, self->addr, self->depth, (self->type == 0 ? "INT" : "FUN"), (self->init == 0 ? "NO" : "YES"), (self->constant == 0 ? "NO" : "YES"));
+  printf("%6s|%6d|%6d|%6s|%6s\n",self->name, self->addr, self->depth, (self->init == 0 ? "NO" : "YES"), (self->constant == 0 ? "NO" : "YES"));
 }

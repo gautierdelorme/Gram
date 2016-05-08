@@ -31,7 +31,7 @@ void new_symbols_table() {
 void print_symbols_table() {
   Symbol* symbols = symbols_table->symbols;
   printf("-----------------------------------------\n");
-  printf(" NAME | ADDR |DEPTH | TYPE | INIT |CONST \n");
+  printf(" NAME | ADDR |DEPTH | INIT |CONST \n");
   printf("-----------------------------------------\n");
   while (symbols != NULL) {
     symbols->print_symbol(symbols);
@@ -54,8 +54,8 @@ void perform_add_symbol(Symbol* s) {
   }
 }
 
-void add_symbol(char* name, int init, int constant, TYPE type) {
-  Symbol* s = new_symbol(name, symbols_table->current_depth, init, constant, type);
+void add_symbol(char* name, int init, int constant) {
+  Symbol* s = new_symbol(name, symbols_table->current_depth, init, constant);
   Symbol* symbols = symbols_table->symbols;
   while ((symbols != NULL) && ((strcmp(symbols->name, s->name) != 0) || (strcmp(s->name, "-1") == 0) || (symbols->depth != s->depth))) {
     symbols = symbols->next;
@@ -67,7 +67,7 @@ void add_symbol(char* name, int init, int constant, TYPE type) {
 }
 
 void add_variable(char* name, int init, int constant) {
-  add_symbol(name, init, constant, INT);
+  add_symbol(name, init, constant);
 }
 
 Symbol* get_symbol(char* name) {

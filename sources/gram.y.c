@@ -132,6 +132,7 @@
   #include <stdlib.h>
   #include "gram.y.h"
   #include "symbols_table.h"
+  #include "functions_table.h"
   #include "labels_table.h"
   #include "error.h"
   #include "assembly.h"
@@ -161,13 +162,13 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 16 "sources/gram.y"
+#line 17 "sources/gram.y"
 {
   int nb;
   char *var;
 }
 /* Line 193 of yacc.c.  */
-#line 171 "gram.tab.c"
+#line 172 "gram.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -180,7 +181,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 184 "gram.tab.c"
+#line 185 "gram.tab.c"
 
 #ifdef short
 # undef short
@@ -491,12 +492,12 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    39,    39,    40,    42,    44,    45,    46,    47,    49,
-      49,    53,    56,    57,    60,    62,    63,    64,    65,    66,
-      67,    68,    70,    70,    78,    78,    90,    95,   101,   107,
-     114,   119,   124,   129,   134,   135,   140,   145,   150,   155,
-     161,   170,   175,   182,   185,   188,   188,   193,   193,   198,
-     198,   203,   203,   208,   211,   214,   216,   216,   221
+       0,    40,    40,    41,    43,    48,    49,    50,    51,    53,
+      53,    61,    64,    65,    68,    70,    71,    72,    73,    74,
+      75,    76,    78,    78,    86,    86,    98,   103,   109,   115,
+     122,   127,   132,   137,   142,   143,   148,   153,   158,   163,
+     169,   178,   183,   190,   193,   196,   196,   201,   201,   206,
+     206,   211,   211,   216,   219,   222,   224,   224,   229
 };
 #endif
 
@@ -1508,34 +1509,46 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 9:
-#line 49 "sources/gram.y"
-    {assembly_manager->write_fun_assembly("%s:", (yyvsp[(2) - (5)].var));;}
+        case 4:
+#line 43 "sources/gram.y"
+    {
+                        int n = functions_table->get_addr_function((yyvsp[(1) - (5)].var));
+                        assembly_manager->write_assembly("CALL %d", n);
+                      ;}
+    break;
+
+  case 9:
+#line 53 "sources/gram.y"
+    {
+                        functions_table->add_function((yyvsp[(2) - (5)].var), assembly_manager->cpt);
+                        assembly_manager->write_fun_assembly("%s:", (yyvsp[(2) - (5)].var));
+                      ;}
     break;
 
   case 10:
-#line 49 "sources/gram.y"
+#line 56 "sources/gram.y"
     {
                         symbols_table->remove_symbol();
+                        assembly_manager->write_assembly("RET");
                       ;}
     break;
 
   case 11:
-#line 53 "sources/gram.y"
+#line 61 "sources/gram.y"
     {
                         symbols_table->add_variable((yyvsp[(2) - (3)].var), 0, 0);
                       ;}
     break;
 
   case 13:
-#line 57 "sources/gram.y"
+#line 65 "sources/gram.y"
     {
                         symbols_table->add_variable((yyvsp[(3) - (4)].var), 0, 0);
                       ;}
     break;
 
   case 22:
-#line 70 "sources/gram.y"
+#line 78 "sources/gram.y"
     {
                         int l = labels_table->add_label();
                         assembly_manager->write_assembly("JMF %d %d", (yyvsp[(3) - (3)].nb), l);
@@ -1543,14 +1556,14 @@ yyreduce:
     break;
 
   case 23:
-#line 74 "sources/gram.y"
+#line 82 "sources/gram.y"
     {
                         labels_table->update_label(assembly_manager->cpt);
                       ;}
     break;
 
   case 24:
-#line 78 "sources/gram.y"
+#line 86 "sources/gram.y"
     {
                         labels_table->add_label_while();
                         labels_table->update_label(assembly_manager->cpt);
@@ -1560,7 +1573,7 @@ yyreduce:
     break;
 
   case 25:
-#line 84 "sources/gram.y"
+#line 92 "sources/gram.y"
     {
                         int l = labels_table->disabled_last_while();
                         assembly_manager->write_assembly("JMP %d", l);
@@ -1569,7 +1582,7 @@ yyreduce:
     break;
 
   case 26:
-#line 90 "sources/gram.y"
+#line 98 "sources/gram.y"
     {
                         int n = symbols_table->add_tmp_variable();
                         assembly_manager->write_assembly("AFC %d %d", n, (yyvsp[(1) - (1)].nb));
@@ -1578,7 +1591,7 @@ yyreduce:
     break;
 
   case 27:
-#line 95 "sources/gram.y"
+#line 103 "sources/gram.y"
     {
                         int n = symbols_table->add_tmp_variable();
                         int m = symbols_table->get_addr_symbol((yyvsp[(1) - (1)].var));
@@ -1588,7 +1601,7 @@ yyreduce:
     break;
 
   case 28:
-#line 101 "sources/gram.y"
+#line 109 "sources/gram.y"
     {
                         int n = symbols_table->add_tmp_variable();
                         int m = symbols_table->get_addr_symbol((yyvsp[(2) - (2)].var));
@@ -1598,7 +1611,7 @@ yyreduce:
     break;
 
   case 29:
-#line 107 "sources/gram.y"
+#line 115 "sources/gram.y"
     {
                         int n = symbols_table->add_tmp_variable();
                         int m = symbols_table->get_addr_symbol((yyvsp[(1) - (4)].var));
@@ -1609,7 +1622,7 @@ yyreduce:
     break;
 
   case 30:
-#line 114 "sources/gram.y"
+#line 122 "sources/gram.y"
     {
                         assembly_manager->write_assembly("ADD %d %d %d", (yyvsp[(1) - (3)].nb), (yyvsp[(1) - (3)].nb), (yyvsp[(3) - (3)].nb));
                         symbols_table->remove_tmp_variable();
@@ -1618,7 +1631,7 @@ yyreduce:
     break;
 
   case 31:
-#line 119 "sources/gram.y"
+#line 127 "sources/gram.y"
     {
                         assembly_manager->write_assembly("SOU %d %d %d", (yyvsp[(1) - (3)].nb), (yyvsp[(1) - (3)].nb), (yyvsp[(3) - (3)].nb));
                         symbols_table->remove_tmp_variable();
@@ -1627,7 +1640,7 @@ yyreduce:
     break;
 
   case 32:
-#line 124 "sources/gram.y"
+#line 132 "sources/gram.y"
     {
                         assembly_manager->write_assembly("MUL %d %d %d", (yyvsp[(1) - (3)].nb), (yyvsp[(1) - (3)].nb), (yyvsp[(3) - (3)].nb));
                         symbols_table->remove_tmp_variable();
@@ -1636,7 +1649,7 @@ yyreduce:
     break;
 
   case 33:
-#line 129 "sources/gram.y"
+#line 137 "sources/gram.y"
     {
                         assembly_manager->write_assembly("DIV %d %d %d", (yyvsp[(1) - (3)].nb), (yyvsp[(1) - (3)].nb), (yyvsp[(3) - (3)].nb));
                         symbols_table->remove_tmp_variable();
@@ -1645,12 +1658,12 @@ yyreduce:
     break;
 
   case 34:
-#line 134 "sources/gram.y"
+#line 142 "sources/gram.y"
     { (yyval.nb) = (yyvsp[(2) - (3)].nb); ;}
     break;
 
   case 35:
-#line 135 "sources/gram.y"
+#line 143 "sources/gram.y"
     {
                         assembly_manager->write_assembly("EQU %d %d %d", (yyvsp[(1) - (3)].nb), (yyvsp[(1) - (3)].nb), (yyvsp[(3) - (3)].nb));
                         symbols_table->remove_tmp_variable();
@@ -1659,7 +1672,7 @@ yyreduce:
     break;
 
   case 36:
-#line 140 "sources/gram.y"
+#line 148 "sources/gram.y"
     {
                         assembly_manager->write_assembly("SUP %d %d %d", (yyvsp[(1) - (3)].nb), (yyvsp[(1) - (3)].nb), (yyvsp[(3) - (3)].nb));
                         symbols_table->remove_tmp_variable();
@@ -1668,7 +1681,7 @@ yyreduce:
     break;
 
   case 37:
-#line 145 "sources/gram.y"
+#line 153 "sources/gram.y"
     {
                         assembly_manager->write_assembly("INF %d %d %d", (yyvsp[(1) - (3)].nb), (yyvsp[(1) - (3)].nb), (yyvsp[(3) - (3)].nb));
                         symbols_table->remove_tmp_variable();
@@ -1677,7 +1690,7 @@ yyreduce:
     break;
 
   case 38:
-#line 150 "sources/gram.y"
+#line 158 "sources/gram.y"
     {
                         assembly_manager->write_assembly("AND %d %d %d", (yyvsp[(1) - (3)].nb), (yyvsp[(1) - (3)].nb), (yyvsp[(3) - (3)].nb));
                         symbols_table->remove_tmp_variable();
@@ -1686,7 +1699,7 @@ yyreduce:
     break;
 
   case 39:
-#line 155 "sources/gram.y"
+#line 163 "sources/gram.y"
     {
                         assembly_manager->write_assembly("OR %d %d %d", (yyvsp[(1) - (3)].nb), (yyvsp[(1) - (3)].nb), (yyvsp[(3) - (3)].nb));
                         symbols_table->remove_tmp_variable();
@@ -1695,7 +1708,7 @@ yyreduce:
     break;
 
   case 40:
-#line 161 "sources/gram.y"
+#line 169 "sources/gram.y"
     {
                         if (symbols_table->not_constant((yyvsp[(1) - (4)].var))) {
                           int n = symbols_table->get_addr_symbol((yyvsp[(1) - (4)].var));
@@ -1708,7 +1721,7 @@ yyreduce:
     break;
 
   case 41:
-#line 170 "sources/gram.y"
+#line 178 "sources/gram.y"
     {
                         int n = symbols_table->get_addr_symbol((yyvsp[(2) - (5)].var));
                         assembly_manager->write_assembly("COPB %d %d", n, (yyvsp[(4) - (5)].nb));
@@ -1717,7 +1730,7 @@ yyreduce:
     break;
 
   case 42:
-#line 175 "sources/gram.y"
+#line 183 "sources/gram.y"
     {
                         int n = symbols_table->get_addr_symbol((yyvsp[(1) - (7)].var));
                         assembly_manager->write_assembly("ADD %d %d %d", (yyvsp[(3) - (7)].nb), n, (yyvsp[(3) - (7)].nb));
@@ -1727,26 +1740,26 @@ yyreduce:
     break;
 
   case 43:
-#line 182 "sources/gram.y"
+#line 190 "sources/gram.y"
     {
                         symbols_table->add_variable((yyvsp[(2) - (4)].var), 0, 0);
                       ;}
     break;
 
   case 44:
-#line 185 "sources/gram.y"
+#line 193 "sources/gram.y"
     {
                         symbols_table->add_variable((yyvsp[(2) - (7)].var), 0, 0);
                       ;}
     break;
 
   case 45:
-#line 188 "sources/gram.y"
+#line 196 "sources/gram.y"
     {symbols_table->add_variable((yyvsp[(2) - (3)].var), 1, 0);;}
     break;
 
   case 46:
-#line 188 "sources/gram.y"
+#line 196 "sources/gram.y"
     {
                         int n = symbols_table->get_addr_symbol((yyvsp[(2) - (7)].var));
                         assembly_manager->write_assembly("COP %d %d", n, (yyvsp[(5) - (7)].nb));
@@ -1755,12 +1768,12 @@ yyreduce:
     break;
 
   case 47:
-#line 193 "sources/gram.y"
+#line 201 "sources/gram.y"
     {symbols_table->add_variable((yyvsp[(3) - (4)].var), 1, 1);;}
     break;
 
   case 48:
-#line 193 "sources/gram.y"
+#line 201 "sources/gram.y"
     {
                         int n = symbols_table->get_addr_symbol((yyvsp[(3) - (8)].var));
                         assembly_manager->write_assembly("COP %d %d", n, (yyvsp[(6) - (8)].nb));
@@ -1769,12 +1782,12 @@ yyreduce:
     break;
 
   case 49:
-#line 198 "sources/gram.y"
+#line 206 "sources/gram.y"
     {symbols_table->add_variable((yyvsp[(2) - (3)].var), 1, 0);;}
     break;
 
   case 50:
-#line 198 "sources/gram.y"
+#line 206 "sources/gram.y"
     {
                         int n = symbols_table->get_addr_symbol((yyvsp[(2) - (6)].var));
                         assembly_manager->write_assembly("COP %d %d", n, (yyvsp[(5) - (6)].nb));
@@ -1783,12 +1796,12 @@ yyreduce:
     break;
 
   case 51:
-#line 203 "sources/gram.y"
+#line 211 "sources/gram.y"
     {symbols_table->add_variable((yyvsp[(3) - (4)].var), 1, 1);;}
     break;
 
   case 52:
-#line 203 "sources/gram.y"
+#line 211 "sources/gram.y"
     {
                         int n = symbols_table->get_addr_symbol((yyvsp[(3) - (7)].var));
                         assembly_manager->write_assembly("COP %d %d", n, (yyvsp[(6) - (7)].nb));
@@ -1797,26 +1810,26 @@ yyreduce:
     break;
 
   case 53:
-#line 208 "sources/gram.y"
+#line 216 "sources/gram.y"
     {
                         symbols_table->add_variable((yyvsp[(2) - (3)].var), 0, 0);
                       ;}
     break;
 
   case 54:
-#line 211 "sources/gram.y"
+#line 219 "sources/gram.y"
     {
                         symbols_table->add_variable((yyvsp[(2) - (6)].var), 0, 0);
                       ;}
     break;
 
   case 56:
-#line 216 "sources/gram.y"
+#line 224 "sources/gram.y"
     {symbols_table->current_depth++;;}
     break;
 
   case 57:
-#line 216 "sources/gram.y"
+#line 224 "sources/gram.y"
     {
                         symbols_table->remove_symbol();
                         symbols_table->current_depth--;
@@ -1824,7 +1837,7 @@ yyreduce:
     break;
 
   case 58:
-#line 221 "sources/gram.y"
+#line 229 "sources/gram.y"
     {
                         int n = symbols_table->get_addr_symbol((yyvsp[(3) - (5)].var));
                         assembly_manager->write_assembly("PRI %d", n);
@@ -1833,7 +1846,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1837 "gram.tab.c"
+#line 1850 "gram.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2047,7 +2060,7 @@ yyreturn:
 }
 
 
-#line 225 "sources/gram.y"
+#line 233 "sources/gram.y"
 
 
 int yyerror(char *s) {
@@ -2055,14 +2068,25 @@ int yyerror(char *s) {
   return 1;
 }
 
-int main(void) {
+void init() {
   new_error_manager();
   new_assembly_manager();
   new_symbols_table();
+  new_functions_table();
   new_labels_table();
-  yyparse();
+}
+
+void clear() {
   assembly_manager->close_assembly();
   assembly_manager->second_wave();
+  functions_table->clear();
+  labels_table->clear();
+}
+
+int main(void) {
+  init();
+  yyparse();
+  clear();
   return 0;
 }
 

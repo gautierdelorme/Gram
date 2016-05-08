@@ -9,6 +9,7 @@ void update_label(int addr);
 Label* get_label(int index);
 int disabled_last_while();
 void print_labels_table();
+void clear_labels_table();
 
 void new_labels_table() {
   if (labels_table == NULL) {
@@ -21,6 +22,7 @@ void new_labels_table() {
     labels_table->get_label = get_label;
     labels_table->disabled_last_while = disabled_last_while;
     labels_table->print_labels_table = print_labels_table;
+    labels_table->clear = clear_labels_table;
   } else {
     error_manager->raise_error("ERROR LABELS TABLE ALREADY EXISTING");
   }
@@ -108,4 +110,9 @@ int disabled_last_while() {
   }
   labels->is_while = 0;
   return labels->index;
+}
+
+void clear_labels_table() {
+  labels_table->labels = NULL;
+  labels_table->height = 0;
 }

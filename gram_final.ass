@@ -1,18 +1,21 @@
 f:
 	AFC 1 99
 	COP 0 1
+	RET
 main:
 	AFC 1 12
 	COP 0 1
 	AFC 1 1
 	AFC 2 1
 	EQU 1 1 2
-	JMF 1 17
+	JMF 1 19
 	AFC 2 2
 	COP 4 0
+	CALL 1
 	AFC 5 0
 	AFC 6 1
 	ADD 5 3 5
 	COPB 5 6
 	AFC 2 3
 	COP 0 2
+	RET

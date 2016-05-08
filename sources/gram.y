@@ -3,6 +3,7 @@
   #include <stdlib.h>
   #include "gram.y.h"
   #include "symbols_table.h"
+  #include "functions_table.h"
   #include "labels_table.h"
   #include "error.h"
   #include "assembly.h"
@@ -39,15 +40,22 @@
 Input           :     Function Input
                 |     ;
 
-FunctionCall    :     tID tPO Arguments tPC tSM
+FunctionCall    :     tID tPO Arguments tPC tSM {
+                        int n = functions_table->get_addr_function($1);
+                        assembly_manager->write_assembly("CALL %d", n);
+                      }
 
 Arguments       :     Arithm ArgumentsNext
                 |     ;
 ArgumentsNext   :     tCOM Arithm ArgumentsNext
                 |     ;
 
-Function        :     tINT tID tPO Params tPC {assembly_manager->write_fun_assembly("%s:", $2);} Body {
+Function        :     tINT tID tPO Params tPC {
+                        functions_table->add_function($2, assembly_manager->cpt);
+                        assembly_manager->write_fun_assembly("%s:", $2);
+                      } Body {
                         symbols_table->remove_symbol();
+                        assembly_manager->write_assembly("RET");
                       }
 
 Params          :     tINT tID ParamsNext {
@@ -229,13 +237,24 @@ int yyerror(char *s) {
   return 1;
 }
 
-int main(void) {
+void init() {
   new_error_manager();
   new_assembly_manager();
   new_symbols_table();
+  new_functions_table();
   new_labels_table();
-  yyparse();
+}
+
+void clear() {
   assembly_manager->close_assembly();
   assembly_manager->second_wave();
+  functions_table->clear();
+  labels_table->clear();
+}
+
+int main(void) {
+  init();
+  yyparse();
+  clear();
   return 0;
 }

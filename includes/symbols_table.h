@@ -1,5 +1,5 @@
-#ifndef SYMBOL_TABLE_H
-#define SYMBOL_TABLE_H
+#ifndef SYMBOLS_TABLE_H
+#define SYMBOLS_TABLE_H
 #include "symbol.h"
 
 #define  DEBUG_SYMBOLS_TABLE 0

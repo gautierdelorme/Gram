@@ -14,6 +14,7 @@ typedef struct Labels_Table{
 	Label* (*get_label)(int index);
 	int (*disabled_last_while)();
 	void (*print_labels_table)();
+	void (*clear)();
 } Labels_Table;
 
 Labels_Table* labels_table;
