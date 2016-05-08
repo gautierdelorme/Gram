@@ -6,7 +6,9 @@
 #include <stdarg.h>
 
 void add_instruction(char* name, int nb_params, ...);
+Instruction* get_instruction(int index);
 void clear_instructions_memory();
+int size_instructions_memory();
 
 void new_instructions_memory() {
   if (instructions_memory == NULL) {
@@ -14,7 +16,9 @@ void new_instructions_memory() {
     instructions_memory->instructions = NULL;
     instructions_memory->height = 0;
     instructions_memory->add_instruction = add_instruction;
+    instructions_memory->get = get_instruction;
     instructions_memory->clear = clear_instructions_memory;
+    instructions_memory->size = size_instructions_memory;
   } else {
     error_manager->raise_error("ERROR INSTRUCTIONS MEMORY ALREADY EXISTING");
   }
@@ -58,6 +62,25 @@ void add_instruction(char* name, int nb_params, ...) {
   va_end(args);
   Instruction* in = new_instruction(name, nb_params, params);
   perform_add_instruction(in);
+}
+
+Instruction* get_instruction(int index) {
+  if (index > instructions_memory->height) {
+    error_manager->raise_error("ERROR GETTING INSTRUCTION: index out of bounds.");
+    return NULL;
+  } else {
+    int cpt = 1;
+    Instruction* instructions = instructions_memory->instructions;
+    while (cpt < index) {
+      instructions = instructions->next;
+      cpt++;
+    }
+    return instructions;
+  }
+}
+
+int size_instructions_memory() {
+  return instructions_memory->height;
 }
 
 void clear_instructions_memory() {

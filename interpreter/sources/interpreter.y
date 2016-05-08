@@ -4,6 +4,7 @@
   #include "interpreter.y.h"
   #include "error.h"
   #include "instructions_memory.h"
+  #include "interpreter.h"
 
   // FIX WARNING YACC
   int yylex();
@@ -76,6 +77,7 @@ int yyerror(char *s) {
 void init() {
   new_error_manager();
   new_instructions_memory();
+  new_interpreter();
 }
 
 void clear() {
@@ -85,6 +87,7 @@ void clear() {
 int main(void) {
   init();
   yyparse();
+  interpreter->start();
   clear();
   return 0;
 }

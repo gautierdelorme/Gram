@@ -9,6 +9,8 @@ typedef struct Instructions_Memory{
 	Instruction* instructions;
   int height;
 	void (*add_instruction)(char* name, int nb_params, ...);
+  Instruction* (*get)(int index);
+  int (*size)();
 	void (*clear)();
 } Instructions_Memory;
 

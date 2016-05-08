@@ -121,6 +121,7 @@
   #include "interpreter.y.h"
   #include "error.h"
   #include "instructions_memory.h"
+  #include "interpreter.h"
 
   // FIX WARNING YACC
   int yylex();
@@ -147,12 +148,12 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 14 "sources/interpreter.y"
+#line 15 "sources/interpreter.y"
 {
   int nb;
 }
 /* Line 193 of yacc.c.  */
-#line 156 "interpreter.tab.c"
+#line 157 "interpreter.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -165,7 +166,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 169 "interpreter.tab.c"
+#line 170 "interpreter.tab.c"
 
 #ifdef short
 # undef short
@@ -464,10 +465,10 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    28,    28,    28,    28,    28,    28,    28,    28,    29,
-      29,    29,    29,    29,    29,    30,    30,    30,    30,    30,
-      31,    33,    35,    37,    39,    41,    43,    45,    47,    49,
-      51,    53,    55,    57,    59,    61,    63,    65,    67
+       0,    29,    29,    29,    29,    29,    29,    29,    29,    30,
+      30,    30,    30,    30,    30,    31,    31,    31,    31,    31,
+      32,    34,    36,    38,    40,    42,    44,    46,    48,    50,
+      52,    54,    56,    58,    60,    62,    64,    66,    68
 };
 #endif
 
@@ -1418,98 +1419,98 @@ yyreduce:
   switch (yyn)
     {
         case 21:
-#line 33 "sources/interpreter.y"
+#line 34 "sources/interpreter.y"
     {instructions_memory->add_instruction("ADD", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 22:
-#line 35 "sources/interpreter.y"
+#line 36 "sources/interpreter.y"
     {instructions_memory->add_instruction("SUB", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 23:
-#line 37 "sources/interpreter.y"
+#line 38 "sources/interpreter.y"
     {instructions_memory->add_instruction("MUL", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 24:
-#line 39 "sources/interpreter.y"
+#line 40 "sources/interpreter.y"
     {instructions_memory->add_instruction("DIV", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 25:
-#line 41 "sources/interpreter.y"
+#line 42 "sources/interpreter.y"
     {instructions_memory->add_instruction("JMF", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));;}
     break;
 
   case 26:
-#line 43 "sources/interpreter.y"
+#line 44 "sources/interpreter.y"
     {instructions_memory->add_instruction("JMP", 1, (yyvsp[(2) - (2)].nb));;}
     break;
 
   case 27:
-#line 45 "sources/interpreter.y"
+#line 46 "sources/interpreter.y"
     {instructions_memory->add_instruction("AFC", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));;}
     break;
 
   case 28:
-#line 47 "sources/interpreter.y"
+#line 48 "sources/interpreter.y"
     {instructions_memory->add_instruction("COP", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));;}
     break;
 
   case 29:
-#line 49 "sources/interpreter.y"
+#line 50 "sources/interpreter.y"
     {instructions_memory->add_instruction("COPA", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));;}
     break;
 
   case 30:
-#line 51 "sources/interpreter.y"
+#line 52 "sources/interpreter.y"
     {instructions_memory->add_instruction("COPB", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));;}
     break;
 
   case 31:
-#line 53 "sources/interpreter.y"
+#line 54 "sources/interpreter.y"
     {instructions_memory->add_instruction("INF", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 32:
-#line 55 "sources/interpreter.y"
+#line 56 "sources/interpreter.y"
     {instructions_memory->add_instruction("EQU", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 33:
-#line 57 "sources/interpreter.y"
+#line 58 "sources/interpreter.y"
     {instructions_memory->add_instruction("SUP", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 34:
-#line 59 "sources/interpreter.y"
+#line 60 "sources/interpreter.y"
     {instructions_memory->add_instruction("AND", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 35:
-#line 61 "sources/interpreter.y"
+#line 62 "sources/interpreter.y"
     {instructions_memory->add_instruction("OR", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));;}
     break;
 
   case 36:
-#line 63 "sources/interpreter.y"
+#line 64 "sources/interpreter.y"
     {instructions_memory->add_instruction("CALL", 1, (yyvsp[(2) - (2)].nb));;}
     break;
 
   case 37:
-#line 65 "sources/interpreter.y"
+#line 66 "sources/interpreter.y"
     {instructions_memory->add_instruction("RET", 0);;}
     break;
 
   case 38:
-#line 67 "sources/interpreter.y"
+#line 68 "sources/interpreter.y"
     {instructions_memory->add_instruction("PRI", 1, (yyvsp[(2) - (2)].nb));;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1513 "interpreter.tab.c"
+#line 1514 "interpreter.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1723,7 +1724,7 @@ yyreturn:
 }
 
 
-#line 69 "sources/interpreter.y"
+#line 70 "sources/interpreter.y"
 
 
 int yyerror(char *s) {
@@ -1734,6 +1735,7 @@ int yyerror(char *s) {
 void init() {
   new_error_manager();
   new_instructions_memory();
+  new_interpreter();
 }
 
 void clear() {
@@ -1743,6 +1745,7 @@ void clear() {
 int main(void) {
   init();
   yyparse();
+  interpreter->start();
   clear();
   return 0;
 }
