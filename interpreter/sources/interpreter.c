@@ -167,7 +167,8 @@ void copa(int addr_res, int addr_addr_val) {
 }
 
 void copb(int addr_addr_res, int addr_val) {
-  data_memory->put(data_memory->get(addr_addr_res), data_memory->get(addr_val));
+  int val = data_memory->get(addr_val);
+  data_memory->put(data_memory->get(addr_addr_res), val);
   interpreter->current_line++;
 }
 

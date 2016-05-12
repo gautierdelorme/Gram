@@ -4,7 +4,7 @@
 
 void print_symbol(Symbol *self);
 
-Symbol* new_symbol(char* name, int depth, int init, int constant){
+Symbol* new_symbol(char* name, int depth, int init, int constant, int size){
   Symbol* s = malloc(sizeof(Symbol));
   s->name = name;
   s->addr = -1;
@@ -12,6 +12,7 @@ Symbol* new_symbol(char* name, int depth, int init, int constant){
   s->constant = constant;
   s->depth = depth;
   s->next = NULL;
+  s->size = size;
   s->print_symbol = print_symbol;
   return s;
 }

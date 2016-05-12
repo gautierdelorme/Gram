@@ -4,7 +4,9 @@
 #include "error.h"
 #include <string.h>
 
-void add_variable(char* name, int init, int constant);
+int add_variable(char* name, int init, int constant);
+int add_pointer(char* name, int init);
+int add_array(char* name, int size);
 void remove_symbol();
 int get_addr_symbol(char* name);
 int add_tmp_variable();
@@ -18,6 +20,8 @@ void new_symbols_table() {
     symbols_table->symbols = NULL;
     symbols_table->height = 0;
     symbols_table->add_variable = add_variable;
+    symbols_table->add_pointer = add_pointer;
+    symbols_table->add_array = add_array;
     symbols_table->remove_symbol = remove_symbol;
     symbols_table->get_addr_symbol = get_addr_symbol;
     symbols_table->add_tmp_variable = add_tmp_variable;
@@ -40,7 +44,7 @@ void print_symbols_table() {
   printf("-----------------------------------------\n");
 }
 
-void perform_add_symbol(Symbol* s) {
+int perform_add_symbol(Symbol* s) {
   s->addr = symbols_table->height;
   if (symbols_table->symbols == NULL) {
     symbols_table->symbols = s;
@@ -48,14 +52,15 @@ void perform_add_symbol(Symbol* s) {
     s->next = symbols_table->symbols;
     symbols_table->symbols = s;
   }
-  symbols_table->height++;
+  symbols_table->height += symbols_table->symbols->size;
   if (DEBUG_SYMBOLS_TABLE) {
     print_symbols_table();
   }
+  return s->addr;
 }
 
-void add_symbol(char* name, int init, int constant) {
-  Symbol* s = new_symbol(name, symbols_table->current_depth, init, constant);
+int add_symbol(char* name, int init, int constant, int size) {
+  Symbol* s = new_symbol(name, symbols_table->current_depth, init, constant, size);
   Symbol* symbols = symbols_table->symbols;
   while ((symbols != NULL) && ((strcmp(symbols->name, s->name) != 0) || (strcmp(s->name, "-1") == 0) || (symbols->depth != s->depth))) {
     symbols = symbols->next;
@@ -63,11 +68,19 @@ void add_symbol(char* name, int init, int constant) {
   if (symbols !=  NULL) {
     error_manager->raise_error("ERROR SYMBOL %s level %d ALREADY IN THE SYMBOLS TABLE", s->name, s->depth);
   }
-  perform_add_symbol(s);
+  return perform_add_symbol(s);
 }
 
-void add_variable(char* name, int init, int constant) {
-  add_symbol(name, init, constant);
+int add_variable(char* name, int init, int constant) {
+  return add_symbol(name, init, constant, 1);
+}
+
+int add_pointer(char* name, int init) {
+  return add_symbol(name, init, 0, 2);
+}
+
+int add_array(char* name, int size) {
+  return add_symbol(name, 0, 0, size+1);
 }
 
 Symbol* get_symbol(char* name) {
@@ -87,8 +100,8 @@ int get_addr_symbol(char* name) {
 
 void remove_symbol() {
   while ((symbols_table->symbols != NULL) && (symbols_table->symbols->depth == symbols_table->current_depth)) {
+    symbols_table->height -= symbols_table->symbols->size;
     symbols_table->symbols = symbols_table->symbols->next;
-    symbols_table->height--;
   }
   if (DEBUG_SYMBOLS_TABLE) {
     print_symbols_table();

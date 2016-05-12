@@ -8,7 +8,9 @@ typedef struct Symbols_Table{
 	Symbol* symbols;
   int height;
 	int current_depth;
-	void (*add_variable)(char* name, int init, int constant);
+	int (*add_variable)(char* name, int init, int constant);
+	int (*add_pointer)(char* name, int init);
+	int (*add_array)(char* name, int size);
 	void (*remove_symbol)();
 	int (*get_addr_symbol)(char* name);
 	int (*add_tmp_variable)();

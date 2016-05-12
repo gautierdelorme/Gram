@@ -1,10 +1,7 @@
 int main () {
-  int a = 1;
-  int b = 0;
-  while(a<10){
-    a = a+1;
-  }
-  printf(a);
-  a = 22+*b;
+  int b[1];
+  b[0] = 22;
+  *b = 555;
+  int a = b[0];
   printf(a);
 }

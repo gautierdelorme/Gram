@@ -7,10 +7,11 @@ typedef struct Symbol {
 	int init;
   int constant;
   int depth;
+	int size;
   struct Symbol* next;
   void (*print_symbol)(struct Symbol*);
 } Symbol;
 
-Symbol* new_symbol(char* name, int depth, int init, int constant);
+Symbol* new_symbol(char* name, int depth, int init, int constant, int size);
 
 #endif
