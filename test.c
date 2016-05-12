@@ -6,7 +6,10 @@ int f() {
 int main () {
   int b[1];
   b[0] = 22;
-  *b = 555;
   int a = b[0];
   printf(a);
+  *b = 555;
+  a = b[0];
+  printf(a);
+  f();
 }

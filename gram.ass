@@ -10,12 +10,19 @@ main:
 	COP 4 0
 	ADD 4 4 2
 	COPB 4 3
-	AFC 2 555
-	COPB 0 2
 	AFC 3 0
 	COP 5 0
 	ADD 5 5 3
 	COPA 4 5
 	COP 2 4
 	PRI 2
+	AFC 4 555
+	COPB 0 4
+	AFC 4 0
+	COP 6 0
+	ADD 6 6 4
+	COPA 5 6
+	COP 2 5
+	PRI 2
+	CALL 1
 	RET

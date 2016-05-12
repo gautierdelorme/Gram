@@ -59,7 +59,6 @@ void read_line() {
 }
 
 void start_interpreter() {
-  printf("start_line: %d, end_line: %d, current_line: %d\n", interpreter->start_line,interpreter->end_line,interpreter->current_line);
   while (interpreter->current_line != interpreter->end_line) {
     Instruction *in = instructions_memory->get(interpreter->current_line);
     if (strcmp(in->name, "ADD" ) == 0) {
