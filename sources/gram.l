@@ -47,9 +47,6 @@ COMMENTS    ("/*"([^*]|\*+[^*/])*\*+"/")|("//".*)
 "int" {
   return tINT;
 }
-"int main" {
-  return tMAIN;
-}
 "(" {
   return tPO;
 }

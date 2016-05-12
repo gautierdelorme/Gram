@@ -2,6 +2,10 @@ int f() {
   int a = 2;
   printf(a);
 }
+int g() {
+  int a = 2;
+  printf(a);
+}
 // lol
 /* a COMMENT
  * multi lines
@@ -15,7 +19,7 @@ int main () {
   a = b[0];
   printf(a);
   /* call
-    f 
+    f
   */
   f();
 }

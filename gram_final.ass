@@ -3,6 +3,11 @@ f:
 	COP 0 1
 	PRI 0
 	RET
+g:
+	AFC 1 2
+	COP 0 1
+	PRI 0
+	RET
 main:
 	AFC 0 1
 	AFC 2 0
