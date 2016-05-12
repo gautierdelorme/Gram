@@ -4,7 +4,6 @@
   #include "interpreter.y.h"
   #include "error.h"
   #include "instructions_memory.h"
-  #include "data_memory.h"
   #include "interpreter.h"
 
   // FIX WARNING YACC
@@ -150,7 +149,6 @@ int yyerror(char *s) {
 void init() {
   new_error_manager();
   new_instructions_memory();
-  new_data_memory();
   new_interpreter();
 }
 

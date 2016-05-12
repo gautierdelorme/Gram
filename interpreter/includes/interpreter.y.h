@@ -94,7 +94,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 16 "sources/interpreter.y"
+#line 15 "sources/interpreter.y"
 {
   int nb;
 }

@@ -99,6 +99,7 @@ ID          {ALPHABET}+{DIGIT}*{ALPHABET}*
   yylval.var = newID;
   return tID;
 }
+\n {}
 . {
   printf("tERROR\n");
   return tERROR;

@@ -83,6 +83,7 @@ FUNCTIONS   {ALPHABET}+{DIGIT}*{ALPHABET}*
 {FUNCTIONS} {
   return tID;
 }
+\n {}
 . {
   printf("tERROR\n");
   return tERROR;

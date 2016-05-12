@@ -31,6 +31,7 @@ void read_line();
 
 void new_interpreter() {
   if (interpreter == NULL) {
+    new_data_memory();
     interpreter = malloc(sizeof(Interpreter));
     interpreter->cpt_line = 0;
     interpreter->current_line = 0;

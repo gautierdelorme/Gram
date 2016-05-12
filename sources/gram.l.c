@@ -358,8 +358,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 30
-#define YY_END_OF_BUFFER 31
+#define YY_NUM_RULES 31
+#define YY_END_OF_BUFFER 32
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -369,9 +369,9 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[67] =
     {   0,
-        0,    0,   31,   29,    1,   30,   29,   13,   14,    9,
+        0,    0,   32,   30,    1,   29,   30,   13,   14,    9,
         7,   19,    8,   10,    2,   20,    6,    3,    5,   28,
-       17,   18,   28,   28,   28,   28,   28,   15,   29,   16,
+       17,   18,   28,   28,   28,   28,   28,   15,   30,   16,
         1,   26,    2,    0,    4,   28,   28,   28,   28,   22,
        28,   28,   28,   27,    0,    2,   28,   28,   28,   11,
        28,   28,   28,   23,    0,   28,   28,   21,    0,   28,
@@ -965,19 +965,25 @@ YY_RULE_SETUP
 }
 	YY_BREAK
 case 29:
+/* rule 29 can match eol */
 YY_RULE_SETUP
 #line 102 "sources/gram.l"
+{}
+	YY_BREAK
+case 30:
+YY_RULE_SETUP
+#line 103 "sources/gram.l"
 {
   printf("tERROR\n");
   return tERROR;
 }
 	YY_BREAK
-case 30:
+case 31:
 YY_RULE_SETUP
-#line 106 "sources/gram.l"
+#line 107 "sources/gram.l"
 ECHO;
 	YY_BREAK
-#line 981 "lex.yy.c"
+#line 987 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1937,4 +1943,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 106 "sources/gram.l"
+#line 107 "sources/gram.l"

@@ -127,7 +127,6 @@
   #include "interpreter.y.h"
   #include "error.h"
   #include "instructions_memory.h"
-  #include "data_memory.h"
   #include "interpreter.h"
 
   // FIX WARNING YACC
@@ -155,12 +154,12 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 16 "sources/interpreter.y"
+#line 15 "sources/interpreter.y"
 {
   int nb;
 }
 /* Line 193 of yacc.c.  */
-#line 164 "interpreter.tab.c"
+#line 163 "interpreter.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -173,7 +172,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 177 "interpreter.tab.c"
+#line 176 "interpreter.tab.c"
 
 #ifdef short
 # undef short
@@ -476,11 +475,11 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    30,    30,    32,    33,    35,    35,    40,    40,    48,
-      48,    48,    48,    48,    48,    48,    49,    49,    49,    49,
-      49,    49,    50,    50,    50,    50,    51,    53,    58,    63,
-      68,    73,    78,    83,    88,    93,    98,   103,   108,   113,
-     118,   123,   128,   133,   138
+       0,    29,    29,    31,    32,    34,    34,    39,    39,    47,
+      47,    47,    47,    47,    47,    47,    48,    48,    48,    48,
+      48,    48,    49,    49,    49,    49,    50,    52,    57,    62,
+      67,    72,    77,    82,    87,    92,    97,   102,   107,   112,
+     117,   122,   127,   132,   137
 };
 #endif
 
@@ -1441,7 +1440,7 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 35 "sources/interpreter.y"
+#line 34 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("NOP", 0);
@@ -1449,7 +1448,7 @@ yyreduce:
     break;
 
   case 7:
-#line 40 "sources/interpreter.y"
+#line 39 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("NOP", 0);
@@ -1458,14 +1457,14 @@ yyreduce:
     break;
 
   case 8:
-#line 44 "sources/interpreter.y"
+#line 43 "sources/interpreter.y"
     {
                         interpreter->set_end_line();
                       ;}
     break;
 
   case 27:
-#line 53 "sources/interpreter.y"
+#line 52 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("ADD", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));
@@ -1473,7 +1472,7 @@ yyreduce:
     break;
 
   case 28:
-#line 58 "sources/interpreter.y"
+#line 57 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("SUB", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));
@@ -1481,7 +1480,7 @@ yyreduce:
     break;
 
   case 29:
-#line 63 "sources/interpreter.y"
+#line 62 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("MUL", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));
@@ -1489,7 +1488,7 @@ yyreduce:
     break;
 
   case 30:
-#line 68 "sources/interpreter.y"
+#line 67 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("DIV", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));
@@ -1497,7 +1496,7 @@ yyreduce:
     break;
 
   case 31:
-#line 73 "sources/interpreter.y"
+#line 72 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("INF", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));
@@ -1505,7 +1504,7 @@ yyreduce:
     break;
 
   case 32:
-#line 78 "sources/interpreter.y"
+#line 77 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("EQU", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));
@@ -1513,7 +1512,7 @@ yyreduce:
     break;
 
   case 33:
-#line 83 "sources/interpreter.y"
+#line 82 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("SUP", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));
@@ -1521,7 +1520,7 @@ yyreduce:
     break;
 
   case 34:
-#line 88 "sources/interpreter.y"
+#line 87 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("AND", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));
@@ -1529,7 +1528,7 @@ yyreduce:
     break;
 
   case 35:
-#line 93 "sources/interpreter.y"
+#line 92 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("OR", 3, (yyvsp[(2) - (4)].nb), (yyvsp[(3) - (4)].nb), (yyvsp[(4) - (4)].nb));
@@ -1537,7 +1536,7 @@ yyreduce:
     break;
 
   case 36:
-#line 98 "sources/interpreter.y"
+#line 97 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("JMF", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));
@@ -1545,7 +1544,7 @@ yyreduce:
     break;
 
   case 37:
-#line 103 "sources/interpreter.y"
+#line 102 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("AFC", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));
@@ -1553,7 +1552,7 @@ yyreduce:
     break;
 
   case 38:
-#line 108 "sources/interpreter.y"
+#line 107 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("COP", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));
@@ -1561,7 +1560,7 @@ yyreduce:
     break;
 
   case 39:
-#line 113 "sources/interpreter.y"
+#line 112 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("COPA", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));
@@ -1569,7 +1568,7 @@ yyreduce:
     break;
 
   case 40:
-#line 118 "sources/interpreter.y"
+#line 117 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("COPB", 2, (yyvsp[(2) - (3)].nb), (yyvsp[(3) - (3)].nb));
@@ -1577,7 +1576,7 @@ yyreduce:
     break;
 
   case 41:
-#line 123 "sources/interpreter.y"
+#line 122 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("JMP", 1, (yyvsp[(2) - (2)].nb));
@@ -1585,7 +1584,7 @@ yyreduce:
     break;
 
   case 42:
-#line 128 "sources/interpreter.y"
+#line 127 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("CALL", 1, (yyvsp[(2) - (2)].nb));
@@ -1593,7 +1592,7 @@ yyreduce:
     break;
 
   case 43:
-#line 133 "sources/interpreter.y"
+#line 132 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("PRI", 1, (yyvsp[(2) - (2)].nb));
@@ -1601,7 +1600,7 @@ yyreduce:
     break;
 
   case 44:
-#line 138 "sources/interpreter.y"
+#line 137 "sources/interpreter.y"
     {
                         interpreter->read_line();
                         instructions_memory->add_instruction("RET", 0);
@@ -1610,7 +1609,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1614 "interpreter.tab.c"
+#line 1613 "interpreter.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1824,7 +1823,7 @@ yyreturn:
 }
 
 
-#line 143 "sources/interpreter.y"
+#line 142 "sources/interpreter.y"
 
 
 int yyerror(char *s) {
@@ -1835,7 +1834,6 @@ int yyerror(char *s) {
 void init() {
   new_error_manager();
   new_instructions_memory();
-  new_data_memory();
   new_interpreter();
 }
 
