@@ -21,52 +21,124 @@
         tADD tSOU tMUL tDIV
         tAFC tCOP tCOPB tCOPA
         tEQU tSUP tINF tAND tOR
-        tRET tPRI
+        tRET tPRI tMAIN tID tCOL
         tJMF tJMP tCALL tERROR
 
-%start INS
+%start Start
 %%
+
+Start           :     Functions Main
+
+Functions       :     Function Functions
+                |     ;
+
+Function        :     tID tCOL {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("NOP", 0);
+                      } INS Ret
+
+Main            :     tMAIN tCOL {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("NOP", 0);
+                        interpreter->set_start_line();
+                      } INS Ret {
+                        interpreter->set_end_line();
+                      }
 
 INS             :     Add INS |  Sub INS | Mul INS | Div INS | Jmp INS | Jmf INS | Afc INS
                 |     Cop INS | Copa INS | Copb INS | Inf INS | Equ INS | Sup INS
-                |     And INS | Or INS | Call INS | Ret INS | Pri INS
-                | ;
+                |     And INS | Or INS | Call INS | Pri INS
+                |     ;
 
-Add             :     tADD tNB tNB tNB {instructions_memory->add_instruction("ADD", 3, $2, $3, $4);}
+Add             :     tADD tNB tNB tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("ADD", 3, $2, $3, $4);
+                      }
 
-Sub             :     tSOU tNB tNB tNB {instructions_memory->add_instruction("SUB", 3, $2, $3, $4);}
+Sub             :     tSOU tNB tNB tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("SUB", 3, $2, $3, $4);
+                      }
 
-Mul             :     tMUL tNB tNB tNB {instructions_memory->add_instruction("MUL", 3, $2, $3, $4);}
+Mul             :     tMUL tNB tNB tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("MUL", 3, $2, $3, $4);
+                      }
 
-Div             :     tDIV tNB tNB tNB {instructions_memory->add_instruction("DIV", 3, $2, $3, $4);}
+Div             :     tDIV tNB tNB tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("DIV", 3, $2, $3, $4);
+                      }
 
-Inf             :     tINF tNB tNB tNB {instructions_memory->add_instruction("INF", 3, $2, $3, $4);}
+Inf             :     tINF tNB tNB tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("INF", 3, $2, $3, $4);
+                      }
 
-Equ             :     tEQU tNB tNB tNB {instructions_memory->add_instruction("EQU", 3, $2, $3, $4);}
+Equ             :     tEQU tNB tNB tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("EQU", 3, $2, $3, $4);
+                      }
 
-Sup             :     tSUP tNB tNB tNB {instructions_memory->add_instruction("SUP", 3, $2, $3, $4);}
+Sup             :     tSUP tNB tNB tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("SUP", 3, $2, $3, $4);
+                      }
 
-And             :     tAND tNB tNB tNB {instructions_memory->add_instruction("AND", 3, $2, $3, $4);}
+And             :     tAND tNB tNB tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("AND", 3, $2, $3, $4);
+                      }
 
-Or              :     tOR tNB tNB tNB {instructions_memory->add_instruction("OR", 3, $2, $3, $4);}
+Or              :     tOR tNB tNB tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("OR", 3, $2, $3, $4);
+                      }
 
-Jmf             :     tJMF tNB tNB {instructions_memory->add_instruction("JMF", 2, $2, $3);}
+Jmf             :     tJMF tNB tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("JMF", 2, $2, $3);
+                      }
 
-Afc             :     tAFC tNB tNB {instructions_memory->add_instruction("AFC", 2, $2, $3);}
+Afc             :     tAFC tNB tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("AFC", 2, $2, $3);
+                      }
 
-Cop             :     tCOP tNB tNB {instructions_memory->add_instruction("COP", 2, $2, $3);}
+Cop             :     tCOP tNB tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("COP", 2, $2, $3);
+                      }
 
-Copa            :     tCOPA tNB tNB {instructions_memory->add_instruction("COPA", 2, $2, $3);}
+Copa            :     tCOPA tNB tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("COPA", 2, $2, $3);
+                      }
 
-Copb            :     tCOPB tNB tNB {instructions_memory->add_instruction("COPB", 2, $2, $3);}
+Copb            :     tCOPB tNB tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("COPB", 2, $2, $3);
+                      }
 
-Jmp             :     tJMP tNB {instructions_memory->add_instruction("JMP", 1, $2);}
+Jmp             :     tJMP tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("JMP", 1, $2);
+                      }
 
-Call            :     tCALL tNB {instructions_memory->add_instruction("CALL", 1, $2);}
+Call            :     tCALL tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("CALL", 1, $2);
+                      }
 
-Pri             :     tPRI tNB {instructions_memory->add_instruction("PRI", 1, $2);}
+Pri             :     tPRI tNB {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("PRI", 1, $2);
+                      }
 
-Ret             :     tRET {instructions_memory->add_instruction("RET", 0);}
+Ret             :     tRET {
+                        interpreter->read_line();
+                        instructions_memory->add_instruction("RET", 0);
+                      }
 
 %%
 

@@ -1548,7 +1548,7 @@ yyreduce:
 #line 53 "sources/gram.y"
     {
                         functions_table->add_function((yyvsp[(2) - (5)].var), assembly_manager->cpt);
-                        //assembly_manager->write_fun_assembly("%s:", $2);
+                        assembly_manager->write_fun_assembly("%s:", (yyvsp[(2) - (5)].var));
                       ;}
     break;
 
@@ -1563,7 +1563,7 @@ yyreduce:
   case 11:
 #line 60 "sources/gram.y"
     {
-                        //assembly_manager->write_fun_assembly("main:");
+                        assembly_manager->write_fun_assembly("main:");
                       ;}
     break;
 

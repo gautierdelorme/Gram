@@ -1,3 +1,9 @@
+f:
+	AFC 1 2
+	COP 0 1
+	PRI 0
+	RET
+main:
 	AFC 0 1
 	AFC 2 0
 	AFC 3 22

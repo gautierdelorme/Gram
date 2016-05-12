@@ -22,21 +22,45 @@ void jmp(int line);
 void call(int line);
 void pri(int addr_val);
 void ret();
+void nop();
 
 void start_interpreter();
+void set_start_line();
+void set_end_line();
+void read_line();
 
 void new_interpreter() {
   if (interpreter == NULL) {
     interpreter = malloc(sizeof(Interpreter));
-    interpreter->current_line = 1;
+    interpreter->cpt_line = 0;
+    interpreter->current_line = 0;
+    interpreter->start_line = 0;
+    interpreter->end_line = 0;
     interpreter->start = start_interpreter;
+    interpreter->set_start_line = set_start_line;
+    interpreter->set_end_line = set_end_line;
+    interpreter->read_line = read_line;
   } else {
     error_manager->raise_error("ERROR INTERPRETER ALREADY EXISTING");
   }
 }
 
+void set_start_line() {
+  interpreter->start_line = interpreter->cpt_line+1;
+  interpreter->current_line = interpreter->start_line;
+}
+
+void set_end_line() {
+  interpreter->end_line = interpreter->cpt_line;
+}
+
+void read_line() {
+  interpreter->cpt_line++;
+}
+
 void start_interpreter() {
-  while (interpreter->current_line <= instructions_memory->size()) {
+  printf("start_line: %d, end_line: %d, current_line: %d\n", interpreter->start_line,interpreter->end_line,interpreter->current_line);
+  while (interpreter->current_line != interpreter->end_line) {
     Instruction *in = instructions_memory->get(interpreter->current_line);
     if (strcmp(in->name, "ADD" ) == 0) {
       add(in->params[0], in->params[1], in->params[2]);
@@ -74,6 +98,10 @@ void start_interpreter() {
       call(in->params[0]);
     } else if (strcmp(in->name, "RET" ) == 0) {
       ret();
+    } else if (strcmp(in->name, "NOP" ) == 0) {
+      nop();
+    } else {
+      error_manager->raise_error("ERROR ASSEMBLY INSTRUCTION NOT DEFINED.");
     }
   }
 }
@@ -187,5 +215,9 @@ void pri(int addr_val) {
 }
 
 void ret() {
+  interpreter->current_line++;
+}
+
+void nop() {
   interpreter->current_line++;
 }

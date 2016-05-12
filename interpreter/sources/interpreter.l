@@ -11,15 +11,17 @@ DIGITS      {DIGIT}+
 EXP         [eE][+-]?{DIGITS}
 NUMBER      {DIGITS}{EXP}?
 ALPHABET    [a-zA-Z]
-FUNCTIONS   {ALPHABET}+{DIGIT}*{ALPHABET}*:
+FUNCTIONS   {ALPHABET}+{DIGIT}*{ALPHABET}*
 
 %%
 
 {WHITESPACES} { }
-{FUNCTIONS} { }
 {NUMBER}  {
   yylval.nb = atoi(yytext);
   return tNB;
+}
+"main" {
+  return tMAIN;
 }
 "ADD" {
   return tADD;
@@ -74,6 +76,12 @@ FUNCTIONS   {ALPHABET}+{DIGIT}*{ALPHABET}*:
 }
 "JMP" {
   return tJMP;
+}
+":" {
+  return tCOL;
+}
+{FUNCTIONS} {
+  return tID;
 }
 . {
   printf("tERROR\n");

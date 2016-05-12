@@ -52,13 +52,13 @@ ArgumentsNext   :     tCOM Arithm ArgumentsNext
 
 Function        :     tINT tID tPO Params tPC {
                         functions_table->add_function($2, assembly_manager->cpt);
-                        //assembly_manager->write_fun_assembly("%s:", $2);
+                        assembly_manager->write_fun_assembly("%s:", $2);
                       } Body {
                         symbols_table->remove_symbol();
                         assembly_manager->write_assembly("RET");
                       }
 Main        :         tMAIN tPO Params tPC {
-                        //assembly_manager->write_fun_assembly("main:");
+                        assembly_manager->write_fun_assembly("main:");
                       } Body {
                         symbols_table->remove_symbol();
                         assembly_manager->write_assembly("RET");
