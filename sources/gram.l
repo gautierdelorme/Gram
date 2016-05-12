@@ -11,9 +11,11 @@ DIGITS      {DIGIT}+
 EXP         [eE][+-]?{DIGITS}
 NUMBER      {DIGITS}{EXP}?
 ID          {ALPHABET}+{DIGIT}*{ALPHABET}*
+COMMENTS    ("/*"([^*]|\*+[^*/])*\*+"/")|("//".*)
 
 %%
 {WHITESPACES} { }
+{COMMENTS} { }
 {NUMBER}  {
   yylval.nb = atoi(yytext);
   return tNB;
