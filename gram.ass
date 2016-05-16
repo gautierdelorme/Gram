@@ -1,71 +1,17 @@
-f:
-	AFC 1 2
-	COP 0 1
-	PRI 0
-	RET
-g:
-	AFC 1 2
-	COP 0 1
-	PRI 0
-	RET
 main:
-	AFC 0 1
-	AFC 3 0
-	AFC 4 22
-	COP 5 0
-	ADD 5 5 3
-	COPB 5 4
+	AFC 1 1
+	COP 0 1
+	AFC 2 1
 	AFC 3 1
-	AFC 4 33
-	COP 5 0
-	ADD 5 5 3
-	COPB 5 4
-	AFC 4 0
-	COP 6 0
-	ADD 6 6 4
-	COPA 5 6
-	COP 3 5
-	COP 5 3
-	AFC 6 44
-	INF 5 5 6
-	JMF 5 2
-	COP 6 3
-	AFC 7 33
-	INF 6 6 7
-	JMF 6 3
-	COP 7 3
-	AFC 8 2
-	ADD 7 7 8
-	COP 3 7
-	JMP 4
-	COP 7 3
-	AFC 8 42
-	SUP 7 7 8
-	JMF 7 5
-	COP 8 3
-	AFC 9 3
-	ADD 8 8 9
-	COP 3 8
-	JMP 6
-	COP 8 3
-	AFC 9 1
-	ADD 8 8 9
-	COP 3 8
-	PRI 3
-	JMP 1
-	AFC 6 555
-	COPB 0 6
-	AFC 6 0
-	COP 8 0
-	ADD 8 8 6
-	COPA 7 8
-	COP 3 7
-	PRI 3
-	AFC 7 1
-	COP 9 0
-	ADD 9 9 7
-	COPA 8 9
-	COP 3 8
-	PRI 3
-	CALL 1
+	ADD 2 2 3
+	AFC 3 2
+	MUL 2 2 3
+	COP 1 2
+	COP 3 0
+	COP 4 1
+	ADD 3 3 4
+	COP 2 3
+	PRI 0
+	PRI 1
+	PRI 2
 	RET

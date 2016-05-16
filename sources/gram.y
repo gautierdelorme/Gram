@@ -200,74 +200,74 @@ Affectation     :     tID tEQU Arithm tSM {
                         symbols_table->remove_tmp_variable();
                       }
 
-Declarations    :     tINT tID DeclarationsNext tSM {
+Declarations    :     tINT tID {
                         symbols_table->add_variable($2, 0, 0);
-                      }
-                |     tINT tSTAR tID DeclarationsNext tSM {
+                      } DeclarationsNext tSM
+                |     tINT tSTAR tID {
                         int n = symbols_table->add_pointer($3, 0);
                         assembly_manager->write_assembly("AFC %d %d", n, n+1);
-                      }
-                |     tINT tID tSBO tNB tSBC DeclarationsNext tSM {
+                      } DeclarationsNext tSM
+                |     tINT tID tSBO tNB tSBC {
                         int n = symbols_table->add_array($2, $4);
                         assembly_manager->write_assembly("AFC %d %d", n, n+1);
-                      }
+                      } DeclarationsNext tSM
                 |     tINT tSTAR tID tEQU {
                         int n = symbols_table->add_pointer($3, 0);
                         assembly_manager->write_assembly("AFC %d %d", n, n+1);
-                      } Arithm DeclarationsNext tSM {
+                      } Arithm {
                         int n = symbols_table->get_addr_symbol($3);
                         assembly_manager->write_assembly("COPB %d %d", n, $6);
                         symbols_table->remove_tmp_variable();
-                      }
+                      }  DeclarationsNext tSM
                 |     tINT tID tEQU {
                         symbols_table->add_variable($2, 1, 0);
-                      } Arithm DeclarationsNext tSM {
+                      } Arithm {
                         int n = symbols_table->get_addr_symbol($2);
                         assembly_manager->write_assembly("COP %d %d", n, $5);
                         symbols_table->remove_tmp_variable();
-                      }
+                      }  DeclarationsNext tSM
                 |     tINT tCONST tID tEQU {
                         symbols_table->add_variable($3, 1, 1);
-                      } Arithm DeclarationsNext tSM {
+                      } Arithm {
                         int n = symbols_table->get_addr_symbol($3);
                         assembly_manager->write_assembly("COP %d %d", n, $6);
                         symbols_table->remove_tmp_variable();
-                      }
+                      } DeclarationsNext tSM
 DeclarationsNext:     tCOM tID tEQU {
                         symbols_table->add_variable($2, 1, 0);
-                      } Arithm DeclarationsNext {
+                      } Arithm {
                         int n = symbols_table->get_addr_symbol($2);
                         assembly_manager->write_assembly("COP %d %d", n, $5);
                         symbols_table->remove_tmp_variable();
-                      }
-                |     tCOM tSTAR tID DeclarationsNext tSM {
+                      } DeclarationsNext
+                |     tCOM tSTAR tID {
                         int n = symbols_table->add_pointer($3, 0);
                         assembly_manager->write_assembly("AFC %d %d", n, n+1);
-                      }
+                      } DeclarationsNext
                 |     tCOM tSTAR tID tEQU {
                         int n = symbols_table->add_pointer($3, 0);
                         assembly_manager->write_assembly("AFC %d %d", n, n+1);
-                      } Arithm DeclarationsNext tSM {
+                      } Arithm {
                         int n = symbols_table->get_addr_symbol($3);
                         assembly_manager->write_assembly("COPB %d %d", n, $6);
                         symbols_table->remove_tmp_variable();
-                      }
-                |     tCOM tID tSBO tNB tSBC DeclarationsNext tSM {
+                      } DeclarationsNext
+                |     tCOM tID tSBO tNB tSBC {
                         symbols_table->add_array($2, $4);
-                      }
+                      } DeclarationsNext
                 |     tCOM tCONST tID tEQU {
                         symbols_table->add_variable($3, 1, 1);
-                      } Arithm DeclarationsNext {
+                      } Arithm {
                         int n = symbols_table->get_addr_symbol($3);
                         assembly_manager->write_assembly("COP %d %d", n, $6);
                         symbols_table->remove_tmp_variable();
-                      }
-                |     tCOM tID DeclarationsNext {
+                      } DeclarationsNext
+                |     tCOM tID {
                         symbols_table->add_variable($2, 0, 0);
-                      }
-                |     tCOM tID tSBO Arithm tSBC DeclarationsNext {
+                      } DeclarationsNext
+                |     tCOM tID tSBO Arithm tSBC {
                         symbols_table->add_variable($2, 0, 0);
-                      }
+                      } DeclarationsNext
                 |     ;
 
 Body            :     tBO {symbols_table->current_depth++;} Content tBC  {
