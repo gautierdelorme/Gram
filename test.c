@@ -11,12 +11,26 @@ int g() {
  * multi lines
  */
 int main () {
-  int b[1];
+  int b[2];
   b[0] = 22;
+  b[1] = 33;
   int a = b[0];
-  printf(a);
+  while (a < 44) {
+    if (a < 33) {
+      a = a+2;
+    } else {
+      if (a > 42) {
+        a = a+3;
+      } else {
+        a = a+1;
+      }
+    }
+    printf(a);
+  }
   *b = 555;
   a = b[0];
+  printf(a);
+  a = b[1];
   printf(a);
   /* call
     f
