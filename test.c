@@ -6,7 +6,7 @@ int g() {
   int a = 2;
   printf(a);
 }
-// lol
+// simple line comments
 /* a COMMENT
  * multi lines
  */
