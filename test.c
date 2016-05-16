@@ -1,13 +1,39 @@
+int f() {
+  int a = 2;
+  printf(a);
+}
+int g() {
+  int a = 2;
+  printf(a);
+}
+// simple line comments
+/* a COMMENT
+ * multi lines
+ */
 int main () {
-  int a = 0, b[5], c;
-  while (a < 5) {
-    b[a] = a*3;
-    a = a+1;
+  int b[2];
+  b[0] = 22;
+  b[1] = 33;
+  int a = b[0];
+  while (a < 44) {
+    if (a < 33) {
+      a = a+2;
+    } else {
+      if (a > 42) {
+        a = a+3;
+      } else {
+        a = a+1;
+      }
+    }
+    printf(a);
   }
-  a = 0;
-  while (a < 5) {
-    c = b[a];
-    printf(c);
-    a = a+1;
-  }
+  *b = 555;
+  a = b[0];
+  printf(a);
+  a = b[1];
+  printf(a);
+  /* call
+    f
+  */
+  f();
 }
