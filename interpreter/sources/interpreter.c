@@ -110,6 +110,9 @@ void add(int addr_res, int addr_var1, int addr_var2) {
   int val1 = data_memory->get(addr_var1);
   int val2 = data_memory->get(addr_var2);
   data_memory->put(addr_res, val1 + val2);
+  if (DEBUG_INTERPRETER) {
+    printf("add %d + %d = %d at @%d\n", val1, val2, val1 + val2, addr_res);
+  }
   interpreter->current_line++;
 }
 
@@ -124,6 +127,9 @@ void mul(int addr_res, int addr_var1, int addr_var2) {
   int val1 = data_memory->get(addr_var1);
   int val2 = data_memory->get(addr_var2);
   data_memory->put(addr_res, val1 * val2);
+  if (DEBUG_INTERPRETER) {
+    printf("mul %d * %d = %d at @%d\n", val1, val2, val1 * val2, addr_res);
+  }
   interpreter->current_line++;
 }
 
@@ -179,24 +185,36 @@ void jmf(int addr_cond, int line) {
 
 void afc(int addr_res, int val) {
   data_memory->put(addr_res, val);
+  if (DEBUG_INTERPRETER) {
+    printf("afc %d to @%d\n", val, addr_res);
+  }
   interpreter->current_line++;
 }
 
 void cop(int addr_res, int addr_val) {
   int val = data_memory->get(addr_val);
   data_memory->put(addr_res, val);
+  if (DEBUG_INTERPRETER) {
+    printf("cop from @%d to @%d : %d\n", addr_val, addr_res, val);
+  }
   interpreter->current_line++;
 }
 
 void copa(int addr_res, int addr_addr_val) {
   int val = data_memory->get(data_memory->get(addr_addr_val));
   data_memory->put(addr_res, val);
+  if (DEBUG_INTERPRETER) {
+    printf("cop(a) from (@%d)@%d to @%d : %d\n", addr_addr_val, data_memory->get(addr_addr_val), addr_res, val);
+  }
   interpreter->current_line++;
 }
 
 void copb(int addr_addr_res, int addr_val) {
   int val = data_memory->get(addr_val);
   data_memory->put(data_memory->get(addr_addr_res), val);
+  if (DEBUG_INTERPRETER) {
+    printf("cop(b) from @%d to (@%d)@%d : %d\n", addr_val, addr_addr_res, data_memory->get(addr_addr_res), val);
+  }
   interpreter->current_line++;
 }
 

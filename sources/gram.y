@@ -253,7 +253,8 @@ DeclarationsNext:     tCOM tID tEQU {
                         symbols_table->remove_tmp_variable();
                       } DeclarationsNext
                 |     tCOM tID tSBO tNB tSBC {
-                        symbols_table->add_array($2, $4);
+                        int n = symbols_table->add_array($2, $4);
+                        assembly_manager->write_assembly("AFC %d %d", n, n+1);
                       } DeclarationsNext
                 |     tCOM tCONST tID tEQU {
                         symbols_table->add_variable($3, 1, 1);

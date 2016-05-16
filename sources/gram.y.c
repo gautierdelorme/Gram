@@ -511,8 +511,8 @@ static const yytype_uint16 yyrline[] =
      157,   162,   167,   172,   178,   187,   192,   203,   203,   206,
      206,   210,   210,   214,   217,   214,   222,   224,   222,   229,
      231,   229,   236,   238,   236,   243,   243,   247,   250,   247,
-     255,   255,   258,   260,   258,   265,   265,   268,   268,   271,
-     273,   273,   278
+     255,   255,   259,   261,   259,   266,   266,   269,   269,   272,
+     274,   274,   279
 };
 #endif
 
@@ -1911,19 +1911,20 @@ yyreduce:
   case 70:
 #line 255 "sources/gram.y"
     {
-                        symbols_table->add_array((yyvsp[(2) - (5)].var), (yyvsp[(4) - (5)].nb));
+                        int n = symbols_table->add_array((yyvsp[(2) - (5)].var), (yyvsp[(4) - (5)].nb));
+                        assembly_manager->write_assembly("AFC %d %d", n, n+1);
                       ;}
     break;
 
   case 72:
-#line 258 "sources/gram.y"
+#line 259 "sources/gram.y"
     {
                         symbols_table->add_variable((yyvsp[(3) - (4)].var), 1, 1);
                       ;}
     break;
 
   case 73:
-#line 260 "sources/gram.y"
+#line 261 "sources/gram.y"
     {
                         int n = symbols_table->get_addr_symbol((yyvsp[(3) - (6)].var));
                         assembly_manager->write_assembly("COP %d %d", n, (yyvsp[(6) - (6)].nb));
@@ -1932,26 +1933,26 @@ yyreduce:
     break;
 
   case 75:
-#line 265 "sources/gram.y"
+#line 266 "sources/gram.y"
     {
                         symbols_table->add_variable((yyvsp[(2) - (2)].var), 0, 0);
                       ;}
     break;
 
   case 77:
-#line 268 "sources/gram.y"
+#line 269 "sources/gram.y"
     {
                         symbols_table->add_variable((yyvsp[(2) - (5)].var), 0, 0);
                       ;}
     break;
 
   case 80:
-#line 273 "sources/gram.y"
+#line 274 "sources/gram.y"
     {symbols_table->current_depth++;;}
     break;
 
   case 81:
-#line 273 "sources/gram.y"
+#line 274 "sources/gram.y"
     {
                         symbols_table->remove_symbol();
                         symbols_table->current_depth--;
@@ -1959,7 +1960,7 @@ yyreduce:
     break;
 
   case 82:
-#line 278 "sources/gram.y"
+#line 279 "sources/gram.y"
     {
                         int n = symbols_table->get_addr_symbol((yyvsp[(3) - (5)].var));
                         assembly_manager->write_assembly("PRI %d", n);
@@ -1968,7 +1969,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1972 "gram.tab.c"
+#line 1973 "gram.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2182,7 +2183,7 @@ yyreturn:
 }
 
 
-#line 282 "sources/gram.y"
+#line 283 "sources/gram.y"
 
 
 int yyerror(char *s) {
